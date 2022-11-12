@@ -16,7 +16,7 @@ export const Navigation = () => {
           <Link to='/photos'>
             <Button>Photos</Button>
           </Link>
-          <Link to='/auth'>
+          <Link to='/sign-in'>
             <Button>Sign In</Button>
           </Link>
         </div>
