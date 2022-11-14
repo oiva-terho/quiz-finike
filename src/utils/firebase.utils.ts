@@ -12,12 +12,12 @@ import {
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: `${process.env.REACT_APP_PROJECT_ID}.firebaseapp.com`,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: `${process.env.REACT_APP_PROJECT_ID}.appspot.com`,
-  messagingSenderId: process.env.REACT_APP_MSGR_SENDER_ID,
-  appId: process.env.REACT_APP_ID,
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: `${import.meta.env.VITE_PROJECT_ID}.firebaseapp.com`,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: `${import.meta.env.VITE_PROJECT_ID}.appspot.com`,
+  messagingSenderId: import.meta.env.VITE_MSGR_SENDER_ID,
+  appId: import.meta.env.VITE_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
