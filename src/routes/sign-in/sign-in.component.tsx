@@ -1,8 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
+
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
+import { selectCurrentUser } from '~/store/user/user.selector';
 import { googleSignInStart } from '../../store/user/user.action';
 
 const defaultFormFields = {
@@ -14,6 +16,7 @@ export const SignInForm = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const currentUser = useSelector(selectCurrentUser);
 
   const resetFormFields = () => setFormFields(defaultFormFields);
 
@@ -61,6 +64,7 @@ export const SignInForm = () => {
       <Link to='/sign-up'>
         <Button>Sign Up</Button>
       </Link>
+      {currentUser ? <Navigate to='/' /> : null}
     </div>
   );
 };
