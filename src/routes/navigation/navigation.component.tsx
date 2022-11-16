@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
 import { Button } from '~/components/button/button.component';
 import { signOutStart } from '~/store/user/user.action';
@@ -8,8 +8,10 @@ import { selectCurrentUser } from '../../store/user/user.selector';
 import './navigation.styles.scss';
 
 export const Navigation = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const signOutUser = () => dispatch(signOutStart());
+  console.log(currentUser);
   return (
     <>
       <div className='navigation'>
@@ -36,6 +38,3 @@ export const Navigation = () => {
     </>
   );
 };
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
-}

@@ -3,6 +3,8 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   User,
@@ -30,6 +32,18 @@ googleProvider.setCustomParameters({
 export const auth = getAuth(firebaseApp);
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+
+export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signInUserWithEmailAndPassword = async (email: string, password: string) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+};
 
 export const signOutUser = async () => await signOut(auth);
 
