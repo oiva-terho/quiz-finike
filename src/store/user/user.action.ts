@@ -5,6 +5,7 @@ import { User } from 'firebase/auth';
 
 // Types
 
+export type CheckUserSession = Action<USER_ACTION_TYPES.CHECK_USER_SESSION>;
 export type GoogleSignInStart = Action<USER_ACTION_TYPES.GOOGLE_SIGN_IN_START>;
 export type EmailSignInStart = ActionWithPayload<
   USER_ACTION_TYPES.EMAIL_SIGN_IN_START,
@@ -26,6 +27,9 @@ export type SignUpSuccess = ActionWithPayload<
 export type SignUpFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_FAILED, Error>;
 
 // Actions
+export const checkUserSession = withMatcher(
+  (): CheckUserSession => createAction(USER_ACTION_TYPES.CHECK_USER_SESSION),
+);
 
 export const googleSignInStart = withMatcher(
   (): GoogleSignInStart => createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START),

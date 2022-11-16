@@ -88,16 +88,18 @@ export function* signInAfterSignUp({ payload: { user, additionalDetails } }: Sig
   yield* call(getSnapshotFromUserAuth, user, additionalDetails);
 }
 
+// Listeners
+
+export function* onCheckUserSession() {
+  yield* takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated);
+}
+
 export function* onGoogleSignInStart() {
   yield* takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
 
 export function* onEmailSignInStart() {
   yield* takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInWithEmail);
-}
-
-export function* onCheckUserSession() {
-  yield* takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated);
 }
 
 export function* onSignOutStart() {
