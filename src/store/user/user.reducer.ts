@@ -11,13 +11,11 @@ import {
 
 export type UserState = {
   readonly currentUser: UserData | null;
-  readonly noTeamName: boolean;
   readonly error: Error | null;
 };
 
 const INITIAL_STATE: UserState = {
   currentUser: null,
-  noTeamName: false,
   error: null,
 };
 

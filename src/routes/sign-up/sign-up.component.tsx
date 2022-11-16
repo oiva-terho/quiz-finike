@@ -59,6 +59,13 @@ export const SignUpForm = () => {
     setRegError('');
   };
 
+  let checkUser = 'no user';
+  if (currentUser?.teamName) {
+    checkUser = 'has team';
+  } else if (currentUser) {
+    checkUser = 'no team';
+  } else checkUser = 'no user';
+
   return (
     <div>
       <h2>Sign up with your email and password</h2>
@@ -90,7 +97,8 @@ export const SignUpForm = () => {
         {regError !== null && <span>{regError}</span>}
         <Button type='submit'>Sign Up</Button>
       </form>
-      {currentUser ? <Navigate to='/' /> : null}
+      {checkUser === 'has team' && <Navigate to='/' />}
+      {checkUser === 'no team' && <Navigate to='/team' />}
     </div>
   );
 };

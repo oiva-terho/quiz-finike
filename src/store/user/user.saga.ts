@@ -12,6 +12,7 @@ import {
   signUpFailed,
   SignUpSuccess,
   EmailSignInStart,
+  AddTeamName,
 } from './user.action';
 import {
   getCurrentUser,
@@ -20,11 +21,12 @@ import {
   signOutUser,
   createAuthUserWithEmailAndPassword,
   signInUserWithEmailAndPassword,
+  uploadTeamName,
 } from '../../utils/firebase.utils';
 
-export function* getSnapshotFromUserAuth(userAuth: User, additionalDetails?: AdditionalInfo) {
+export function* getSnapshotFromUserAuth(userAuth: User) {
   try {
-    const userSnapshot = yield* call(createUserDocFromAuth, userAuth, additionalDetails);
+    const userSnapshot = yield* call(createUserDocFromAuth, userAuth);
     if (userSnapshot) {
       yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
     }
@@ -87,6 +89,18 @@ export function* signInAfterSignUp({ payload: { user } }: SignUpSuccess) {
   yield* call(getSnapshotFromUserAuth, user);
 }
 
+export function* addTeamName({ payload: teamName }: AddTeamName) {
+  try {
+    const userAuth = yield* call(getCurrentUser);
+    console.log(teamName, userAuth);
+    if (!userAuth) return;
+    yield* call(uploadTeamName, userAuth, teamName);
+    yield* call(getSnapshotFromUserAuth, userAuth);
+  } catch (error) {
+    yield* put(signInFailed(error as Error));
+  }
+}
+
 // Listeners
 
 export function* onCheckUserSession() {
@@ -113,6 +127,10 @@ export function* onSignUpSuccess() {
   yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
+export function* onAddTeamName() {
+  yield* takeLatest(USER_ACTION_TYPES.ADD_TEAM_NAME_START, addTeamName);
+}
+
 export function* userSagas() {
   yield* all([
     call(onCheckUserSession),
@@ -121,5 +139,6 @@ export function* userSagas() {
     call(onSignOutStart),
     call(onSignUpStart),
     call(onSignUpSuccess),
+    call(onAddTeamName),
   ]);
 }

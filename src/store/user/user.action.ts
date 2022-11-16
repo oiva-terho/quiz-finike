@@ -23,6 +23,7 @@ export type SignUpStart = ActionWithPayload<
 export type SignUpSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user: User }>;
 export type SignUpFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_FAILED, Error>;
 export type ClearError = Action<USER_ACTION_TYPES.CLEAR_ERROR>;
+export type AddTeamName = ActionWithPayload<USER_ACTION_TYPES.ADD_TEAM_NAME_START, string>;
 
 // Actions
 
@@ -78,4 +79,8 @@ export const signUpFailed = withMatcher(
 
 export const clearError = withMatcher(
   (): ClearError => createAction(USER_ACTION_TYPES.CLEAR_ERROR),
+);
+
+export const addTeamName = withMatcher(
+  (teamName: string): AddTeamName => createAction(USER_ACTION_TYPES.ADD_TEAM_NAME_START, teamName),
 );

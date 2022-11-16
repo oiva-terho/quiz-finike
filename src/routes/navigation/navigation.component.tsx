@@ -11,7 +11,6 @@ export const Navigation = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const signOutUser = () => dispatch(signOutStart());
-  console.log(currentUser);
   return (
     <>
       <div className='navigation'>
@@ -26,7 +25,10 @@ export const Navigation = () => {
             <Button>Photos</Button>
           </Link>
           {currentUser ? (
-            <Button onClick={signOutUser}>Sign Out</Button>
+            <>
+              <span>{currentUser.teamName}</span>
+              <Button onClick={signOutUser}>Sign Out</Button>
+            </>
           ) : (
             <Link to='/sign-in'>
               <Button>Sign In</Button>

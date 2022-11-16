@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.form-input {
+  position: relative;
+  margin: 1rem 0;
+  & > label {
+    font-size: 1rem;
+    pointer-events: none;
+    position: absolute;
+    left: 5px;
+    color: $main-dark;
+  }
+  & > input {
+    font-size: 1rem;
+    background-color: $main-light;
+    border: none;
+    border-bottom: 1px solid $main-dark;
+    border-radius: 6px;
+  }
+}
+
+.shrink-input-label {
+  top: -1rem;
+  font-size: 0.7rem !important;
+}

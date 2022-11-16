@@ -6,6 +6,7 @@ import { Home } from './routes/home/home.component';
 import { Navigation } from './routes/navigation/navigation.component';
 import { SignInForm } from './routes/sign-in/sign-in.component';
 import { SignUpForm } from './routes/sign-up/sign-up.component';
+import { TeamName } from './routes/team/team.component';
 import { checkUserSession } from './store/user/user.action';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path='photos' element={<div>Photos component</div>} />
         <Route path='sign-in' element={<SignInForm />} />
         <Route path='sign-up' element={<SignUpForm />} />
+        <Route path='team' element={<TeamName />} />
       </Route>
     </Routes>
   );

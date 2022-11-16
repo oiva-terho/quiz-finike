@@ -2,11 +2,14 @@
 
 .button {
   font-size: 1rem;
+  font-weight: bold;
   min-width: 100px;
   text-decoration: none;
-  color: #343434;
+  color: $main-dark;
   background-color: transparent;
   border: none;
+  border-radius: 6px;
+  padding: 0.3rem;
   &:hover {
     cursor: pointer;
     color: $marker;
@@ -22,5 +25,9 @@
 
 .button-apply {
   @extend .button;
+  color: $main-light;
   background-color: $marker;
+  &:hover {
+    background-color: $main-light;
+  }
 }

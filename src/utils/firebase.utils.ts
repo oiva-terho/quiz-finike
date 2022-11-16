@@ -97,3 +97,12 @@ export const getCurrentUser = (): Promise<User | null> => {
     );
   });
 };
+
+export const uploadTeamName = async (userAuth: User, teamName: string) => {
+  try {
+    const userDocRef = doc(db, 'users', userAuth.uid);
+    await setDoc(userDocRef, { teamName }, { merge: true });
+  } catch (error) {
+    console.log('error adding team name', error);
+  }
+};

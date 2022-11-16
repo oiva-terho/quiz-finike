@@ -42,6 +42,13 @@ export const SignInForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
+  let checkUser = 'no user';
+  if (currentUser?.teamName) {
+    checkUser = 'has team';
+  } else if (currentUser) {
+    checkUser = 'no team';
+  } else checkUser = 'no user';
+
   return (
     <div>
       <h2>Sign in</h2>
@@ -75,7 +82,8 @@ export const SignInForm = () => {
       <Link to='/sign-up'>
         <Button>Sign Up</Button>
       </Link>
-      {currentUser ? <Navigate to='/' /> : null}
+      {checkUser === 'has team' && <Navigate to='/' />}
+      {checkUser === 'no team' && <Navigate to='/team' />}
     </div>
   );
 };
