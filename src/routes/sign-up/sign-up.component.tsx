@@ -1,14 +1,12 @@
-import { AuthError, AuthErrorCodes } from 'firebase/auth';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
-import { signUpStart } from '~/store/user/user.action';
-import { selectCurrentUser } from '~/store/user/user.selector';
+import { clearError, signUpStart } from '~/store/user/user.action';
+import { selectCurrentUser, selectUserError } from '~/store/user/user.selector';
 
 const defaultFormFields = {
-  displayName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -16,17 +14,18 @@ const defaultFormFields = {
 
 export const SignUpForm = () => {
   const [regError, setRegError] = useState('');
-  const errMessage = {
-    short: 'Password should be 6 characters or longer',
-    noMatch: 'Passwords do not match',
-    exist: 'Cannot create user. Email already in use',
-    else: 'Something went wrong. Try again later.',
-  };
+  enum errMessage {
+    short = 'Password should be 6 characters or longer',
+    noMatch = 'Passwords do not match',
+    exist = 'Cannot create user. Email already in use',
+    else = 'Something went wrong. Try again later.',
+  }
 
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const logError = useSelector(selectUserError);
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => setFormFields(defaultFormFields);
 
@@ -39,17 +38,20 @@ export const SignUpForm = () => {
       setRegError(errMessage.noMatch);
       return;
     }
-    try {
-      dispatch(signUpStart(email, password, displayName));
-      resetFormFields();
-    } catch (error) {
-      setRegError(
-        (error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS
-          ? errMessage.exist
-          : errMessage.else,
-      );
-    }
+
+    dispatch(signUpStart(email, password));
+    resetFormFields();
   };
+
+  useEffect(() => {
+    if (logError?.message === 'Firebase: Error (auth/email-already-in-use).') {
+      setRegError(errMessage.exist);
+      setTimeout(() => {
+        dispatch(clearError());
+        setRegError('');
+      }, 6000);
+    }
+  }, [logError, errMessage, dispatch]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -59,17 +61,8 @@ export const SignUpForm = () => {
 
   return (
     <div>
-      <h2>Do not have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h2>Sign up with your email and password</h2>
       <form onSubmit={handleSubmit}>
-        <FormInput
-          label='Team Name'
-          required
-          name='displayName'
-          type='text'
-          onChange={handleChange}
-          value={displayName}
-        />
         <FormInput
           label='Email'
           required

@@ -6,17 +6,18 @@ import {
   signOutFailed,
   signInFailed,
   signUpFailed,
+  clearError,
 } from './user.action';
 
 export type UserState = {
   readonly currentUser: UserData | null;
-  readonly isLoading: boolean;
+  readonly noTeamName: boolean;
   readonly error: Error | null;
 };
 
 const INITIAL_STATE: UserState = {
   currentUser: null,
-  isLoading: false,
+  noTeamName: false,
   error: null,
 };
 
@@ -29,6 +30,9 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
   }
   if (signOutFailed.match(action) || signInFailed.match(action) || signUpFailed.match(action)) {
     return { ...state, error: action.payload };
+  }
+  if (clearError.match(action)) {
+    return { ...state, error: null };
   }
   return state;
 };

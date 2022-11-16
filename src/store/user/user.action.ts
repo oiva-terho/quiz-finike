@@ -1,6 +1,6 @@
 import { createAction, withMatcher, Action, ActionWithPayload } from '../../utils/reducer.utils';
 import { USER_ACTION_TYPES } from './user.types';
-import { AdditionalInfo, UserData } from '../../utils/firebase.utils';
+import { UserData } from '../../utils/firebase.utils';
 import { User } from 'firebase/auth';
 
 // Types
@@ -18,15 +18,14 @@ export type SignOutSuccess = Action<USER_ACTION_TYPES.SIGN_OUT_SUCCESS>;
 export type SignOutFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_OUT_FAILED, Error>;
 export type SignUpStart = ActionWithPayload<
   USER_ACTION_TYPES.SIGN_UP_START,
-  { email: string; password: string; displayName: string }
+  { email: string; password: string }
 >;
-export type SignUpSuccess = ActionWithPayload<
-  USER_ACTION_TYPES.SIGN_UP_SUCCESS,
-  { user: User; additionalDetails: AdditionalInfo }
->;
+export type SignUpSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user: User }>;
 export type SignUpFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_FAILED, Error>;
+export type ClearError = Action<USER_ACTION_TYPES.CLEAR_ERROR>;
 
 // Actions
+
 export const checkUserSession = withMatcher(
   (): CheckUserSession => createAction(USER_ACTION_TYPES.CHECK_USER_SESSION),
 );
@@ -62,19 +61,21 @@ export const signOutFailed = withMatcher(
 );
 
 export const signUpStart = withMatcher(
-  (email: string, password: string, displayName: string): SignUpStart =>
+  (email: string, password: string): SignUpStart =>
     createAction(USER_ACTION_TYPES.SIGN_UP_START, {
       email,
       password,
-      displayName,
     }),
 );
 
 export const signUpSuccess = withMatcher(
-  (user: User, additionalDetails: AdditionalInfo): SignUpSuccess =>
-    createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails }),
+  (user: User): SignUpSuccess => createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user }),
 );
 
 export const signUpFailed = withMatcher(
   (error: Error): SignUpFailed => createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error),
+);
+
+export const clearError = withMatcher(
+  (): ClearError => createAction(USER_ACTION_TYPES.CLEAR_ERROR),
 );

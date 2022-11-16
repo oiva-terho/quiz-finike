@@ -55,19 +55,14 @@ export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => {
 
 export const db = getFirestore();
 
-export type AdditionalInfo = {
-  displayName?: string;
-};
-
 export type UserData = {
   createdAt: Date;
-  displayName: string;
+  teamName: string;
   email: string;
 };
 
 export const createUserDocFromAuth = async (
   userAuth: User,
-  additionalInfo = {} as AdditionalInfo,
 ): Promise<void | QueryDocumentSnapshot<UserData>> => {
   if (!userAuth) return;
 
@@ -76,15 +71,13 @@ export const createUserDocFromAuth = async (
 
   if (userSnapshot.exists()) return userSnapshot as QueryDocumentSnapshot<UserData>;
 
-  const { email, displayName } = userAuth;
+  const { email } = userAuth;
   const createdAt = new Date();
 
   try {
     await setDoc(userDocRef, {
-      displayName,
       email,
       createdAt,
-      ...additionalInfo,
     });
   } catch (error) {
     console.log('error creating the user', error);

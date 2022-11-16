@@ -14,9 +14,13 @@
 }
 
 .button-google {
+  @extend .button;
+  color: #fff;
   background-color: #4285f4;
+  border-radius: 6px;
 }
 
 .button-apply {
+  @extend .button;
   background-color: $marker;
 }

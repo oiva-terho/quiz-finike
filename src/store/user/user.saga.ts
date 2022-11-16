@@ -18,7 +18,6 @@ import {
   createUserDocFromAuth,
   signInWithGooglePopup,
   signOutUser,
-  AdditionalInfo,
   createAuthUserWithEmailAndPassword,
   signInUserWithEmailAndPassword,
 } from '../../utils/firebase.utils';
@@ -73,19 +72,19 @@ export function* signOut() {
   }
 }
 
-export function* signUp({ payload: { email, password, displayName } }: SignUpStart) {
+export function* signUp({ payload: { email, password } }: SignUpStart) {
   try {
     const userCredential = yield* call(createAuthUserWithEmailAndPassword, email, password);
     if (userCredential) {
-      yield* put(signUpSuccess(userCredential.user, { displayName }));
+      yield* put(signUpSuccess(userCredential.user));
     }
   } catch (error) {
     yield* put(signUpFailed(error as Error));
   }
 }
 
-export function* signInAfterSignUp({ payload: { user, additionalDetails } }: SignUpSuccess) {
-  yield* call(getSnapshotFromUserAuth, user, additionalDetails);
+export function* signInAfterSignUp({ payload: { user } }: SignUpSuccess) {
+  yield* call(getSnapshotFromUserAuth, user);
 }
 
 // Listeners
