@@ -9,25 +9,21 @@
   background-color: transparent;
   border: none;
   border-radius: 6px;
-  padding: 0.3rem;
+  padding: 6px;
   &:hover {
     cursor: pointer;
     color: $marker;
   }
-}
-
-.button-google {
-  @extend .button;
-  color: #fff;
-  background-color: #4285f4;
-  border-radius: 6px;
-}
-
-.button-apply {
-  @extend .button;
-  color: $main-light;
-  background-color: $marker;
-  &:hover {
-    background-color: $main-light;
+  &-google {
+    color: #fff;
+    background-color: #4285f4;
+    border-radius: 6px;
+  }
+  &-apply {
+    color: $main-light;
+    background-color: $marker;
+    &:hover {
+      background-color: $main-light;
+    }
   }
 }

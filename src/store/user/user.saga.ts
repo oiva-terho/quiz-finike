@@ -92,7 +92,6 @@ export function* signInAfterSignUp({ payload: { user } }: SignUpSuccess) {
 export function* addTeamName({ payload: teamName }: AddTeamName) {
   try {
     const userAuth = yield* call(getCurrentUser);
-    console.log(teamName, userAuth);
     if (!userAuth) return;
     yield* call(uploadTeamName, userAuth, teamName);
     yield* call(getSnapshotFromUserAuth, userAuth);

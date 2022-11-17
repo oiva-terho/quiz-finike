@@ -2,7 +2,7 @@
 
 .form-input {
   position: relative;
-  margin: 1rem 0;
+  margin: 16px 0;
   & > label {
     font-size: 1rem;
     pointer-events: none;
@@ -20,6 +20,6 @@
 }
 
 .shrink-input-label {
-  top: -1rem;
+  top: -14px;
   font-size: 0.7rem !important;
 }
