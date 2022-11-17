@@ -2,21 +2,28 @@
 
 .button {
   font-size: 1rem;
+  font-weight: bold;
   min-width: 100px;
   text-decoration: none;
-  color: #343434;
+  color: $main-dark;
   background-color: transparent;
   border: none;
+  border-radius: 6px;
+  padding: 6px;
   &:hover {
     cursor: pointer;
     color: $marker;
   }
-}
-
-.button-google {
-  background-color: #4285f4;
-}
-
-.button-apply {
-  background-color: $marker;
+  &-google {
+    color: #fff;
+    background-color: #4285f4;
+    border-radius: 6px;
+  }
+  &-apply {
+    color: $main-light;
+    background-color: $marker;
+    &:hover {
+      background-color: $main-light;
+    }
+  }
 }
