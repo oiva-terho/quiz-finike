@@ -13,6 +13,10 @@ import {
 
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
+import { getStorage, ref, list, listAll } from 'firebase/storage';
+
+// Firebase config
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: `${import.meta.env.VITE_PROJECT_ID}.firebaseapp.com`,
@@ -23,6 +27,8 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
+
+// Firebase authorisation
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -106,3 +112,9 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
     console.log('error adding team name', error);
   }
 };
+
+// Firebase storage
+
+const storage = getStorage(firebaseApp);
+
+export const storageRef = ref(storage);
