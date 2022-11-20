@@ -13,7 +13,7 @@ import {
 
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
-import { getStorage, ref, list, listAll } from 'firebase/storage';
+import { getStorage, ref, listAll, list, getDownloadURL } from 'firebase/storage';
 
 // Firebase config
 
@@ -117,4 +117,26 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 
 const storage = getStorage(firebaseApp);
 
-export const storageRef = ref(storage);
+export const getPhotoDates = () => {
+  const foldersList: string[] = [];
+  const storageRef = ref(storage);
+  listAll(storageRef)
+    .then((res) => {
+      res.prefixes.forEach((ref) => foldersList.push(ref.name));
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+  return foldersList;
+};
+
+export const getPhotoLinks = (folder: string, quantity: number) => {
+  const photoLinks: string[] = [];
+  const folderRef = ref(storage, folder);
+  list(folderRef, { maxResults: quantity }).then((res) => {
+    res.items.forEach((itemRef) => {
+      getDownloadURL(itemRef).then((url) => photoLinks.push(url));
+    });
+  });
+  return photoLinks;
+};
