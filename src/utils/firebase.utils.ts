@@ -117,26 +117,21 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 
 const storage = getStorage(firebaseApp);
 
-export const getQuizDates = () => {
+export const getQuizDates = async () => {
   const foldersList: string[] = [];
   const storageRef = ref(storage);
-  listAll(storageRef)
-    .then((res) => {
-      res.prefixes.forEach((ref) => foldersList.push(ref.name));
-    })
-    .catch((error) => {
-      console.log('error', error);
-    });
+  const res = await listAll(storageRef);
+  res.prefixes.forEach((ref) => foldersList.push(ref.name));
   return foldersList;
 };
 
-export const getPhotoLinks = (date: string, quantity: number) => {
+export const getPhotoLinks = async (date: string, quantity: number) => {
   const photoLinks: string[] = [];
   const folderRef = ref(storage, date);
-  list(folderRef, { maxResults: quantity }).then((res) => {
-    res.items.forEach((itemRef) => {
-      getDownloadURL(itemRef).then((url) => photoLinks.push(url));
-    });
-  });
+  const res = await list(folderRef, { maxResults: quantity });
+  for (const itemRef of res.items) {
+    const url = await getDownloadURL(itemRef);
+    photoLinks.push(url);
+  }
   return photoLinks;
 };

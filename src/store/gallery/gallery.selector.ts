@@ -9,3 +9,7 @@ export const selectPhotoLinks = createSelector(
   [selectGalleryReducer],
   (gallery) => gallery.photoLinks,
 );
+export const selectPhotosLoading = createSelector(
+  [selectGalleryReducer],
+  (gallery) => gallery.isLoading,
+);
