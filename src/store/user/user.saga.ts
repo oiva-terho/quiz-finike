@@ -24,6 +24,7 @@ import {
   uploadTeamName,
 } from '../../utils/firebase.utils';
 import { fetchFoldersStartAsync } from '../gallery/gallery.saga';
+import { clearPhotos } from '../gallery/gallery.action';
 
 export function* getSnapshotFromUserAuth(userAuth: User) {
   try {
@@ -70,6 +71,7 @@ export function* isUserAuthenticated() {
 export function* signOut() {
   try {
     yield* call(signOutUser);
+    yield* put(clearPhotos());
     yield* put(signOutSuccess());
   } catch (error) {
     yield* put(signOutFailed(error as Error));

@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { fetchFoldersSuccess, fetchPhotoLinksSuccess } from './gallery.action';
+import { fetchFoldersSuccess, fetchPhotoLinksSuccess, clearPhotos } from './gallery.action';
 
 export type GalleryState = {
   readonly folders: string[];
@@ -17,6 +17,9 @@ export const galleryReducer = (state = INITIAL_STATE, action: AnyAction): Galler
   }
   if (fetchPhotoLinksSuccess.match(action)) {
     return { ...state, photoLinks: action.payload };
+  }
+  if (clearPhotos.match(action)) {
+    return { ...state, photoLinks: [] };
   }
   return state;
 };

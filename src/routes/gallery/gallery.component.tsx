@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '~/components/button/button.component';
 import { Photo } from '~/components/photo/photo.component';
@@ -12,9 +13,10 @@ export const Gallery = () => {
   const foldersList = useSelector(selectFolders);
   const photoLinks = useSelector(selectPhotoLinks);
 
-  const openDate = async (date: string) => {
-    dispatch(fetchPhotoLinksStart(date, 10));
+  const openDate = (date: string) => {
+    dispatch(fetchPhotoLinksStart(date, 9));
   };
+
   return (
     <>
       <h3>Gallery component</h3>
@@ -27,9 +29,13 @@ export const Gallery = () => {
       ) : (
         <span>Log in to watch the gallery</span>
       )}
-      {currentUser && photoLinks.length !== 0
-        ? photoLinks.map((link, id) => <Photo key={id} src={link} />)
-        : null}
+      <div>
+        {currentUser && photoLinks.length !== 0 ? (
+          photoLinks.map((link, id) => <Photo key={id} src={link} />)
+        ) : (
+          <span>Choose the date</span>
+        )}
+      </div>
     </>
   );
 };

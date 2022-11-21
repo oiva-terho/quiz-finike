@@ -1,5 +1,5 @@
 import { GALLERY_ACTION_TYPES } from './gallery.types';
-import { createAction, ActionWithPayload, withMatcher } from '../../utils/reducer.utils';
+import { createAction, ActionWithPayload, Action, withMatcher } from '../../utils/reducer.utils';
 
 // Types
 
@@ -21,6 +21,7 @@ export type FetchPhotoLinksFailed = ActionWithPayload<
   GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_FAILED,
   Error
 >;
+export type CleanPhotos = Action<GALLERY_ACTION_TYPES.CLEAR_PHOTO_LINKS>;
 
 // Actions
 
@@ -42,4 +43,7 @@ export const fetchPhotoLinksSuccess = withMatcher(
 export const fetchPhotoLinksFailed = withMatcher(
   (error: Error): FetchPhotoLinksFailed =>
     createAction(GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_FAILED, error),
+);
+export const clearPhotos = withMatcher(
+  (): CleanPhotos => createAction(GALLERY_ACTION_TYPES.CLEAR_PHOTO_LINKS),
 );
