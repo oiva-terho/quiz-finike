@@ -21,8 +21,8 @@ export const Navigation = () => {
           <Link to='/games'>
             <Button>Games</Button>
           </Link>
-          <Link to='/photos'>
-            <Button>Photos</Button>
+          <Link to='/gallery'>
+            <Button>Gallery</Button>
           </Link>
           {currentUser ? (
             <>

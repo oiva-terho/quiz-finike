@@ -1,0 +1,14 @@
+.gallery__dates {
+  display: flex;
+  justify-content: center;
+}
+.gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 20px;
+}
+.gallery__notification {
+  grid-column-start: 2;
+  text-align: center;
+}

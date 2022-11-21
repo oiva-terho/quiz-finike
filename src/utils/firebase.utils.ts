@@ -13,6 +13,10 @@ import {
 
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
+import { getStorage, ref, listAll, list, getDownloadURL } from 'firebase/storage';
+
+// Firebase config
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: `${import.meta.env.VITE_PROJECT_ID}.firebaseapp.com`,
@@ -23,6 +27,8 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
+
+// Firebase authorisation
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -105,4 +111,27 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
   } catch (error) {
     console.log('error adding team name', error);
   }
+};
+
+// Firebase storage
+
+const storage = getStorage(firebaseApp);
+
+export const getQuizDates = async () => {
+  const foldersList: string[] = [];
+  const storageRef = ref(storage);
+  const res = await listAll(storageRef);
+  res.prefixes.forEach((ref) => foldersList.push(ref.name));
+  return foldersList;
+};
+
+export const getPhotoLinks = async (date: string, quantity: number) => {
+  const photoLinks: string[] = [];
+  const folderRef = ref(storage, date);
+  const res = await list(folderRef, { maxResults: quantity });
+  for (const itemRef of res.items) {
+    const url = await getDownloadURL(itemRef);
+    photoLinks.push(url);
+  }
+  return photoLinks;
 };
