@@ -130,9 +130,9 @@ export const getQuizDates = () => {
   return foldersList;
 };
 
-export const getPhotoLinks = (folder: string, quantity: number) => {
+export const getPhotoLinks = (date: string, quantity: number) => {
   const photoLinks: string[] = [];
-  const folderRef = ref(storage, folder);
+  const folderRef = ref(storage, date);
   list(folderRef, { maxResults: quantity }).then((res) => {
     res.items.forEach((itemRef) => {
       getDownloadURL(itemRef).then((url) => photoLinks.push(url));

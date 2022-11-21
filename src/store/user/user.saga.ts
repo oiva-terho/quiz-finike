@@ -23,12 +23,14 @@ import {
   signInUserWithEmailAndPassword,
   uploadTeamName,
 } from '../../utils/firebase.utils';
+import { fetchFoldersStartAsync } from '../gallery/gallery.saga';
 
 export function* getSnapshotFromUserAuth(userAuth: User) {
   try {
     const userSnapshot = yield* call(createUserDocFromAuth, userAuth);
     if (userSnapshot) {
       yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+      yield* call(fetchFoldersStartAsync);
     }
   } catch (error) {
     yield* put(signInFailed(error as Error));
