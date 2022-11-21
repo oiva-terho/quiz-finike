@@ -117,7 +117,7 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 
 const storage = getStorage(firebaseApp);
 
-export const getPhotoDates = () => {
+export const getQuizDates = () => {
   const foldersList: string[] = [];
   const storageRef = ref(storage);
   listAll(storageRef)
