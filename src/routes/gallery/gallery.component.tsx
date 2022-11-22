@@ -20,7 +20,6 @@ export const Gallery = () => {
   const foldersList = useSelector(selectFolders);
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
-
   const openDate = (date: string) => {
     dispatch(fetchPhotoLinksStart(date, 9));
   };

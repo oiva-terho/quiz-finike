@@ -3,4 +3,19 @@
   align-items: center;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  &__links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (max-width: 1024px) {
+  .navigation {
+    grid-template-columns: 2fr 3fr;
+  }
+}
+@media (max-width: 425px) {
+  .navigation {
+    grid-template-columns: 1fr 3fr;
+  }
 }
