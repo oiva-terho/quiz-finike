@@ -13,7 +13,7 @@ import {
 
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
-import { getStorage, ref, listAll, list, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
 // Firebase config
 

@@ -23,9 +23,11 @@ export const Gallery = () => {
   const photosLoading = useSelector(selectPhotosLoading);
   const openDate = (date: string) => {
     dispatch(fetchPhotoLinksStart(date));
+    gridRef.current.scrollTop = 0;
+    setStart(0);
   };
 
-  const gridRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
 
   const height = 400;
@@ -36,12 +38,21 @@ export const Gallery = () => {
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
   const onScroll = (e: Event): void => {
-    setStart(Math.floor(e.target.scrollTop / height));
+    const target = e.target as HTMLDivElement;
+    if (target?.scrollTop) {
+      setStart(Math.floor(target.scrollTop / height));
+    }
   };
+
   useEffect(() => {
-    gridRef.current.addEventListener('scroll', onScroll);
+    const currentGridRef = gridRef.current;
+    if (currentGridRef) {
+      currentGridRef.addEventListener('scroll', onScroll);
+    }
     return () => {
-      gridRef.current.removeEventListener('scroll', onScroll);
+      if (currentGridRef) {
+        currentGridRef.removeEventListener('scroll', onScroll);
+      }
     };
   });
 
