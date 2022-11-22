@@ -2,20 +2,20 @@
   height: 70px;
   align-items: center;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 3fr;
   &__links {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
 }
-@media (max-width: 1024px) {
+@media (min-width: 639px) {
   .navigation {
     grid-template-columns: 2fr 3fr;
   }
 }
-@media (max-width: 425px) {
+@media (min-width: 1279px) {
   .navigation {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 3fr 2fr;
   }
 }

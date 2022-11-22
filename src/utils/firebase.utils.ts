@@ -123,9 +123,9 @@ export const getQuizDates = async () => {
   return await Promise.all(res.prefixes.map((ref) => ref.name));
 };
 
-export const getPhotoLinks = async (date: string, quantity: number) => {
+export const getPhotoLinks = async (date: string) => {
   const folderRef = ref(storage, date);
-  const res = await list(folderRef, { maxResults: quantity });
+  const res = await listAll(folderRef);
   return await Promise.all(
     res.items.map(async (itemRef) => {
       return await getDownloadURL(itemRef);
