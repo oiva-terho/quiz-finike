@@ -17,7 +17,7 @@ export const Navigation = () => {
         <Link to='/'>
           <Button>Home</Button>
         </Link>
-        <div>
+        <div className='navigation__links'>
           <Link to='/games'>
             <Button>Games</Button>
           </Link>

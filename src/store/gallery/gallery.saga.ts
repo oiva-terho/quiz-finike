@@ -18,9 +18,9 @@ export function* fetchFoldersStartAsync() {
   }
 }
 
-export function* fetchPhotoLinksStartAsync({ payload: { date, quantity } }: FetchPhotoLinksStart) {
+export function* fetchPhotoLinksStartAsync({ payload: { date } }: FetchPhotoLinksStart) {
   try {
-    const photoLinks = yield* call(() => getPhotoLinks(date, quantity));
+    const photoLinks = yield* call(() => getPhotoLinks(date));
     yield* put(fetchPhotoLinksSuccess(photoLinks));
   } catch (error) {
     yield* put(fetchPhotoLinksFailed(error as Error));

@@ -13,7 +13,7 @@ import {
 
 import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
-import { getStorage, ref, listAll, list, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
 // Firebase config
 
@@ -118,20 +118,17 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 const storage = getStorage(firebaseApp);
 
 export const getQuizDates = async () => {
-  const foldersList: string[] = [];
   const storageRef = ref(storage);
   const res = await listAll(storageRef);
-  res.prefixes.forEach((ref) => foldersList.push(ref.name));
-  return foldersList;
+  return await Promise.all(res.prefixes.map((ref) => ref.name));
 };
 
-export const getPhotoLinks = async (date: string, quantity: number) => {
-  const photoLinks: string[] = [];
+export const getPhotoLinks = async (date: string) => {
   const folderRef = ref(storage, date);
-  const res = await list(folderRef, { maxResults: quantity });
-  for (const itemRef of res.items) {
-    const url = await getDownloadURL(itemRef);
-    photoLinks.push(url);
-  }
-  return photoLinks;
+  const res = await listAll(folderRef);
+  return await Promise.all(
+    res.items.map(async (itemRef) => {
+      return await getDownloadURL(itemRef);
+    }),
+  );
 };
