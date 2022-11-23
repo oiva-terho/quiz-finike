@@ -1,0 +1,13 @@
+.add-game {
+  text-align: center;
+
+  &__date {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+  }
+  &__teams {
+    position: relative;
+    margin: 2rem 1rem;
+  }
+}

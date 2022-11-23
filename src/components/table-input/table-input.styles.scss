@@ -1,0 +1,13 @@
+.table-input {
+  width: fit-content;
+  position: relative;
+  margin: 5px;
+  & > input {
+    width: 40px;
+  }
+  & > label {
+    position: absolute;
+    left: 5px;
+    color: #999;
+  }
+}

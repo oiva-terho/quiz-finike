@@ -11,7 +11,17 @@ import {
   NextOrObserver,
 } from 'firebase/auth';
 
-import { getFirestore, doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  QueryDocumentSnapshot,
+  collection,
+  writeBatch,
+  getDocs,
+  query,
+} from 'firebase/firestore';
 
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
@@ -57,7 +67,7 @@ export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => {
   if (callback) onAuthStateChanged(auth, callback);
 };
 
-// Firestore database
+// Firestore authirization
 
 export const db = getFirestore();
 
@@ -111,6 +121,41 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
   } catch (error) {
     console.log('error adding team name', error);
   }
+};
+
+// Firebase games
+
+export type ObjectToAdd = {
+  date: string;
+  teams: Array<Team>;
+};
+export type Team = {
+  name: string;
+  result: Array<number | string>;
+  position: number;
+};
+
+export const addGameDoc = async <T extends ObjectToAdd>(
+  collectionKey: string,
+  objectsToAdd: T[],
+): Promise<void> => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.date);
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+export const getGameDoc = async (): Promise<Game[]> => {
+  const gameRef = collection(db, 'categories');
+  const querySnapshot = await getDocs(query(gameRef));
+  const gameMap = querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as Game);
+  return gameMap;
 };
 
 // Firebase storage
