@@ -14,11 +14,13 @@ export const AddTeam = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name.replace(/\d/g, '') === 'result') {
-      const pos = parseInt(name.replace(/\D/g, ''));
-      setTeamObject({ ...teamObject, [teamObject.result[pos]]: parseInt(value) });
+      const newResult = teamObject.result.slice(0, 7);
+      newResult[parseInt(name.replace(/\D/g, ''))] = parseInt(value);
+      setTeamObject({ ...teamObject, result: newResult });
     } else {
       setTeamObject({ ...teamObject, [name]: value });
     }
+    console.log(teamObject);
   };
 
   return (
