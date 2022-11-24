@@ -5,7 +5,7 @@ import './add-team.styles.scss';
 
 const defaultTeamObject: Team = {
   name: '',
-  result: ['', '', '', '', '', '', ''],
+  result: [0, 0, 0, 0, 0, 0],
   position: 0,
 };
 export const AddTeam = () => {
@@ -22,6 +22,8 @@ export const AddTeam = () => {
     }
     console.log(teamObject);
   };
+
+  const sum = teamObject.result.reduce((a, b) => a + b);
 
   return (
     <div className='add-team'>
@@ -45,6 +47,7 @@ export const AddTeam = () => {
           value={score}
         />
       ))}
+      <div className='add-team__sum'>{sum}</div>
       <TableInput
         required
         name='position'

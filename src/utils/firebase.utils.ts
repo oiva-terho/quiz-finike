@@ -131,7 +131,7 @@ export type ObjectToAdd = {
 };
 export type Team = {
   name: string;
-  result: Array<number | string>;
+  result: Array<number>;
   position: number;
 };
 
