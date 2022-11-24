@@ -1,12 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
-import { ObjectToAdd } from '~/utils/firebase.utils';
+import { Game } from '~/store/game/game.types';
+
 import './add-game.styles.scss';
 
-const defaultGameObject: ObjectToAdd = {
+const defaultGameObject: Game = {
   date: '',
   teams: [],
 };

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { Team } from '~/utils/firebase.utils';
+import { Team } from '~/store/game/game.types';
 import { TableInput } from '../table-input/table-input.component';
 import './add-team.styles.scss';
 

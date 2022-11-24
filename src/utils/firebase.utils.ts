@@ -24,6 +24,7 @@ import {
 } from 'firebase/firestore';
 
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { Game, Team } from '~/store/game/game.types';
 
 // Firebase config
 
@@ -125,30 +126,13 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 
 // Firebase games
 
-export type ObjectToAdd = {
-  date: string;
-  teams: Array<Team>;
-};
-export type Team = {
-  name: string;
-  result: Array<number>;
-  position: number;
-};
-
-export const addGameDoc = async <T extends ObjectToAdd>(
-  collectionKey: string,
-  objectsToAdd: T[],
-): Promise<void> => {
-  const collectionRef = collection(db, collectionKey);
-  const batch = writeBatch(db);
-
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.date);
-    batch.set(docRef, object);
-  });
-
-  await batch.commit();
-  console.log('done');
+export const addGameDoc = async <T extends Team>(date: string, teams: T[]) => {
+  try {
+    const userDocRef = doc(db, 'games', date);
+    await setDoc(userDocRef, { teams }, { merge: true });
+  } catch (error) {
+    console.log('error adding team name', error);
+  }
 };
 
 export const getGameDoc = async (): Promise<Game[]> => {
