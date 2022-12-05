@@ -18,7 +18,6 @@ import {
   setDoc,
   QueryDocumentSnapshot,
   collection,
-  writeBatch,
   getDocs,
   query,
 } from 'firebase/firestore';

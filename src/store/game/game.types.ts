@@ -1,5 +1,5 @@
 export enum GAME_ACTION_TYPES {
-  ADD_GAME = 'game/ADD_GAME',
+  ADD_DATE = 'game/ADD_DATE',
   ADD_TEAM = 'game/ADD_TEAM',
   UPLOAD_GAME_START = 'game/UPLOAD_GAME_START',
   UPLOAD_GAME_SUCCESS = 'game/UPLOAD_GAME_SUCCESS',
@@ -8,7 +8,7 @@ export enum GAME_ACTION_TYPES {
 
 export type Game = {
   date: string;
-  teams: Array<Team>;
+  teams: Team[];
 };
 export type Team = {
   name: string;

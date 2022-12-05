@@ -3,25 +3,25 @@ import { createAction, ActionWithPayload, Action, withMatcher } from '../../util
 
 // Types
 
-export type AddGame = ActionWithPayload<GAME_ACTION_TYPES.ADD_GAME, Game>;
-export type AddTeam = ActionWithPayload<GAME_ACTION_TYPES.ADD_TEAM, Team>;
+export type AddDate = ActionWithPayload<GAME_ACTION_TYPES.ADD_DATE, string>;
+// export type AddTeam = ActionWithPayload<GAME_ACTION_TYPES.ADD_TEAM, Team>;
 export type UploadGameStart = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_START, Game>;
 export type UploadGameSuccess = Action<GAME_ACTION_TYPES.UPLOAD_GAME_SUCCESS>;
 export type UploadGameFailed = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_FAILED, Error>;
 
 // Actions
 
-export const addGame = withMatcher(
-  ({ date, teams }: Game): AddGame => createAction(GAME_ACTION_TYPES.ADD_GAME, { date, teams }),
+export const addDate = withMatcher(
+  (date: string): AddDate => createAction(GAME_ACTION_TYPES.ADD_DATE, date),
 );
-export const addTeam = withMatcher(
-  ({ name, result, position }: Team): AddTeam =>
-    createAction(GAME_ACTION_TYPES.ADD_TEAM, { name, result, position }),
-);
-export const uploadGameStart = withMatcher(
-  ({ date, teams }: Game): UploadGameStart =>
-    createAction(GAME_ACTION_TYPES.UPLOAD_GAME_START, { date, teams }),
-);
+// export const addTeam = withMatcher(
+//   ({ name, result, position }: Team): AddTeam =>
+//     createAction(GAME_ACTION_TYPES.ADD_TEAM, { name, result, position }),
+// );
+// export const uploadGameStart = withMatcher(
+//   ({ date, teams }: Game): UploadGameStart =>
+//     createAction(GAME_ACTION_TYPES.UPLOAD_GAME_START, { date, teams }),
+// );
 export const uploadGameSuccess = withMatcher(
   (): UploadGameSuccess => createAction(GAME_ACTION_TYPES.UPLOAD_GAME_SUCCESS),
 );
