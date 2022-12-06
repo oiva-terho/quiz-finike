@@ -3,28 +3,30 @@ import { Team } from '~/store/game/game.types';
 import { TableInput } from '../table-input/table-input.component';
 import './add-team.styles.scss';
 
-const defaultTeamObject: Team = {
-  name: '',
-  result: [0, 0, 0, 0, 0, 0],
-  position: 0,
+type AddTeamProps = {
+  team: Team;
 };
-export const AddTeam = () => {
-  const [teamObject, setTeamObject] = useState(defaultTeamObject);
+// const defaultTeamObject: Team = {
+//   name: '',
+//   result: [0, 0, 0, 0, 0, 0],
+//   position: 0,
+// };
+export const AddTeam = ({ team }: AddTeamProps) => {
+  const [teamObject, setTeamObject] = useState(team);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    if (name.replace(/\d/g, '') === 'result') {
-      const newResult = teamObject.result.slice(0, 7);
-      newResult[parseInt(name.replace(/\D/g, ''))] = parseInt(value);
+    if (name === 'result') {
+      const round = event.target.getAttribute('data-round');
+      const newResult = [...teamObject.result];
+      if (!round) return;
+      newResult[parseInt(round)] = parseInt(value);
       setTeamObject({ ...teamObject, result: newResult });
-    } else {
-      setTeamObject({ ...teamObject, [name]: value });
+      return;
     }
-    console.log(teamObject);
+    setTeamObject({ ...teamObject, [name]: value });
   };
-
-  const sum = teamObject.result.reduce((a, b) => a + b);
-
+  // const sum = teamObject.result.reduce((a, b) => a + b);
   return (
     <div className='add-team'>
       <TableInput
@@ -36,18 +38,20 @@ export const AddTeam = () => {
         onChange={handleChange}
         value={teamObject.name}
       />
+
       {teamObject.result.map((score, round) => (
         <TableInput
           required
           key={round}
           width='30px'
-          name={`result${round}`}
+          name='result'
+          data-round={round}
           type='number'
           onChange={handleChange}
           value={score}
         />
       ))}
-      <div className='add-team__sum'>{sum}</div>
+      {/* <div className='add-team__sum'>{sum}</div> */}
       <TableInput
         required
         name='position'

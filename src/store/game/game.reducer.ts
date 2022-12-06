@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { addTeam, uploadGameSuccess, uploadGameFailed, addDate } from './game.action';
+import { uploadGameSuccess, uploadGameFailed, addDate, setTeams } from './game.action';
 import { Game } from './game.types';
 
 const INITIAL_STATE: Game = {
@@ -11,9 +11,10 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): Game => {
   if (addDate.match(action)) {
     return { ...state, date: action.payload };
   }
-  // if (addTeam.match(action) && state.date) {
-  //   return { ...state, teams: [action.payload] };
-  // }
+  if (setTeams.match(action) && state.date) {
+    console.log(action.payload);
+    return { ...state, teams: action.payload };
+  }
   if (uploadGameSuccess.match(action)) {
     return { ...state, date: '', teams: [] };
   }

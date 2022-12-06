@@ -1,10 +1,16 @@
 import { Game, GAME_ACTION_TYPES, Team } from './game.types';
 import { createAction, ActionWithPayload, Action, withMatcher } from '../../utils/reducer.utils';
 
+const defaultTeamObject: Team = {
+  name: '',
+  result: [0, 0, 0, 0, 0, 0],
+  position: 0,
+};
+
 // Types
 
 export type AddDate = ActionWithPayload<GAME_ACTION_TYPES.ADD_DATE, string>;
-// export type AddTeam = ActionWithPayload<GAME_ACTION_TYPES.ADD_TEAM, Team>;
+export type SetTeams = ActionWithPayload<GAME_ACTION_TYPES.SET_TEAMS, Team[]>;
 export type UploadGameStart = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_START, Game>;
 export type UploadGameSuccess = Action<GAME_ACTION_TYPES.UPLOAD_GAME_SUCCESS>;
 export type UploadGameFailed = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_FAILED, Error>;
@@ -14,10 +20,17 @@ export type UploadGameFailed = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_F
 export const addDate = withMatcher(
   (date: string): AddDate => createAction(GAME_ACTION_TYPES.ADD_DATE, date),
 );
-// export const addTeam = withMatcher(
-//   ({ name, result, position }: Team): AddTeam =>
-//     createAction(GAME_ACTION_TYPES.ADD_TEAM, { name, result, position }),
-// );
+// export const addTeam = (teams: Team[]) => {
+//   teams.push(JSON.parse(JSON.stringify(defaultTeamObject)));
+//   return setTeams(teams);
+// };
+export const addTeam = (teams: Team[]) => {
+  const newTeam: Team = JSON.parse(JSON.stringify(defaultTeamObject));
+  return setTeams([...teams, newTeam]);
+};
+export const setTeams = withMatcher(
+  (teams: Team[]): SetTeams => createAction(GAME_ACTION_TYPES.SET_TEAMS, teams),
+);
 // export const uploadGameStart = withMatcher(
 //   ({ date, teams }: Game): UploadGameStart =>
 //     createAction(GAME_ACTION_TYPES.UPLOAD_GAME_START, { date, teams }),
