@@ -26,7 +26,7 @@ export const AddTeam = ({ team, setTeamData, sortTeams }: AddTeamProps) => {
       const round = event.target.getAttribute('data-round');
       const newResult = [...team.result];
       if (!round) return;
-      newResult[parseInt(round)] = parseInt(value);
+      newResult[parseInt(round)] = isNaN(parseInt(value)) ? 0 : parseInt(value);
       team.sum = newResult.reduce((a, b) => a + b);
       setTeamData({ ...team, result: newResult });
       if (round === '5') sortTeams();

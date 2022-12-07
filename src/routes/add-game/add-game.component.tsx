@@ -35,7 +35,7 @@ export const AddGame = () => {
   };
   const sortTeams = () => {
     teams
-      .sort(function (a, b) {
+      .sort((a, b) => {
         return a.sum - b.sum;
       })
       .reverse();
