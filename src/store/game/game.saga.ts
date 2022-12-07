@@ -8,7 +8,6 @@ export function* uploadGame({ payload: { date, teams } }: UploadGameStart) {
     const userAuth = yield* call(getCurrentUser);
     if (!userAuth) return;
     const gameDate = date.slice(2).replace(/\D/g, '');
-
     yield* call(addGameDoc, gameDate, teams);
     yield* put(uploadGameSuccess());
   } catch (error) {

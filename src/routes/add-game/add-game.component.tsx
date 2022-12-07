@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
-import { addDate, addTeam, setTeams } from '~/store/game/game.action';
+import { addDate, addTeam, setTeams, uploadGameStart } from '~/store/game/game.action';
 import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
 
@@ -43,7 +43,7 @@ export const AddGame = () => {
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(date, teams);
+    dispatch(uploadGameStart(date, teams));
   };
   return (
     <div className='add-game'>

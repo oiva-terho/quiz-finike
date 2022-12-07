@@ -28,10 +28,10 @@ export const addTeam = (teams: Team[]) => {
 export const setTeams = withMatcher(
   (teams: Team[]): SetTeams => createAction(GAME_ACTION_TYPES.SET_TEAMS, teams),
 );
-// export const uploadGameStart = withMatcher(
-//   ({ date, teams }: Game): UploadGameStart =>
-//     createAction(GAME_ACTION_TYPES.UPLOAD_GAME_START, { date, teams }),
-// );
+export const uploadGameStart = withMatcher(
+  (date: string, teams: Team[]): UploadGameStart =>
+    createAction(GAME_ACTION_TYPES.UPLOAD_GAME_START, { date, teams }),
+);
 export const uploadGameSuccess = withMatcher(
   (): UploadGameSuccess => createAction(GAME_ACTION_TYPES.UPLOAD_GAME_SUCCESS),
 );
