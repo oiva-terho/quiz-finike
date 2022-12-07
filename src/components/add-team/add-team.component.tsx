@@ -5,60 +5,64 @@ import './add-team.styles.scss';
 
 type AddTeamProps = {
   team: Team;
+  setTeamData: (team: Team) => void;
+  sortTeams: () => void;
 };
-// const defaultTeamObject: Team = {
-//   name: '',
-//   result: [0, 0, 0, 0, 0, 0],
-//   position: 0,
-// };
-export const AddTeam = ({ team }: AddTeamProps) => {
-  const [teamObject, setTeamObject] = useState(team);
+
+const errMessage = {
+  noTeam: 'Fill team name',
+  tooLarge: 'Too large score',
+};
+
+export const AddTeam = ({ team, setTeamData, sortTeams }: AddTeamProps) => {
+  const [inputError, setInputError] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputError('');
     const { name, value } = event.target;
     if (name === 'result') {
+      if (!team.name) return setInputError(errMessage.noTeam);
+      if (+value > 20) return setInputError(errMessage.tooLarge);
       const round = event.target.getAttribute('data-round');
-      const newResult = [...teamObject.result];
+      const newResult = [...team.result];
       if (!round) return;
       newResult[parseInt(round)] = parseInt(value);
-      setTeamObject({ ...teamObject, result: newResult });
+      team.sum = newResult.reduce((a, b) => a + b);
+      setTeamData({ ...team, result: newResult });
+      if (round === '5') sortTeams();
       return;
     }
-    setTeamObject({ ...teamObject, [name]: value });
+    setTeamData({ ...team, [name]: value });
   };
-  // const sum = teamObject.result.reduce((a, b) => a + b);
   return (
-    <div className='add-team'>
-      <TableInput
-        required
-        className='add-team__team-name'
-        label='Team name'
-        name='name'
-        type='text'
-        onChange={handleChange}
-        value={teamObject.name}
-      />
-
-      {teamObject.result.map((score, round) => (
+    <>
+      <div className='add-team'>
         <TableInput
           required
-          key={round}
-          width='30px'
-          name='result'
-          data-round={round}
-          type='number'
+          className='add-team__team-name'
+          label='Team name'
+          name='name'
+          type='text'
           onChange={handleChange}
-          value={score}
+          value={team.name}
         />
-      ))}
-      {/* <div className='add-team__sum'>{sum}</div> */}
-      <TableInput
-        required
-        name='position'
-        type='number'
-        onChange={handleChange}
-        value={teamObject.position}
-      />
-    </div>
+
+        {team.result.map((score, round) => (
+          <TableInput
+            required
+            key={round}
+            width='30px'
+            name='result'
+            data-round={round}
+            type='number'
+            onChange={handleChange}
+            value={score}
+          />
+        ))}
+        <div className='add-team__sum'>{team.sum}</div>
+        <div className='add-team__sum'>{team.position}</div>
+      </div>
+      {<div>{inputError}</div>}
+    </>
   );
 };

@@ -13,5 +13,6 @@ export type Game = {
 export type Team = {
   name: string;
   result: Array<number>;
+  sum: number;
   position: number;
 };

@@ -12,7 +12,6 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): Game => {
     return { ...state, date: action.payload };
   }
   if (setTeams.match(action) && state.date) {
-    console.log(action.payload);
     return { ...state, teams: action.payload };
   }
   if (uploadGameSuccess.match(action)) {

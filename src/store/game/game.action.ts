@@ -4,6 +4,7 @@ import { createAction, ActionWithPayload, Action, withMatcher } from '../../util
 const defaultTeamObject: Team = {
   name: '',
   result: [0, 0, 0, 0, 0, 0],
+  sum: 0,
   position: 0,
 };
 
@@ -20,10 +21,6 @@ export type UploadGameFailed = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_F
 export const addDate = withMatcher(
   (date: string): AddDate => createAction(GAME_ACTION_TYPES.ADD_DATE, date),
 );
-// export const addTeam = (teams: Team[]) => {
-//   teams.push(JSON.parse(JSON.stringify(defaultTeamObject)));
-//   return setTeams(teams);
-// };
 export const addTeam = (teams: Team[]) => {
   const newTeam: Team = JSON.parse(JSON.stringify(defaultTeamObject));
   return setTeams([...teams, newTeam]);
