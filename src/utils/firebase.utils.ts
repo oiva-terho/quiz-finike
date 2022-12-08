@@ -20,6 +20,7 @@ import {
   collection,
   getDocs,
   query,
+  deleteDoc,
 } from 'firebase/firestore';
 
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
@@ -127,13 +128,21 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
 
 export const addGameDoc = async <T extends Team>(date: string, teams: T[]) => {
   try {
-    const userDocRef = doc(db, 'games', date);
-    await setDoc(userDocRef, { teams }, { merge: true });
+    const gameDocRef = doc(db, 'games', date);
+    await setDoc(gameDocRef, { teams }, { merge: true });
   } catch (error) {
     console.log('error adding game', error);
   }
 };
 
+export const removeGame = async (date: string) => {
+  try {
+    const refToRemove = doc(db, 'games', date);
+    await deleteDoc(refToRemove);
+  } catch (error) {
+    console.log('error removing game', error);
+  }
+};
 export const getGameDoc = async (date: string) => {
   const gameRef = doc(db, 'games', date);
   const snapshot = await getDoc(gameRef);

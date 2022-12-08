@@ -6,9 +6,16 @@ import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
 import { TableInput } from '~/components/table-input/table-input.component';
-import { addTeam, setTeams, clearGame, uploadGameStart } from '~/store/game/game.action';
+import {
+  addTeam,
+  setTeams,
+  clearGame,
+  uploadGameStart,
+  fetchGamesListStart,
+} from '~/store/game/game.action';
 import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
+import { removeGame } from '~/utils/firebase.utils';
 
 import './add-game.styles.scss';
 
@@ -48,6 +55,11 @@ export const AddGame = () => {
     dispatch(clearGame());
     setInputError('');
   };
+  const handleRemoveGame = () => {
+    removeGame(date.slice(2).replace(/\D/g, ''));
+    clearTable();
+    dispatch(fetchGamesListStart());
+  };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!teams.length) return setInputError(errMessage.noTeams);
@@ -73,6 +85,9 @@ export const AddGame = () => {
             </Button>
           </div>
           <Button type='submit'>Add game to DB</Button>
+          <Button type='button' onClick={handleRemoveGame}>
+            Remove from DB
+          </Button>
           <Link to='/games'>
             <Button type='button' onClick={clearTable}>
               Return to games

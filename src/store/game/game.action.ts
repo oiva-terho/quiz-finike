@@ -13,6 +13,7 @@ const defaultTeamObject: Team = {
 export type AddDate = ActionWithPayload<GAME_ACTION_TYPES.ADD_DATE, string>;
 export type SetTeams = ActionWithPayload<GAME_ACTION_TYPES.SET_TEAMS, Team[]>;
 export type ClearGame = Action<GAME_ACTION_TYPES.CLEAR_GAME>;
+export type FetchGamesListStart = Action<GAME_ACTION_TYPES.FETCH_GAMES_LIST_START>;
 export type FetchGamesListSuccess = ActionWithPayload<
   GAME_ACTION_TYPES.FETCH_GAMES_LIST_SUCCESS,
   string[]
@@ -47,6 +48,9 @@ export const setTeams = withMatcher(
   (teams: Team[]): SetTeams => createAction(GAME_ACTION_TYPES.SET_TEAMS, teams),
 );
 export const clearGame = withMatcher(() => createAction(GAME_ACTION_TYPES.CLEAR_GAME));
+export const fetchGamesListStart = withMatcher(
+  (): FetchGamesListStart => createAction(GAME_ACTION_TYPES.FETCH_GAMES_LIST_START),
+);
 export const fetchGamesListSuccess = withMatcher(
   (gamesList: string[]): FetchGamesListSuccess =>
     createAction(GAME_ACTION_TYPES.FETCH_GAMES_LIST_SUCCESS, gamesList),

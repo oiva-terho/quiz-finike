@@ -42,7 +42,9 @@ export function* uploadGame({ payload: { date, teams } }: UploadGameStart) {
     yield* put(uploadGameFailed(error as Error));
   }
 }
-
+export function* onFetchGamesList() {
+  yield* takeLatest(GAME_ACTION_TYPES.FETCH_GAMES_LIST_START, fetchGamesListStartAsync);
+}
 export function* onFetchGame() {
   yield* takeLatest(GAME_ACTION_TYPES.FETCH_GAME_START, fetchGameStartAsync);
 }
@@ -51,5 +53,5 @@ export function* onUploadGameStart() {
 }
 
 export function* gameSagas() {
-  yield* all([call(onFetchGame), call(onUploadGameStart)]);
+  yield* all([call(onFetchGamesList), call(onFetchGame), call(onUploadGameStart)]);
 }
