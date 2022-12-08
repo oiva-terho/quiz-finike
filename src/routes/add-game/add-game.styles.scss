@@ -1,40 +1,21 @@
 .add-game {
+  margin: 0 7%;
   text-align: center;
-  &__header {
+  form {
     display: grid;
-    grid-template-columns: 3fr 2fr repeat(8, 1fr);
-    align-items: center;
-    width: 85%;
-    margin: 0 auto;
-    & span {
-      text-align: center;
-      &:first-of-type {
-        text-align: right;
-      }
-    }
+    grid-template-columns: 1fr 9fr;
   }
-  &__date {
-    display: block;
-    margin: 0 auto;
-    width: 200px;
+  &__table {
+    grid-column: 2 /3;
   }
   &__teams {
     position: relative;
     margin-top: 0.5rem;
-    padding-bottom: 2rem;
     min-height: 12rem;
   }
   &__controls {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%);
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    & input {
+    input {
       width: 3rem;
-      text-align: right !important;
     }
   }
 }

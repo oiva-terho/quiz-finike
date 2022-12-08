@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
+import { GameHeader } from '~/components/game-header/game-header.component';
 import { TableInput } from '~/components/table-input/table-input.component';
-import { addDate, addTeam, setTeams, clearGame, uploadGameStart } from '~/store/game/game.action';
+import { addTeam, setTeams, clearGame, uploadGameStart } from '~/store/game/game.action';
 import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
 
@@ -15,8 +16,6 @@ const errMessage = {
   noDate: 'Choose date first',
   noTeams: 'Fill in teams results',
 };
-const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
-rounds.push('Total', 'Place');
 
 export const AddGame = () => {
   const dispatch = useDispatch();
@@ -24,11 +23,7 @@ export const AddGame = () => {
   const teams = useSelector(selectGameTeams);
   const [inputError, setInputError] = useState('');
   const [rowQuantity, setRowQuantity] = useState(1);
-  console.log(date);
-  const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(addDate(event.target.value));
-    setInputError('');
-  };
+
   const rowQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRowQuantity(+event.target.value);
   };
@@ -60,28 +55,9 @@ export const AddGame = () => {
   };
   return (
     <div className='add-game'>
-      Add a game
+      <h2>Add a game</h2>
       <form onSubmit={handleSubmit}>
-        <div className='add-game__header'>
-          <span>FinikeQuiz | </span>
-          <TableInput
-            className='add-game__date'
-            required
-            name='date'
-            type='date'
-            onChange={handleChangeDate}
-            value={date}
-          />
-          {rounds.map((n, i) => (
-            <span key={i}>{n}</span>
-          ))}
-        </div>
-        {inputError ? <span>{inputError}</span> : null}
-        <div className='add-game__teams'>
-          {teams.map((team, id) => {
-            team.position = id + 1;
-            return <AddTeam key={id} team={team} setTeamData={setTeamData} sortTeams={sortTeams} />;
-          })}
+        <div>
           <div className='add-game__controls'>
             <TableInput
               name='row quantity'
@@ -96,11 +72,25 @@ export const AddGame = () => {
               Clear table
             </Button>
           </div>
+          <Button type='submit'>Add game to DB</Button>
+          <Link to='/games'>
+            <Button type='button' onClick={clearTable}>
+              Return to games
+            </Button>
+          </Link>
         </div>
-        <Button type='submit'>Add game to DB</Button>
-        <Link to='/games'>
-          <Button type='button'>Return to games</Button>
-        </Link>
+        <div className='add-game__table'>
+          <GameHeader />
+          {inputError ? <span>{inputError}</span> : null}
+          <div className='add-game__teams'>
+            {teams.map((team, id) => {
+              team.position = id + 1;
+              return (
+                <AddTeam key={id} team={team} setTeamData={setTeamData} sortTeams={sortTeams} />
+              );
+            })}
+          </div>
+        </div>
       </form>
     </div>
   );

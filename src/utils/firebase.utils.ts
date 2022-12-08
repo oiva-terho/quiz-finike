@@ -137,6 +137,7 @@ export const addGameDoc = async <T extends Team>(date: string, teams: T[]) => {
 export const getGameDoc = async (date: string) => {
   const gameRef = doc(db, 'games', date);
   const snapshot = await getDoc(gameRef);
+  // @ts-ignore next-line
   const { teams } = snapshot.data();
   return teams;
 };
