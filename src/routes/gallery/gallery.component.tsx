@@ -31,7 +31,7 @@ export const Gallery = () => {
   const [start, setStart] = useState(0);
 
   const height = 400;
-  const visibleRows = Math.round(window.innerHeight / height);
+  const visibleRows = Math.round(window.innerHeight / height + 1);
   const photosInRow = Math.ceil(window.innerWidth / 639);
 
   const getTopHeight = () => height * start;

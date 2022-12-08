@@ -1,0 +1,22 @@
+.table-input {
+  position: relative;
+  & > input {
+    width: 99%;
+    border: none;
+  }
+  & > input[type='date'] {
+    text-align: left;
+  }
+  & > input[type='number'] {
+    text-align: center;
+  }
+  & > input[type='text'] {
+    text-align: right;
+  }
+  & > label {
+    position: absolute;
+    left: 5px;
+    top: 0;
+    color: #999;
+  }
+}

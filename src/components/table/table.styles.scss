@@ -1,0 +1,8 @@
+.table {
+  display: grid;
+  grid-template-columns: 4.5fr repeat(8, 1fr);
+  list-style: none;
+  li {
+    display: block;
+  }
+}
