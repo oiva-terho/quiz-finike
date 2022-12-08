@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
-import { FormInput } from '~/components/form-input/form-input.component';
 import { TableInput } from '~/components/table-input/table-input.component';
 import { addDate, addTeam, setTeams, clearGame, uploadGameStart } from '~/store/game/game.action';
 import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
@@ -14,6 +13,7 @@ import './add-game.styles.scss';
 
 const errMessage = {
   noDate: 'Choose date first',
+  noTeams: 'Fill in teams results',
 };
 const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
 rounds.push('Total', 'Place');
@@ -24,13 +24,13 @@ export const AddGame = () => {
   const teams = useSelector(selectGameTeams);
   const [inputError, setInputError] = useState('');
   const [rowQuantity, setRowQuantity] = useState(1);
-  const rowQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowQuantity(+event.target.value);
-  };
-
+  console.log(date);
   const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(addDate(event.target.value));
     setInputError('');
+  };
+  const rowQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowQuantity(+event.target.value);
   };
   const addRow = () => {
     if (!date) setInputError(errMessage.noDate);
@@ -51,9 +51,11 @@ export const AddGame = () => {
   };
   const clearTable = () => {
     dispatch(clearGame());
+    setInputError('');
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!teams.length) return setInputError(errMessage.noTeams);
     dispatch(uploadGameStart(date, teams));
   };
   return (

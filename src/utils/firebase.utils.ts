@@ -23,7 +23,7 @@ import {
 } from 'firebase/firestore';
 
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import { Game, Team } from '~/store/game/game.types';
+import { Team } from '~/store/game/game.types';
 
 // Firebase config
 
@@ -130,17 +130,23 @@ export const addGameDoc = async <T extends Team>(date: string, teams: T[]) => {
     const userDocRef = doc(db, 'games', date);
     await setDoc(userDocRef, { teams }, { merge: true });
   } catch (error) {
-    console.log('error adding team name', error);
+    console.log('error adding game', error);
   }
 };
 
-export const getGameDoc = async (): Promise<Game[]> => {
-  const gameRef = collection(db, 'categories');
-  const querySnapshot = await getDocs(query(gameRef));
-  const gameMap = querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as Game);
-  return gameMap;
+export const getGameDoc = async (date: string) => {
+  const gameRef = doc(db, 'games', date);
+  const snapshot = await getDoc(gameRef);
+  const { teams } = snapshot.data();
+  return teams;
 };
 
+export const getGamesList = async (): Promise<string[]> => {
+  const gameRef = collection(db, 'games');
+  const querySnapshot = await getDocs(query(gameRef));
+  const gameMap = querySnapshot.docs.map((docSnapshot) => docSnapshot.id);
+  return gameMap;
+};
 // Firebase storage
 
 const storage = getStorage(firebaseApp);
