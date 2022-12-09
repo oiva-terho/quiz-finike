@@ -2,12 +2,13 @@
 
 .form-input {
   position: relative;
-  margin: 16px 0;
+  margin: 16px auto;
+  width: 200px;
   & > label {
     font-size: 1rem;
     pointer-events: none;
     position: absolute;
-    left: 5px;
+    left: 7px;
     color: $main-dark;
   }
   & > input {

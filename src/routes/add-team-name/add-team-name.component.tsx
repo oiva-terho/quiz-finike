@@ -6,10 +6,13 @@ import { FormInput } from '~/components/form-input/form-input.component';
 import { addTeamName } from '~/store/user/user.action';
 import { selectCurrentUser } from '~/store/user/user.selector';
 
-export const TeamName = () => {
+export const AddTeamName = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const [teamName, setTeamName] = useState('');
+
+  if (!currentUser) return <Navigate to='/' />;
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(addTeamName(teamName));
@@ -21,7 +24,7 @@ export const TeamName = () => {
   };
 
   return (
-    <div>
+    <div className='sign-in'>
       <form onSubmit={handleSubmit}>
         <FormInput
           required
@@ -31,9 +34,13 @@ export const TeamName = () => {
           onChange={handleChange}
           value={teamName}
         />
-        <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
-          Enter
-        </Button>
+        {teamName.toLocaleLowerCase() === 'admin' ? (
+          <h2>Unacceptable team name</h2>
+        ) : (
+          <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
+            Enter
+          </Button>
+        )}
       </form>
       {currentUser?.teamName && <Navigate to='/' />}
     </div>

@@ -67,7 +67,7 @@ export const SignUpForm = () => {
   } else checkUser = 'no user';
 
   return (
-    <div>
+    <div className='sign-in'>
       <h2>Sign up with your email and password</h2>
       <form onSubmit={handleSubmit}>
         <FormInput
@@ -98,7 +98,7 @@ export const SignUpForm = () => {
         <Button type='submit'>Sign Up</Button>
       </form>
       {checkUser === 'has team' && <Navigate to='/' />}
-      {checkUser === 'no team' && <Navigate to='/team' />}
+      {checkUser === 'no team' && <Navigate to='/add-team' />}
     </div>
   );
 };

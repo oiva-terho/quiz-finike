@@ -8,24 +8,32 @@ import './game-header.styles.scss';
 const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
 rounds.push('Total', 'Place');
 
-export const GameHeader = () => {
+type GameHeaderProps = {
+  passive?: boolean;
+  clearErr?: (value: React.SetStateAction<string>) => void;
+};
+export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
   const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(addDate(event.target.value));
-    // setInputError('');
+    clearErr && clearErr('');
   };
   return (
     <div className='game-header'>
-      <span>FinikeQuiz | </span>
-      <TableInput
-        className='add-game__date'
-        required
-        name='date'
-        type='date'
-        onChange={handleChangeDate}
-        value={date}
-      />
+      <span>FinikeQuiz |&nbsp;</span>
+      {passive ? (
+        <span>{date.split('-').reverse().join('.')}</span>
+      ) : (
+        <TableInput
+          className='add-game__date'
+          required
+          name='date'
+          type='date'
+          onChange={handleChangeDate}
+          value={date}
+        />
+      )}
       {rounds.map((n, i) => (
         <span key={i}>{n}</span>
       ))}
