@@ -2,10 +2,10 @@
 
 .button {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   min-width: 100px;
   text-decoration: none;
-  color: $main-dark;
+  color: $font-main;
   background-color: transparent;
   border: none;
   border-radius: 6px;
@@ -20,10 +20,10 @@
     border-radius: 6px;
   }
   &-apply {
-    color: $main-light;
+    color: $bg-light;
     background-color: $marker;
     &:hover {
-      background-color: $main-light;
+      background-color: $bg-light;
     }
   }
 }

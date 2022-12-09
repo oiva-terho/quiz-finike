@@ -1,0 +1,20 @@
+$breakpoints: (
+  'mob': 320px,
+  'mobL': 425px,
+  'tab': 768px,
+  'laptop': 1024px,
+  'laptopL': 1440px,
+  '4k': 2560px,
+);
+
+@mixin bp($key1, $type: up) {
+  $bp1: map-get($breakpoints, #{$key1});
+
+  @if ($bp1 == null) {
+    @warn 'Breakpoint mixin supports: mob, mobL, tab, laptop, laptopL, 4k';
+  } @else {
+    @media only screen and (min-width: $bp1) {
+      @content;
+    }
+  }
+}

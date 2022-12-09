@@ -1,8 +1,19 @@
 .table {
   display: grid;
-  grid-template-columns: 4.5fr repeat(8, 1fr);
+  grid-template-columns: 4.5fr repeat(7, 1fr) 0.5fr;
   list-style: none;
+  align-items: center;
   li {
     display: block;
+    font-weight: 700;
+    font-size: 1.5rem;
+    &:first-of-type {
+      text-align: right;
+      padding-right: 1rem;
+    }
+    &.table__position {
+      font-weight: 400;
+      font-size: 1rem;
+    }
   }
 }

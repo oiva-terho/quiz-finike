@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '/src/styles/variables.scss';
 
 .form-input {
   position: relative;
@@ -9,13 +9,13 @@
     pointer-events: none;
     position: absolute;
     left: 7px;
-    color: $main-dark;
+    color: $font-main;
   }
   & > input {
     font-size: 1rem;
-    background-color: $main-light;
+    background-color: $bg-light;
     border: none;
-    border-bottom: 1px solid $main-dark;
+    border-bottom: 1px solid $font-grey;
     border-radius: 6px;
   }
 }

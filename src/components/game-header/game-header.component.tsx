@@ -6,7 +6,7 @@ import { TableInput } from '../table-input/table-input.component';
 import './game-header.styles.scss';
 
 const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
-rounds.push('Total', 'Place');
+rounds.push('Total', '');
 
 type GameHeaderProps = {
   passive?: boolean;

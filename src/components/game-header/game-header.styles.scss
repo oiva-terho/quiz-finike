@@ -1,9 +1,13 @@
+@import '/src/styles/variables.scss';
 .game-header {
   display: grid;
-  grid-template-columns: 3fr 2fr repeat(8, 1fr);
+  grid-template-columns: 3fr 2fr repeat(7, 1fr) 0.5fr;
   align-items: center;
   span {
     text-align: center;
+    color: $font-grey;
+    font-weight: 700;
+    font-size: 1rem;
     &:first-of-type {
       text-align: right;
     }
