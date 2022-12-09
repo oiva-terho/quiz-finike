@@ -7,6 +7,8 @@ import { FormInput } from '~/components/form-input/form-input.component';
 import { selectCurrentUser, selectUserError } from '~/store/user/user.selector';
 import { clearError, emailSignInStart, googleSignInStart } from '../../store/user/user.action';
 
+import './sign-in.styles.scss';
+
 const defaultFormFields = {
   email: '',
   password: '',
@@ -50,7 +52,7 @@ export const SignInForm = () => {
   } else checkUser = 'no user';
 
   return (
-    <div>
+    <div className='sign-in'>
       <h2>Sign in</h2>
       <form onSubmit={handleSubmit}>
         <FormInput
@@ -83,7 +85,7 @@ export const SignInForm = () => {
         <Button>Sign Up</Button>
       </Link>
       {checkUser === 'has team' && <Navigate to='/' />}
-      {checkUser === 'no team' && <Navigate to='/team' />}
+      {checkUser === 'no team' && <Navigate to='/add-team' />}
     </div>
   );
 };

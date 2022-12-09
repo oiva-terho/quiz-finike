@@ -1,17 +1,21 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '~/components/button/button.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
+import { Nouser } from '~/components/nouser/nouser.component';
 import { Table } from '~/components/table/table.component';
 import { clearGame, fetchGameStart } from '~/store/game/game.action';
 import { selectGamesList, selectGameTeams } from '~/store/game/game.selector';
+import { selectCurrentUser } from '~/store/user/user.selector';
 import './games.styles.scss';
 
 export const Games = () => {
   const dispatch = useDispatch();
   const gamesList = useSelector(selectGamesList);
   const teams = useSelector(selectGameTeams);
+  const currentUser = useSelector(selectCurrentUser);
+  if (!currentUser) return <Nouser location='games' />;
+
   const openGame = (date: string) => {
     dispatch(fetchGameStart(date));
   };
@@ -29,15 +33,17 @@ export const Games = () => {
           : null}
       </div>
       <div className='games__table'>
-        <GameHeader />
+        <GameHeader passive />
         {teams.map((team) => (
           <Table key={team.name} team={team} />
         ))}
       </div>
-      <Link to='/games/add'>
-        <Button>Edit game</Button>
-        <Button onClick={() => dispatch(clearGame())}>Add a game</Button>
-      </Link>
+      {currentUser.teamName === 'Admin' ? (
+        <Link to='/games/add'>
+          <Button>Edit game</Button>
+          <Button onClick={() => dispatch(clearGame())}>Add a game</Button>
+        </Link>
+      ) : null}
     </div>
   );
 };

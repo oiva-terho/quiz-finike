@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
@@ -15,6 +15,7 @@ import {
 } from '~/store/game/game.action';
 import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
+import { selectCurrentUser } from '~/store/user/user.selector';
 import { removeGame } from '~/utils/firebase.utils';
 
 import './add-game.styles.scss';
@@ -28,8 +29,12 @@ export const AddGame = () => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
+  const currentUser = useSelector(selectCurrentUser);
+
   const [inputError, setInputError] = useState('');
   const [rowQuantity, setRowQuantity] = useState(1);
+
+  if (!currentUser || currentUser.teamName !== 'Admin') return <Navigate to='/games' />;
 
   const rowQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRowQuantity(+event.target.value);
@@ -95,7 +100,7 @@ export const AddGame = () => {
           </Link>
         </div>
         <div className='add-game__table'>
-          <GameHeader />
+          <GameHeader clearErr={setInputError} />
           {inputError ? <span>{inputError}</span> : null}
           <div className='add-game__teams'>
             {teams.map((team, id) => {

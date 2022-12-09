@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '~/components/button/button.component';
+import { Nouser } from '~/components/nouser/nouser.component';
 import { Photo } from '~/components/photo/photo.component';
 import { Spinner } from '~/components/spinner/spinner.component';
 import { fetchPhotoLinksStart } from '~/store/gallery/gallery.action';
@@ -21,6 +22,7 @@ export const Gallery = () => {
   const foldersList = useSelector(selectFolders);
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
+
   const openDate = (date: string) => {
     dispatch(fetchPhotoLinksStart(date));
     gridRef.current.scrollTop = 0;
@@ -56,18 +58,15 @@ export const Gallery = () => {
     };
   });
 
+  if (!currentUser) return <Nouser location='gallery' />;
   return (
     <>
       <div className='gallery__dates'>
-        {currentUser ? (
-          foldersList.map((folder) => (
-            <Button key={folder} onClick={() => openDate(folder)}>
-              {`${folder.slice(5, 7)}.${folder.slice(3, 5)}.20${folder.slice(1, 3)}`}
-            </Button>
-          ))
-        ) : (
-          <span>Log in to watch the gallery</span>
-        )}
+        {foldersList.map((folder) => (
+          <Button key={folder} onClick={() => openDate(folder)}>
+            {`${folder.slice(5, 7)}.${folder.slice(3, 5)}.20${folder.slice(1, 3)}`}
+          </Button>
+        ))}
       </div>
       <div
         className='gallery__grid'
