@@ -23,7 +23,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
     <div className='game-header'>
       <span>FinikeQuiz |&nbsp;</span>
       {passive ? (
-        <span>{date.split('-').reverse().join('.')}</span>
+        <b>{date.split('-').reverse().join('.')}</b>
       ) : (
         <TableInput
           className='add-game__date'

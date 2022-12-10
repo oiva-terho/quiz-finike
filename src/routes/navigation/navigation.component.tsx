@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
 import { Button } from '~/components/button/button.component';
+import { clearGame } from '~/store/game/game.action';
 import { signOutStart } from '~/store/user/user.action';
 
 import { selectCurrentUser } from '../../store/user/user.selector';
@@ -19,7 +20,7 @@ export const Navigation = () => {
         </Link>
         <div className='navigation__links'>
           <Link to='/games'>
-            <Button>Games</Button>
+            <Button onClick={() => dispatch(clearGame())}>Games</Button>
           </Link>
           <Link to='/gallery'>
             <Button>Gallery</Button>
