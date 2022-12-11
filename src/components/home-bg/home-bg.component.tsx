@@ -5,7 +5,7 @@ import './home-bg.styles.scss';
 //preload bg images
 for (let i = 1; i < 9; i++) {
   const img = new Image();
-  img.src = `/hero${i}.webp`;
+  img.src = `/src/assets/hero${i}.webp`;
 }
 
 export const HomeBg = () => {
@@ -18,5 +18,7 @@ export const HomeBg = () => {
     return () => clearInterval(bgChange);
   });
 
-  return <div className='home-bg' style={{ backgroundImage: `url('/hero${bgImg}.webp')` }} />;
+  return (
+    <div className='home-bg' style={{ backgroundImage: `url('/src/assets/hero${bgImg}.webp')` }} />
+  );
 };

@@ -4,7 +4,8 @@ import { Button } from '~/components/button/button.component';
 import { clearGame } from '~/store/game/game.action';
 import { signOutStart } from '~/store/user/user.action';
 
-import { selectCurrentUser } from '../../store/user/user.selector';
+import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
+import { selectCurrentUser } from '~/store/user/user.selector';
 
 import './navigation.styles.scss';
 
@@ -16,7 +17,9 @@ export const Navigation = () => {
     <>
       <div className='navigation'>
         <Link to='/'>
-          <Button>Home</Button>
+          <Button>
+            <QuizLogo />
+          </Button>
         </Link>
         <div className='navigation__links'>
           <Link to='/games'>
