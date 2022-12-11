@@ -13,9 +13,10 @@ export const Heroblock = () => {
   const [tagline, setTagline] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
+    const taglineChange = setInterval(() => {
       setTagline(tagline === 3 ? 0 : tagline + 1);
     }, 4000);
+    return () => clearInterval(taglineChange);
   });
   return (
     <div className='home-hero'>

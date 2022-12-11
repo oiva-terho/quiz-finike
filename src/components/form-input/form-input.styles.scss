@@ -9,13 +9,13 @@
     pointer-events: none;
     position: absolute;
     left: 7px;
-    color: $font-main;
+    color: $color-font-primary;
   }
   & > input {
     font-size: 1rem;
-    background-color: $bg-light;
+    background-color: $color-bg-light;
     border: none;
-    border-bottom: 1px solid $font-grey;
+    border-bottom: 1px solid $color-font-secondary;
     border-radius: 6px;
   }
 }

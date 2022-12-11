@@ -12,9 +12,10 @@ export const HomeBg = () => {
   const [bgImg, setBgImg] = useState(1);
 
   useEffect(() => {
-    setTimeout(() => {
+    const bgChange = setInterval(() => {
       setBgImg(bgImg === 8 ? 1 : bgImg + 1);
     }, 10000);
+    return () => clearInterval(bgChange);
   });
 
   return <div className='home-bg' style={{ backgroundImage: `url('/hero${bgImg}.webp')` }} />;
