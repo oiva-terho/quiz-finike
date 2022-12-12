@@ -22,7 +22,7 @@ export const HomeBg = () => {
           className={adaptiveClassName({ counter: bgImg, key: i, maxQuantity: bgQuantity.length })}
           key={i}
           alt='background'
-          src={`/src/assets/hero${i + 1}.webp`}
+          src={`/public/assets/hero${i + 1}.webp`}
         />
       ))}
     </div>
