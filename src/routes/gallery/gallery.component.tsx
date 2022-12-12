@@ -64,7 +64,7 @@ export const Gallery = () => {
       <div className='gallery__dates'>
         {foldersList.map((folder) => (
           <Button key={folder} onClick={() => openDate(folder)}>
-            {`${folder.slice(5, 7)}.${folder.slice(3, 5)}.20${folder.slice(1, 3)}`}
+            {`${folder.slice(4, 6)}.${folder.slice(2, 4)}.20${folder.slice(0, 2)}`}
           </Button>
         ))}
       </div>

@@ -14,6 +14,7 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "declaration": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "emitDecoratorMetadata": true,
@@ -26,6 +27,6 @@
       "~/*": ["src/*"]
     }
   },
-  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx", "src", "src/custom.d.ts"],
   "exclude": ["node_modules"]
 }

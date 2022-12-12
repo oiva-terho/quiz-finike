@@ -1,3 +1,12 @@
+import { HomeBg } from '~/components/home-bg/home-bg.component';
+import { Heroblock } from '~/components/home-hero/home-hero.component';
+
 export const Home = () => {
-  return <div>Home component</div>;
+  return (
+    <div className='home'>
+      <HomeBg />
+      <Heroblock />
+      <h2>...</h2>
+    </div>
+  );
 };

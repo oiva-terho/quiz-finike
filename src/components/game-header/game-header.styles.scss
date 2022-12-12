@@ -1,14 +1,20 @@
+@import '/src/styles/variables.scss';
 .game-header {
   display: grid;
-  grid-template-columns: 3fr 2fr repeat(8, 1fr);
+  grid-template-columns: 3fr 2fr repeat(7, 1fr) 0.5fr;
   align-items: center;
-  span {
+  span,
+  b {
     text-align: center;
-    &:first-of-type {
-      text-align: right;
-    }
-    &:nth-of-type(2) {
-      text-align: left;
-    }
+    color: $color-font-secondary;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  span:first-of-type {
+    text-align: right;
+  }
+  b {
+    display: block;
+    text-align: left;
   }
 }

@@ -2,17 +2,17 @@
 
 .button {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   min-width: 100px;
   text-decoration: none;
-  color: $main-dark;
+  color: $color-font-primary;
   background-color: transparent;
   border: none;
   border-radius: 6px;
   padding: 6px;
   &:hover {
     cursor: pointer;
-    color: $marker;
+    color: $color-marker;
   }
   &-google {
     color: #fff;
@@ -20,10 +20,10 @@
     border-radius: 6px;
   }
   &-apply {
-    color: $main-light;
-    background-color: $marker;
+    color: $color-bg-light;
+    background-color: $color-marker;
     &:hover {
-      background-color: $main-light;
+      background-color: $color-bg-light;
     }
   }
 }

@@ -6,7 +6,7 @@ import { TableInput } from '../table-input/table-input.component';
 import './game-header.styles.scss';
 
 const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
-rounds.push('Total', 'Place');
+rounds.push('Total', '');
 
 type GameHeaderProps = {
   passive?: boolean;
@@ -23,7 +23,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
     <div className='game-header'>
       <span>FinikeQuiz |&nbsp;</span>
       {passive ? (
-        <span>{date.split('-').reverse().join('.')}</span>
+        <b>{date.split('-').reverse().join('.')}</b>
       ) : (
         <TableInput
           className='add-game__date'

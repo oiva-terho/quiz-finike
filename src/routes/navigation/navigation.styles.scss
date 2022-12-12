@@ -1,21 +1,78 @@
+@import '/src/styles/breakpoints';
+
 .navigation {
-  height: 70px;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: repeat(5, 20%);
+  grid-auto-rows: 35px;
+  grid-template-areas:
+    'h h t t t'
+    'l l l l l';
+  overflow: clip;
+  @include bp(mobL) {
+    grid-template-columns: 25% 75%;
+    grid-template-areas:
+      't t'
+      'h l';
+  }
+  @include bp(tab) {
+    grid-auto-rows: 45px;
+    grid-template-columns: 15% 50% 35%;
+    grid-template-areas: 'h t l';
+  }
+  @include bp(laptop) {
+    grid-auto-rows: 60px;
+    grid-template-columns: 13% 57% 30%;
+  }
+  @include bp(4k) {
+    grid-auto-rows: 100px;
+  }
+  &__home {
+    grid-area: h;
+    justify-self: start;
+    background-color: transparent;
+    border: none;
+    margin-left: 1rem;
+    overflow: clip;
+    & > svg {
+      height: 20px;
+      cursor: pointer;
+      transform: translate(0, 20%);
+      @include bp(laptop) {
+        height: 30px;
+      }
+      @include bp(4k) {
+        height: 70px;
+      }
+    }
+  }
+  &__team {
+    grid-area: t;
+    text-align: left;
+    font-size: 0.7rem;
+    @include bp(mobL) {
+      text-align: center;
+    }
+    @include bp(laptop) {
+      font-size: 1rem;
+    }
+    @include bp(4k) {
+      font-size: 2rem;
+    }
+  }
   &__links {
+    grid-area: l;
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
-}
-@media (min-width: 639px) {
-  .navigation {
-    grid-template-columns: 2fr 3fr;
-  }
-}
-@media (min-width: 1279px) {
-  .navigation {
-    grid-template-columns: 3fr 2fr;
+  & button {
+    font-size: 0.8rem;
+    @include bp(laptop) {
+      font-size: 1rem;
+    }
+    @include bp(4k) {
+      font-size: 2rem;
+    }
   }
 }

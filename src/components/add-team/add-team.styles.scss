@@ -1,6 +1,6 @@
 .add-team {
   display: grid;
-  grid-template-columns: 5fr repeat(8, 1fr);
+  grid-template-columns: 5fr repeat(7, 1fr) 0.5fr;
   align-items: center;
-  margin: 1rem auto;
+  margin: auto;
 }

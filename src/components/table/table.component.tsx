@@ -14,7 +14,7 @@ export const Table = ({ team }: TableProps) => {
         <li key={n}>{round}</li>
       ))}
       <li>{team.sum}</li>
-      <li>{team.position}</li>
+      <li className='table__position'>{team.position}</li>
     </ul>
   );
 };

@@ -162,13 +162,13 @@ export const getGamesList = async (): Promise<string[]> => {
 const storage = getStorage(firebaseApp);
 
 export const getQuizDates = async () => {
-  const storageRef = ref(storage);
+  const storageRef = ref(storage, 'foto');
   const res = await listAll(storageRef);
   return await Promise.all(res.prefixes.map((ref) => ref.name));
 };
 
 export const getPhotoLinks = async (date: string) => {
-  const folderRef = ref(storage, date);
+  const folderRef = ref(storage, `foto/${date}`);
   const res = await listAll(folderRef);
   return await Promise.all(
     res.items.map(async (itemRef) => {

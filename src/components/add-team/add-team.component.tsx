@@ -22,7 +22,7 @@ export const AddTeam = ({ team, setTeamData, sortTeams }: AddTeamProps) => {
     const { name, value } = event.target;
     if (name === 'result') {
       if (!team.name) return setInputError(errMessage.noTeam);
-      if (+value > 20) return setInputError(errMessage.tooLarge);
+      if (+value > 30) return setInputError(errMessage.tooLarge);
       const round = event.target.getAttribute('data-round');
       const newResult = [...team.result];
       if (!round) return;
