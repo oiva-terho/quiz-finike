@@ -40,7 +40,7 @@
     margin: 0 auto;
     justify-self: center;
     width: 200px;
-    margin-top: 30vh;
+    padding-top: 30vh;
     @include bp(mobL) {
       width: 300px;
     }
