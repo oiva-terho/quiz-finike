@@ -1,29 +1,88 @@
+@import '/src/styles/breakpoints';
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translate3d(0, 100%, 0);
+    transform: translateY(100%);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateY(0);
+  }
+}
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
   }
 }
 
 .home-hero {
   text-align: center;
   height: calc(100vh - 70px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  & > h1 {
-    font-size: 4rem;
-    font-weight: 700;
+  @include bp(tab) {
+    height: calc(100vh - 45px);
+  }
+  @include bp(laptop) {
+    height: calc(100vh - 60px);
+  }
+  @include bp(4k) {
+    height: calc(100vh - 100px);
+  }
+  & > svg {
+    display: block;
+    margin: 0 auto;
+    justify-self: center;
+    width: 200px;
+    margin-top: 30vh;
+    @include bp(mobL) {
+      width: 300px;
+    }
+    @include bp(tab) {
+      width: 400px;
+    }
+    @include bp(laptop) {
+      width: 550px;
+    }
+    @include bp(laptopL) {
+      width: 800px;
+    }
+    @include bp(4k) {
+      width: 1600px;
+    }
   }
   & > p {
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 400;
-    animation-name: fadeInUp;
+    margin: 1rem 2rem;
+    width: calc(100% - 4rem);
+    animation-name: fadeOutUp;
     animation-duration: 1s;
+    opacity: 0;
+    display: none;
+    position: absolute;
+    &.outgoing {
+      display: block;
+    }
+    &.active {
+      opacity: 1;
+      animation-name: fadeInUp;
+      display: block;
+    }
+    @include bp(tab) {
+      font-size: 1.3rem;
+    }
+    @include bp(laptop) {
+      font-size: 1.5rem;
+    }
+    @include bp(4k) {
+      font-size: 3rem;
+    }
   }
 }

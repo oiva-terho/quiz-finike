@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
+import { adaptiveClassName } from '~/utils/layout.utils';
 import './home-hero.styles.scss';
 
 const heroText = [
@@ -15,13 +17,26 @@ export const Heroblock = () => {
   useEffect(() => {
     const taglineChange = setInterval(() => {
       setTagline(tagline === 3 ? 0 : tagline + 1);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(taglineChange);
   });
   return (
     <div className='home-hero'>
-      <h1>FINIKE QUIZ IS</h1>
-      <p>{heroText[tagline]}</p>
+      <QuizLogo />
+      {heroText.map((text, key) => {
+        return (
+          <p
+            className={adaptiveClassName({
+              counter: tagline,
+              key: key,
+              maxQuantity: heroText.length,
+            })}
+            key={key}
+          >
+            {text}
+          </p>
+        );
+      })}
     </div>
   );
 };

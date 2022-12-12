@@ -7,7 +7,7 @@ $breakpoints: (
   '4k': 2560px,
 );
 
-@mixin bp($key1, $type: up) {
+@mixin bp($key1) {
   $bp1: map-get($breakpoints, #{$key1});
 
   @if ($bp1 == null) {
