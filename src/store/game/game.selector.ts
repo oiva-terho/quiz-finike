@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../store';
-import { Game } from './game.types';
+import { GameState } from './game.reducer';
 
-export const selectGameReducer = (state: RootState): Game => state.game;
+export const selectGameReducer = (state: RootState): GameState => state.game;
 
 export const selectGameDate = createSelector([selectGameReducer], (game) => game.date);
 export const selectGameTeams = createSelector([selectGameReducer], (game) => game.teams);
 export const selectGamesList = createSelector([selectGameReducer], (game) => game.gamesList);
+export const selectGameRounds = createSelector([selectGameReducer], (game) => game.rounds);

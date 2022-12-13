@@ -17,7 +17,7 @@ export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: Ad
     const { name, value } = event.target;
     if (name === 'result') {
       if (!team.name) {
-        setTeamData({ ...team, result: ['', '', '', '', '', ''] });
+        setTeamData({ ...team, result: new Array(team.result.length).fill('') });
         return setErr(errMessage.noTeam);
       }
       if (+value > 30) return setErr(errMessage.tooLarge);
@@ -27,7 +27,8 @@ export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: Ad
       newResult[parseInt(round)] = isNaN(parseInt(value)) ? '' : parseInt(value);
       team.sum = +newResult.reduce((a, b) => +a + +b);
       setTeamData({ ...team, result: newResult });
-      if (round === '5') sortTeams();
+      if (+round === team.result.length - 1) sortTeams();
+      event.target.focus();
       return;
     }
     setTeamData({ ...team, [name]: value });
@@ -48,7 +49,7 @@ export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: Ad
         {team.result.map((score, round) => (
           <TableInput
             required
-            key={round}
+            key={`${team.name}${round}`}
             width='30px'
             name='result'
             data-round={round}
@@ -58,7 +59,9 @@ export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: Ad
           />
         ))}
         <div className='add-team__sum'>{team.sum}</div>
-        <div className='add-team__sum'>{team.position}</div>
+        <div className={`add-team__position ${team.position < 4 ? 'add-team__position-top3' : ''}`}>
+          {team.position}
+        </div>
       </div>
     </>
   );

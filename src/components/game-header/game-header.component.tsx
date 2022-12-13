@@ -18,7 +18,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
     if (!teams.length) {
       return [];
     } else {
-      const res = teams[1].result.map((_n, i) => (i + 1).toString());
+      const res = teams[0].result.map((_n, i) => (i + 1).toString());
       res.push('Total', '');
       return res;
     }

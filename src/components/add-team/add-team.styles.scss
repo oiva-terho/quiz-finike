@@ -1,6 +1,22 @@
+@import '../../styles/variables';
+
 .add-team {
   display: grid;
   grid-template-columns: 5fr repeat(7, 1fr) 0.5fr;
   align-items: center;
   margin: auto;
+  &__sum {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  &__position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    &-top3 {
+      height: 100%;
+      background-color: $color-marker;
+    }
+  }
 }

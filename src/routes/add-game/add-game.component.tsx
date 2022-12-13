@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
@@ -9,11 +9,12 @@ import { TableInput } from '~/components/table-input/table-input.component';
 import {
   addTeam,
   setTeams,
+  setRounds,
   clearGame,
   uploadGameStart,
   fetchGamesListStart,
 } from '~/store/game/game.action';
-import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
+import { selectGameDate, selectGameRounds, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
 import { selectCurrentUser } from '~/store/user/user.selector';
 import { removeGame } from '~/utils/firebase.utils';
@@ -27,26 +28,41 @@ const errMessage: ErrMessage = {
   noTeams: 'Fill in teams results',
   noTeam: 'Fill team name',
   tooLarge: 'Too large score',
+  teamsExists: 'Cannot change rounds quantity for existing game. Clear the table first',
+  dataLoss: 'You will loose all filled data. Would you like to continue?',
 };
+
+let expectedRowQuantity = 0;
 
 export const AddGame = () => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
   const currentUser = useSelector(selectCurrentUser);
+  const rounds = useSelector(selectGameRounds);
+  const navigate = useNavigate();
 
   const [inputError, setInputError] = useState('');
-  const [rowQuantity, setRowQuantity] = useState(1);
+
+  const goTo = (path: string) => navigate(path);
 
   if (!currentUser || currentUser.teamName !== 'Admin') return <Navigate to='/games' />;
 
-  const rowQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowQuantity(+event.target.value);
+  const setRowsQuantity = (rows: number, ok = false) => {
+    if (!date) return setInputError(errMessage.noDate);
+    if (!ok) if (teams.some((team) => team.name)) return setInputError(errMessage.dataLoss);
+    dispatch(addTeam(rows, rounds));
+    setInputError('');
   };
-  const addRow = () => {
-    if (!date) setInputError(errMessage.noDate);
-    dispatch(addTeam(teams, rowQuantity));
-    setRowQuantity(1);
+  const handleRowsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    expectedRowQuantity = +event.target.value;
+    setRowsQuantity(expectedRowQuantity);
+  };
+  const setRoundsQuantity = (event: ChangeEvent<HTMLInputElement>) => {
+    if (teams.length) return setInputError(errMessage.teamsExists);
+    if (!date) return setInputError(errMessage.noDate);
+    const newRounds = +event.target.value;
+    dispatch(setRounds(newRounds));
   };
   const setTeamData = (team: Team) => {
     teams[team.position - 1] = team;
@@ -67,12 +83,13 @@ export const AddGame = () => {
   const handleRemoveGame = () => {
     removeGame(date.slice(2).replace(/\D/g, ''));
     clearTable();
-    dispatch(fetchGamesListStart());
+    goTo('/games');
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!teams.length) return setInputError(errMessage.noTeams);
     dispatch(uploadGameStart(date, teams));
+    goTo('/games');
   };
   return (
     <div className='add-game'>
@@ -80,15 +97,20 @@ export const AddGame = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <div className='add-game__controls'>
+            <span>Rounds</span>
             <TableInput
-              name='row quantity'
+              name='rounds quantity'
               type='number'
-              value={rowQuantity}
-              onChange={rowQuantityChange}
+              value={rounds}
+              onChange={setRoundsQuantity}
             />
-            <Button type='button' onClick={addRow}>
-              Add rows
-            </Button>
+            <span>Teams</span>
+            <TableInput
+              name='rows quantity'
+              type='number'
+              value={teams.length}
+              onChange={handleRowsChange}
+            />
             <Button type='button' onClick={clearTable}>
               Clear table
             </Button>
@@ -121,6 +143,11 @@ export const AddGame = () => {
             })}
           </div>
           {inputError ? <span>{inputError}</span> : null}
+          {inputError === errMessage.dataLoss ? (
+            <Button type='button' onClick={() => setRowsQuantity(expectedRowQuantity, true)}>
+              Ok
+            </Button>
+          ) : null}
         </div>
       </form>
     </div>
