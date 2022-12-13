@@ -1,33 +1,31 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { Team } from '~/store/game/game.types';
 import { TableInput } from '../table-input/table-input.component';
+import { ErrMessage } from '~/routes/add-game/add-game.component';
 import './add-team.styles.scss';
 
 type AddTeamProps = {
   team: Team;
   setTeamData: (team: Team) => void;
   sortTeams: () => void;
+  setErr: React.Dispatch<React.SetStateAction<string>>;
+  errMessage: ErrMessage;
 };
 
-const errMessage = {
-  noTeam: 'Fill team name',
-  tooLarge: 'Too large score',
-};
-
-export const AddTeam = ({ team, setTeamData, sortTeams }: AddTeamProps) => {
-  const [inputError, setInputError] = useState('');
-
+export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: AddTeamProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputError('');
     const { name, value } = event.target;
     if (name === 'result') {
-      if (!team.name) return setInputError(errMessage.noTeam);
-      if (+value > 30) return setInputError(errMessage.tooLarge);
+      if (!team.name) {
+        setTeamData({ ...team, result: ['', '', '', '', '', ''] });
+        return setErr(errMessage.noTeam);
+      }
+      if (+value > 30) return setErr(errMessage.tooLarge);
       const round = event.target.getAttribute('data-round');
       const newResult = [...team.result];
       if (!round) return;
-      newResult[parseInt(round)] = isNaN(parseInt(value)) ? 0 : parseInt(value);
-      team.sum = newResult.reduce((a, b) => a + b);
+      newResult[parseInt(round)] = isNaN(parseInt(value)) ? '' : parseInt(value);
+      team.sum = +newResult.reduce((a, b) => +a + +b);
       setTeamData({ ...team, result: newResult });
       if (round === '5') sortTeams();
       return;
@@ -62,7 +60,6 @@ export const AddTeam = ({ team, setTeamData, sortTeams }: AddTeamProps) => {
         <div className='add-team__sum'>{team.sum}</div>
         <div className='add-team__sum'>{team.position}</div>
       </div>
-      {<div>{inputError}</div>}
     </>
   );
 };

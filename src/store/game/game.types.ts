@@ -20,7 +20,7 @@ export type Game = {
 };
 export type Team = {
   name: string;
-  result: Array<number>;
+  result: Array<number | string>;
   sum: number;
   position: number;
 };

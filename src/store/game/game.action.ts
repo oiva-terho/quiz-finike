@@ -3,7 +3,7 @@ import { createAction, ActionWithPayload, Action, withMatcher } from '../../util
 
 const defaultTeamObject: Team = {
   name: '',
-  result: [0, 0, 0, 0, 0, 0],
+  result: ['', '', '', '', '', ''],
   sum: 0,
   position: 0,
 };

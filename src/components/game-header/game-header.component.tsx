@@ -1,12 +1,9 @@
 import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDate } from '~/store/game/game.action';
-import { selectGameDate } from '~/store/game/game.selector';
+import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
 import { TableInput } from '../table-input/table-input.component';
 import './game-header.styles.scss';
-
-const rounds = new Array(6).fill('').map(([,], i) => (i + 1).toString());
-rounds.push('Total', '');
 
 type GameHeaderProps = {
   passive?: boolean;
@@ -15,6 +12,19 @@ type GameHeaderProps = {
 export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
+  const teams = useSelector(selectGameTeams);
+
+  const roundsCheck = () => {
+    if (!teams.length) {
+      return [];
+    } else {
+      const res = teams[1].result.map((_n, i) => (i + 1).toString());
+      res.push('Total', '');
+      return res;
+    }
+  };
+  const rounds = roundsCheck();
+
   const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(addDate(event.target.value));
     clearErr && clearErr('');

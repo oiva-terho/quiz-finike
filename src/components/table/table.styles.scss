@@ -1,21 +1,31 @@
+@import '../../styles/variables';
+
 .table {
   display: grid;
   grid-template-columns: 4.5fr repeat(7, 1fr) 0.5fr;
   list-style: none;
   align-items: center;
+  margin: 0;
+  height: 3rem;
   li {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: end;
     font-weight: 700;
     font-size: 1.5rem;
     margin: 0;
     height: 2rem;
     &:first-of-type {
-      text-align: right;
+      justify-self: end;
       padding-right: 1rem;
     }
     &.table__position {
-      font-weight: 400;
       font-size: 1rem;
+      &-top3 {
+        height: 100%;
+        background-color: $color-marker;
+      }
     }
   }
 }

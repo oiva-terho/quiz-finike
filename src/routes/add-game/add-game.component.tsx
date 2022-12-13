@@ -19,10 +19,14 @@ import { selectCurrentUser } from '~/store/user/user.selector';
 import { removeGame } from '~/utils/firebase.utils';
 
 import './add-game.styles.scss';
-
-const errMessage = {
+export type ErrMessage = {
+  readonly [index: string]: string;
+};
+const errMessage: ErrMessage = {
   noDate: 'Choose date first',
   noTeams: 'Fill in teams results',
+  noTeam: 'Fill team name',
+  tooLarge: 'Too large score',
 };
 
 export const AddGame = () => {
@@ -101,15 +105,22 @@ export const AddGame = () => {
         </div>
         <div className='add-game__table'>
           <GameHeader clearErr={setInputError} />
-          {inputError ? <span>{inputError}</span> : null}
           <div className='add-game__teams'>
             {teams.map((team, id) => {
               team.position = id + 1;
               return (
-                <AddTeam key={id} team={team} setTeamData={setTeamData} sortTeams={sortTeams} />
+                <AddTeam
+                  key={id}
+                  team={team}
+                  setTeamData={setTeamData}
+                  sortTeams={sortTeams}
+                  setErr={setInputError}
+                  errMessage={errMessage}
+                />
               );
             })}
           </div>
+          {inputError ? <span>{inputError}</span> : null}
         </div>
       </form>
     </div>
