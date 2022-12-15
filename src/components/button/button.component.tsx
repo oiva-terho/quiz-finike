@@ -10,7 +10,7 @@ export type ButtonProps = {
   buttonType?: BUTTON_CLASSES;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button: FC<ButtonProps> = ({ children, buttonType, ...otherProps }) => {
+export const Button: FC<ButtonProps> = ({ children, buttonType = '', ...otherProps }) => {
   return (
     <button className={`button ${buttonType}`} {...otherProps}>
       {children}

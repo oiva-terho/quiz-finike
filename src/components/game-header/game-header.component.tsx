@@ -28,22 +28,26 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   };
   return (
     <div className='game-header'>
-      <span>FinikeQuiz |&nbsp;</span>
-      {passive ? (
-        <b>{date.split('-').reverse().join('.')}</b>
-      ) : (
-        <TableInput
-          className='add-game__date'
-          required
-          name='date'
-          type='date'
-          onChange={handleChangeDate}
-          value={date}
-        />
-      )}
-      {rounds.map((n, i) => (
-        <span key={i}>{n}</span>
-      ))}
+      <div className='game-header__date'>
+        <span>FinikeQuiz |&nbsp;</span>
+        {passive ? (
+          <b>{date.split('-').reverse().join('.')}</b>
+        ) : (
+          <TableInput
+            className='add-game__date'
+            required
+            name='date'
+            type='date'
+            onChange={handleChangeDate}
+            value={date}
+          />
+        )}
+      </div>
+      <div className='game-header__rounds'>
+        {rounds.map((n, i) => (
+          <span key={i}>{n}</span>
+        ))}
+      </div>
     </div>
   );
 };

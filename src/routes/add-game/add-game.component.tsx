@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
@@ -88,12 +88,16 @@ export const AddGame = () => {
     dispatch(uploadGameStart(date, teams));
     goTo('/games');
   };
+  const handleReturnToGames = () => {
+    clearTable();
+    goTo('/games');
+  };
   return (
     <div className='add-game'>
       <h2>Add a game</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <div className='add-game__controls'>
+        <div className='add-game__controls'>
+          <div className='add-game__rounds'>
             <span>Rounds</span>
             <TableInput
               name='rounds quantity'
@@ -101,6 +105,8 @@ export const AddGame = () => {
               value={rounds}
               onChange={setRoundsQuantity}
             />
+          </div>
+          <div className='add-game__rows'>
             <span>Teams</span>
             <TableInput
               name='rows quantity'
@@ -108,20 +114,24 @@ export const AddGame = () => {
               value={teams.length}
               onChange={handleRowsChange}
             />
-            <Button type='button' onClick={clearTable}>
-              Clear table
-            </Button>
           </div>
+          <Button type='button' onClick={clearTable}>
+            Clear table
+          </Button>
           <Button type='submit'>Add game to DB</Button>
           <Button type='button' onClick={handleRemoveGame}>
             Remove from DB
           </Button>
-          <Link to='/games'>
-            <Button type='button' onClick={clearTable}>
-              Return to games
-            </Button>
-          </Link>
+          <Button type='button' onClick={handleReturnToGames}>
+            Return to games
+          </Button>
         </div>
+        {inputError ? <span>{inputError}</span> : null}
+        {inputError === errMessage.dataLoss ? (
+          <Button type='button' onClick={() => setRowsQuantity(expectedRowQuantity, true)}>
+            Ok
+          </Button>
+        ) : null}
         <div className='add-game__table'>
           <GameHeader clearErr={setInputError} />
           <div className='add-game__teams'>
@@ -144,12 +154,6 @@ export const AddGame = () => {
               );
             })}
           </div>
-          {inputError ? <span>{inputError}</span> : null}
-          {inputError === errMessage.dataLoss ? (
-            <Button type='button' onClick={() => setRowsQuantity(expectedRowQuantity, true)}>
-              Ok
-            </Button>
-          ) : null}
         </div>
       </form>
     </div>

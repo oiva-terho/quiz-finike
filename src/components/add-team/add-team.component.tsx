@@ -42,18 +42,17 @@ export const AddTeam = ({
     setTeamData({ ...team, [name]: value });
   };
   return (
-    <>
-      <div className='add-team'>
-        <TableInput
-          required
-          className='add-team__team-name'
-          label='Team name'
-          name='name'
-          type='text'
-          onChange={handleChange}
-          value={team.name}
-        />
-
+    <div className='add-team'>
+      <TableInput
+        required
+        className='add-team__team-name'
+        label='Team name'
+        name='name'
+        type='text'
+        onChange={handleChange}
+        value={team.name}
+      />
+      <div className='add-team__rounds'>
         {team.result.map((score, round) => (
           <TableInput
             required
@@ -73,6 +72,6 @@ export const AddTeam = ({
           {team.position}
         </div>
       </div>
-    </>
+    </div>
   );
 };

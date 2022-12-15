@@ -2,20 +2,18 @@
   margin: 0 7%;
   text-align: center;
   form {
-    display: grid;
-    grid-template-columns: 1fr 9fr;
-  }
-  &__table {
-    grid-column: 2 /3;
-  }
-  &__teams {
-    position: relative;
-    margin-top: 0.5rem;
-    min-height: 12rem;
-  }
-  &__controls {
-    input {
-      width: 3rem;
+    display: flex;
+    flex-direction: column;
+    .add-game__controls {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      input {
+        height: auto;
+      }
+    }
+    .add-game__teams {
+      margin-top: 0.5rem;
+      min-height: 12rem;
     }
   }
 }

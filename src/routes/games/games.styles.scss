@@ -1,13 +1,39 @@
+@import '/src/styles/breakpoints';
+@import '/src/styles/variables';
+
 .games {
   padding: 0 7%;
   text-align: center;
   display: grid;
-  grid-template-columns: 1fr 9fr;
+  grid-template-areas:
+    'h h h h'
+    's s d d'
+    'a a a a'
+    't t t t';
   h2 {
-    grid-column: 1 / 3;
+    grid-area: h;
+  }
+  span {
+    grid-area: s;
+    font-weight: 300;
+  }
+  select {
+    grid-area: d;
+    background-color: $color-bg-light-blue;
+    border-radius: 6px;
+    border: none;
+    color: $color-font-primary;
+    height: 1.5rem;
+    font-family: 'Montserrat';
+    option {
+      font-family: 'Montserrat';
+      text-align: center;
+    }
   }
   &__table {
-    grid-column: 2 /3;
-    grid-row: 2 / 4;
+    grid-area: t;
+  }
+  & a {
+    grid-area: a;
   }
 }

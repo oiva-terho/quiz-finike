@@ -1,20 +1,36 @@
 @import '/src/styles/variables.scss';
 .game-header {
-  display: grid;
-  grid-template-columns: 3fr 2fr repeat(7, 1fr) 0.5fr;
-  align-items: center;
-  span,
-  b {
-    text-align: center;
-    color: $color-font-secondary;
-    font-weight: 700;
-    font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  &__date {
+    display: flex;
+    justify-content: center;
+    span,
+    b {
+      text-align: center;
+      color: $color-font-secondary;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    span {
+      text-align: right;
+    }
+    b {
+      display: block;
+      text-align: left;
+    }
   }
-  span:first-of-type {
-    text-align: right;
-  }
-  b {
-    display: block;
-    text-align: left;
+  &__rounds {
+    display: flex;
+    justify-content: space-around;
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      &:last-child {
+        width: 50%;
+      }
+    }
   }
 }

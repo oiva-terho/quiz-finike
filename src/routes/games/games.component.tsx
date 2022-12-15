@@ -20,36 +20,37 @@ export const Games = () => {
   if (!currentUser) return <Nouser location='games' />;
 
   const openGame = (date: string) => {
+    if (!date) return dispatch(clearGame());
     dispatch(fetchGameStart(date));
   };
 
-  const table = teams.map((team) => (
-    <Table
-      key={team.name}
-      team={team}
-      resColor={countResColor({
-        min: teams[0].sum,
-        max: teams[teams.length - 1].sum,
-        score: team.sum,
-      })}
-    />
-  ));
-
   return (
     <div className='games'>
-      <h2>Last games</h2>
-      <div className='games__dates'>
+      <h2>Game results</h2>
+      <span>Select date</span>
+      <select defaultValue='' className='games__dates' onChange={(e) => openGame(e.target.value)}>
+        <option value=''>-</option>
         {gamesList?.length
-          ? gamesList?.map((date) => (
-              <Button key={date} name={date} onClick={() => openGame(date)}>
+          ? [...gamesList]?.reverse().map((date) => (
+              <option key={date} value={date}>
                 {`${date.slice(4, 6)}.${date.slice(2, 4)}.20${date.slice(0, 2)}`}
-              </Button>
+              </option>
             ))
           : null}
-      </div>
+      </select>
       <div className='games__table'>
         <GameHeader passive />
-        {table}
+        {teams.map((team) => (
+          <Table
+            key={team.name}
+            team={team}
+            resColor={countResColor({
+              min: teams[0].sum,
+              max: teams[teams.length - 1].sum,
+              score: team.sum,
+            })}
+          />
+        ))}
       </div>
       {currentUser.teamName === 'Admin' ? (
         <Link to='/games/add'>
