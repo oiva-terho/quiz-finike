@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { Button } from '~/components/button/button.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Table } from '~/components/table/table.component';
+
 import { clearGame, fetchGameStart } from '~/store/game/game.action';
 import { selectGamesList, selectGameTeams } from '~/store/game/game.selector';
 import { selectCurrentUser } from '~/store/user/user.selector';
+import { countResColor } from '~/utils/layout.utils';
 import './games.styles.scss';
 
 export const Games = () => {
@@ -19,6 +22,18 @@ export const Games = () => {
   const openGame = (date: string) => {
     dispatch(fetchGameStart(date));
   };
+
+  const table = teams.map((team) => (
+    <Table
+      key={team.name}
+      team={team}
+      resColor={countResColor({
+        min: teams[0].sum,
+        max: teams[teams.length - 1].sum,
+        score: team.sum,
+      })}
+    />
+  ));
 
   return (
     <div className='games'>
@@ -34,9 +49,7 @@ export const Games = () => {
       </div>
       <div className='games__table'>
         <GameHeader passive />
-        {teams.map((team) => (
-          <Table key={team.name} team={team} />
-        ))}
+        {table}
       </div>
       {currentUser.teamName === 'Admin' ? (
         <Link to='/games/add'>

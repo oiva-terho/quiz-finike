@@ -5,9 +5,12 @@
   grid-template-columns: 5fr repeat(7, 1fr) 0.5fr;
   align-items: center;
   margin: auto;
+  height: 2.5rem;
   &__sum {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 1.5rem;
+    color: #111;
+    height: 100%;
   }
   &__position {
     display: flex;

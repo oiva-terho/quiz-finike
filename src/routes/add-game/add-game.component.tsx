@@ -6,18 +6,12 @@ import { AddTeam } from '~/components/add-team/add-team.component';
 import { Button } from '~/components/button/button.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
 import { TableInput } from '~/components/table-input/table-input.component';
-import {
-  addTeam,
-  setTeams,
-  setRounds,
-  clearGame,
-  uploadGameStart,
-  fetchGamesListStart,
-} from '~/store/game/game.action';
+import { addTeam, setTeams, setRounds, clearGame, uploadGameStart } from '~/store/game/game.action';
 import { selectGameDate, selectGameRounds, selectGameTeams } from '~/store/game/game.selector';
 import { Team } from '~/store/game/game.types';
 import { selectCurrentUser } from '~/store/user/user.selector';
 import { removeGame } from '~/utils/firebase.utils';
+import { countResColor } from '~/utils/layout.utils';
 
 import './add-game.styles.scss';
 export type ErrMessage = {
@@ -32,8 +26,6 @@ const errMessage: ErrMessage = {
   dataLoss: 'You will loose all filled data. Would you like to continue?',
 };
 
-let expectedRowQuantity = 0;
-
 export const AddGame = () => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
@@ -42,6 +34,7 @@ export const AddGame = () => {
   const rounds = useSelector(selectGameRounds);
   const navigate = useNavigate();
 
+  const [expectedRowQuantity, setExpectedRowQuantity] = useState(0);
   const [inputError, setInputError] = useState('');
 
   const goTo = (path: string) => navigate(path);
@@ -50,12 +43,16 @@ export const AddGame = () => {
 
   const setRowsQuantity = (rows: number, ok = false) => {
     if (!date) return setInputError(errMessage.noDate);
-    if (!ok) if (teams.some((team) => team.name)) return setInputError(errMessage.dataLoss);
+    if (!ok) {
+      if (teams.some((team) => team.name)) {
+        return setInputError(errMessage.dataLoss);
+      }
+    }
     dispatch(addTeam(rows, rounds));
     setInputError('');
   };
   const handleRowsChange = (event: ChangeEvent<HTMLInputElement>) => {
-    expectedRowQuantity = +event.target.value;
+    setExpectedRowQuantity(+event.target.value);
     setRowsQuantity(expectedRowQuantity);
   };
   const setRoundsQuantity = (event: ChangeEvent<HTMLInputElement>) => {
@@ -134,6 +131,11 @@ export const AddGame = () => {
                 <AddTeam
                   key={id}
                   team={team}
+                  resColor={countResColor({
+                    min: teams[0].sum,
+                    max: teams[teams.length - 1].sum,
+                    score: team.sum,
+                  })}
                   setTeamData={setTeamData}
                   sortTeams={sortTeams}
                   setErr={setInputError}

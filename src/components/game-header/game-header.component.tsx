@@ -15,13 +15,10 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const teams = useSelector(selectGameTeams);
 
   const roundsCheck = () => {
-    if (!teams.length) {
-      return [];
-    } else {
-      const res = teams[0].result.map((_n, i) => (i + 1).toString());
-      res.push('Total', '');
-      return res;
-    }
+    if (!teams.length) return [];
+    const res = teams[0].result.map((_n, i) => (i + 1).toString());
+    res.push('Total', '');
+    return res;
   };
   const rounds = roundsCheck();
 

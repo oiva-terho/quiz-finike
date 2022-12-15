@@ -2,9 +2,10 @@
 
 .table-input {
   position: relative;
+  height: 100%;
   & > input {
     width: 99%;
-    height: 2rem;
+    height: 100%;
     border: none;
     background-color: $color-bg-main;
     color: $color-marker;

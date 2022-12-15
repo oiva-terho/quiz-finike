@@ -1,6 +1,5 @@
 import { GAME_ACTION_TYPES, Team } from './game.types';
 import { createAction, ActionWithPayload, Action, withMatcher } from '../../utils/reducer.utils';
-import { GameState } from './game.reducer';
 
 const defaultTeamObject: Team = {
   name: '',
@@ -33,7 +32,10 @@ export type FetchGameSuccess = ActionWithPayload<
   { date: string; teams: Team[] }
 >;
 export type FetchGameFailed = ActionWithPayload<GAME_ACTION_TYPES.FETCH_GAME_FAILED, Error>;
-export type UploadGameStart = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_START, GameState>;
+export type UploadGameStart = ActionWithPayload<
+  GAME_ACTION_TYPES.UPLOAD_GAME_START,
+  { date: string; teams: Team[] }
+>;
 export type UploadGameSuccess = Action<GAME_ACTION_TYPES.UPLOAD_GAME_SUCCESS>;
 export type UploadGameFailed = ActionWithPayload<GAME_ACTION_TYPES.UPLOAD_GAME_FAILED, Error>;
 

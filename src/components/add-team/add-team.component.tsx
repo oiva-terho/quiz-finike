@@ -6,13 +6,21 @@ import './add-team.styles.scss';
 
 type AddTeamProps = {
   team: Team;
+  resColor: string;
   setTeamData: (team: Team) => void;
   sortTeams: () => void;
   setErr: React.Dispatch<React.SetStateAction<string>>;
   errMessage: ErrMessage;
 };
 
-export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: AddTeamProps) => {
+export const AddTeam = ({
+  team,
+  resColor,
+  setTeamData,
+  sortTeams,
+  setErr,
+  errMessage,
+}: AddTeamProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === 'result') {
@@ -58,7 +66,9 @@ export const AddTeam = ({ team, setTeamData, sortTeams, setErr, errMessage }: Ad
             value={score}
           />
         ))}
-        <div className='add-team__sum'>{team.sum}</div>
+        <div className='add-team__sum' style={{ backgroundColor: resColor }}>
+          {team.sum}
+        </div>
         <div className={`add-team__position ${team.position < 4 ? 'add-team__position-top3' : ''}`}>
           {team.position}
         </div>
