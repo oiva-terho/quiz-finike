@@ -62,11 +62,21 @@ export const Gallery = () => {
   return (
     <>
       <div className='gallery__dates'>
-        {foldersList.map((folder) => (
-          <Button key={folder} onClick={() => openDate(folder)}>
-            {`${folder.slice(4, 6)}.${folder.slice(2, 4)}.20${folder.slice(0, 2)}`}
-          </Button>
-        ))}
+        <span>Date:</span>
+        <select
+          defaultValue=''
+          className='gallery__dates'
+          onChange={(e) => openDate(e.target.value)}
+        >
+          <option value=''>-</option>
+          {foldersList?.length
+            ? [...foldersList]?.reverse().map((folder) => (
+                <option key={folder} value={folder}>
+                  {`${folder.slice(4, 6)}.${folder.slice(2, 4)}.20${folder.slice(0, 2)}`}
+                </option>
+              ))
+            : null}
+        </select>
       </div>
       <div
         className='gallery__grid'
