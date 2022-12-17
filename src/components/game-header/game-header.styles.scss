@@ -1,16 +1,41 @@
+@import '/src/styles/breakpoints';
 @import '/src/styles/variables.scss';
+
 .game-header {
   display: flex;
   flex-direction: column;
+  margin-top: 1.3rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.7rem;
+  @include bp(mobL) {
+    font-size: 0.8rem;
+  }
+  @include bp(tab) {
+    flex-direction: row;
+    font-size: 0.9rem;
+  }
+  @include bp(laptop) {
+    font-size: 1rem;
+  }
+  @include bp(laptopL) {
+    font-size: 1.4rem;
+  }
+  @include bp(4k) {
+    font-size: 2.5rem;
+  }
   &__date {
     display: flex;
     justify-content: center;
+    align-items: center;
+    @include bp(tab) {
+      width: 40%;
+      justify-content: end;
+    }
     span,
     b {
       text-align: center;
       color: $color-font-secondary;
       font-weight: 700;
-      font-size: 1rem;
     }
     span {
       text-align: right;
@@ -23,6 +48,11 @@
   &__rounds {
     display: flex;
     justify-content: space-around;
+    margin-top: 0.2rem;
+    @include bp(tab) {
+      width: 60%;
+      margin-top: 0;
+    }
     span {
       display: flex;
       justify-content: center;

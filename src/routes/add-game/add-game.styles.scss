@@ -1,3 +1,6 @@
+@import '/src/styles/breakpoints';
+@import '../../styles/variables';
+
 .add-game {
   margin: 0 7%;
   text-align: center;
@@ -7,13 +10,48 @@
     .add-game__controls {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      @include bp(tab) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .add-game__rounds {
+        margin-bottom: 0.7rem;
+        @include bp(tab) {
+          grid-column: 1 / 3;
+        }
+        @include bp(4k) {
+          margin-bottom: 2rem;
+        }
+      }
+      .add-game__rows {
+        margin-bottom: 0.5rem;
+        @include bp(tab) {
+          grid-column: 3 /5;
+        }
+        @include bp(4k) {
+          margin-bottom: 2rem;
+        }
+      }
       input {
         height: auto;
+        box-shadow: 0 0 2px $color-font-secondary;
+        width: 2.5rem;
+        margin-left: 0.5rem;
+        @include bp(4k) {
+          width: 7rem;
+        }
       }
     }
-    .add-game__teams {
-      margin-top: 0.5rem;
-      min-height: 12rem;
+    .add-game__table {
+      @include bp(4k) {
+        margin-top: 2rem;
+      }
+      .add-game__teams {
+        margin-top: 0.5rem;
+        min-height: 12rem;
+        @include bp(4k) {
+          margin-top: 2rem;
+        }
+      }
     }
   }
 }

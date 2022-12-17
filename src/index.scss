@@ -10,4 +10,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
+  font-size: 1rem;
+  @include bp(mobL) {
+    font-size: 1.2rem;
+  }
+  @include bp(tab) {
+    font-size: 1.3rem;
+  }
+  @include bp(laptop) {
+    font-size: 1.5rem;
+  }
+  @include bp(laptopL) {
+    font-size: 2rem;
+  }
+  @include bp(4k) {
+    font-size: 4rem;
+  }
 }

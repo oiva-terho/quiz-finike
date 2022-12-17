@@ -94,11 +94,11 @@ export const AddGame = () => {
   };
   return (
     <div className='add-game'>
-      <h2>Add a game</h2>
+      <h3>Add a game</h3>
       <form onSubmit={handleSubmit}>
         <div className='add-game__controls'>
           <div className='add-game__rounds'>
-            <span>Rounds</span>
+            <span>Rounds:</span>
             <TableInput
               name='rounds quantity'
               type='number'
@@ -107,7 +107,7 @@ export const AddGame = () => {
             />
           </div>
           <div className='add-game__rows'>
-            <span>Teams</span>
+            <span>Teams:</span>
             <TableInput
               name='rows quantity'
               type='number'

@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDate } from '~/store/game/game.action';
-import { selectGameDate, selectGameTeams } from '~/store/game/game.selector';
+import { selectGameDate, selectGamesList, selectGameTeams } from '~/store/game/game.selector';
 import { TableInput } from '../table-input/table-input.component';
 import './game-header.styles.scss';
 
@@ -13,7 +13,11 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
+  const gameList = useSelector(selectGamesList);
 
+  const gameNumber = gameList
+    ? gameList?.findIndex((game) => game === date.slice(2).replace(/\D/g, '')) + 1
+    : 0;
   const roundsCheck = () => {
     if (!teams.length) return [];
     const res = teams[0].result.map((_n, i) => (i + 1).toString());
@@ -29,7 +33,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   return (
     <div className='game-header'>
       <div className='game-header__date'>
-        <span>FinikeQuiz |&nbsp;</span>
+        <span>FinikeQuiz #{gameNumber} |&nbsp;</span>
         {passive ? (
           <b>{date.split('-').reverse().join('.')}</b>
         ) : (

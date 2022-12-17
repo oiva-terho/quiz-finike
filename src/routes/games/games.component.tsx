@@ -27,7 +27,7 @@ export const Games = () => {
   return (
     <div className='games'>
       <h2>Game results</h2>
-      <span>Select date</span>
+      <span>Date:</span>
       <select defaultValue='' className='games__dates' onChange={(e) => openGame(e.target.value)}>
         <option value=''>-</option>
         {gamesList?.length

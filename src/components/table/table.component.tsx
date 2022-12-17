@@ -10,7 +10,7 @@ type TableProps = {
 export const Table = ({ team, resColor }: TableProps) => {
   return (
     <div className='table'>
-      <span>{team.name}</span>
+      <span className='table__name'>{team.name}</span>
       <ul>
         {team.result.map((round, n) => (
           <li key={n}>{round}</li>
