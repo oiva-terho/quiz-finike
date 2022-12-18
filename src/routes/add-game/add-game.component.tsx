@@ -43,10 +43,8 @@ export const AddGame = () => {
 
   const setRowsQuantity = (rows: number, ok = false) => {
     if (!date) return setInputError(errMessage.noDate);
-    if (!ok) {
-      if (teams.some((team) => team.name)) {
-        return setInputError(errMessage.dataLoss);
-      }
+    if (!ok && teams.some((team) => team.name)) {
+      return setInputError(errMessage.dataLoss);
     }
     dispatch(addTeam(rows, rounds));
     setInputError('');
