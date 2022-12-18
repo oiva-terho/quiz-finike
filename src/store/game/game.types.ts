@@ -1,6 +1,7 @@
 export enum GAME_ACTION_TYPES {
   ADD_DATE = 'game/ADD_DATE',
   SET_TEAMS = 'game/SET_TEAMS',
+  SET_ROUNDS = 'game/SET_ROUNDS',
   CLEAR_GAME = 'game/CLEAR_GAME',
   FETCH_GAMES_LIST_START = 'game/FETCH_GAMES_LIST_START',
   FETCH_GAMES_LIST_SUCCESS = 'game/FETCH_GAMES_LIST_SUCCESS',
@@ -13,14 +14,9 @@ export enum GAME_ACTION_TYPES {
   UPLOAD_GAME_FAILED = 'game/UPLOAD_GAME_FAILED',
 }
 
-export type Game = {
-  date: string;
-  teams: Team[];
-  gamesList?: string[];
-};
 export type Team = {
   name: string;
-  result: Array<number>;
+  result: Array<number | string>;
   sum: number;
   position: number;
 };

@@ -4,17 +4,24 @@ import './table.styles.scss';
 
 type TableProps = {
   team: Team;
+  resColor: string;
 };
 
-export const Table = ({ team }: TableProps) => {
+export const Table = ({ team, resColor }: TableProps) => {
   return (
-    <ul className='table'>
-      <li>{team.name}</li>
-      {team.result.map((round, n) => (
-        <li key={n}>{round}</li>
-      ))}
-      <li>{team.sum}</li>
-      <li className='table__position'>{team.position}</li>
-    </ul>
+    <div className='table'>
+      <span className='table__name'>{team.name}</span>
+      <ul>
+        {team.result.map((round, n) => (
+          <li key={n}>{round}</li>
+        ))}
+        <li className='table__sum' style={{ backgroundColor: resColor }}>
+          {team.sum}
+        </li>
+        <li className={`table__position ${team.position < 4 ? 'table__position-top3' : ''}`}>
+          {team.position}
+        </li>
+      </ul>
+    </div>
   );
 };

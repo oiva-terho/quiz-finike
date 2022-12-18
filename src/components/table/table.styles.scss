@@ -1,21 +1,61 @@
+@import '/src/styles/breakpoints';
+@import '../../styles/variables';
+
 .table {
-  display: grid;
-  grid-template-columns: 4.5fr repeat(7, 1fr) 0.5fr;
-  list-style: none;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 2px $color-font-secondary;
+  border-radius: 6px;
+  margin-top: 0.3rem;
   align-items: center;
-  li {
-    display: block;
-    font-weight: 700;
-    font-size: 1.5rem;
+  line-height: 150%;
+  @include bp(tab) {
+    flex-direction: row;
+    box-shadow: none;
+    border-radius: 0;
     margin: 0;
-    height: 2rem;
-    &:first-of-type {
+  }
+  &__name {
+    @include bp(tab) {
+      width: 40%;
       text-align: right;
-      padding-right: 1rem;
     }
-    &.table__position {
-      font-weight: 400;
-      font-size: 1rem;
+  }
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    @include bp(tab) {
+      width: 60%;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0;
+      width: 100%;
+      &.table__sum {
+        color: #111;
+        font-weight: 800;
+      }
+      &.table__position {
+        font-size: 1rem;
+        width: 50%;
+        align-self: center;
+        @include bp(laptopL) {
+          font-size: 1.3rem;
+        }
+        @include bp(4k) {
+          font-size: 2.5rem;
+        }
+        &-top3 {
+          background-color: $color-marker;
+        }
+      }
     }
   }
 }

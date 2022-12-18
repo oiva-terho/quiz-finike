@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ReactComponent as QuizLogo } from '/public/finike-quiz.svg';
+import { ReactComponent as QuizLogo } from '~/finike-quiz.svg';
 import { adaptiveClassName } from '~/utils/layout.utils';
 import './home-hero.styles.scss';
 

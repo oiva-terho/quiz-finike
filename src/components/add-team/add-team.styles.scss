@@ -1,6 +1,81 @@
+@import '/src/styles/breakpoints';
+@import '../../styles/variables';
+
 .add-team {
-  display: grid;
-  grid-template-columns: 5fr repeat(7, 1fr) 0.5fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin: auto;
+  border-radius: 6px;
+  box-shadow: 0 0 2px $color-font-secondary;
+  margin-top: 0.3rem;
+  align-items: center;
+  line-height: 150%;
+  @include bp(tab) {
+    flex-direction: row;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+  }
+  &__team-name {
+    @include bp(tab) {
+      width: 40%;
+    }
+  }
+  &__rounds {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    @include bp(tab) {
+      width: 60%;
+    }
+  }
+  &__sum {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #111;
+    width: 100%;
+    @include bp(mobL) {
+      font-size: 1.4rem;
+    }
+    @include bp(tab) {
+      font-size: 1.6rem;
+    }
+    @include bp(laptop) {
+      font-size: 1.8rem;
+    }
+    @include bp(laptopL) {
+      font-size: 2.3rem;
+    }
+    @include bp(4k) {
+      font-size: 4.7rem;
+    }
+  }
+  &__position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    width: 50%;
+    font-size: 0.7rem;
+    color: #fff;
+    @include bp(mobL) {
+      font-size: 0.8rem;
+    }
+    @include bp(tab) {
+      font-size: 1rem;
+    }
+    @include bp(laptop) {
+      font-size: 1.1rem;
+    }
+    @include bp(laptopL) {
+      font-size: 1.5rem;
+    }
+    @include bp(4k) {
+      font-size: 2.8rem;
+    }
+    &-top3 {
+      background-color: $color-marker;
+    }
+  }
 }

@@ -6,7 +6,6 @@ export const Home = () => {
     <div className='home'>
       <HomeBg />
       <Heroblock />
-      <h2>...</h2>
     </div>
   );
 };
