@@ -5,83 +5,14 @@
   padding: 0 7%;
   margin-bottom: 2rem;
   text-align: center;
-  display: grid;
-  grid-template-areas:
-    'h h h h'
-    's s d d'
-    'a a a a'
-    't t t t';
-  h2 {
-    grid-area: h;
-  }
-  & > span {
-    grid-area: s;
-    font-weight: 300;
-    align-self: center;
-    @include bp(tab) {
-      justify-self: end;
-      padding-right: 1rem;
-    }
-    @include bp(laptop) {
-      padding-right: 1.6rem;
-    }
-    @include bp(laptopL) {
-      padding-right: 2.2rem;
-    }
-    @include bp(4k) {
-      padding-right: 4rem;
-    }
-  }
-  select {
-    grid-area: d;
-    background-color: $color-bg-light-blue;
-    border-radius: 6px;
-    border: none;
-    color: $color-font-primary;
-    height: 1.5rem;
-    font-family: 'Montserrat';
-    @include bp(tab) {
-      justify-self: start;
-      width: 60%;
-      height: 1.7rem;
-      font-size: 1rem;
-    }
-    @include bp(laptop) {
-      height: 2.2rem;
-      font-size: 1.2rem;
-    }
-    @include bp(laptopL) {
-      height: 2.5rem;
-      font-size: 1.3rem;
-    }
-    @include bp(4k) {
-      height: 5rem;
-      font-size: 2.2rem;
-    }
-    option {
-      font-family: 'Montserrat';
-      text-align: center;
-    }
-  }
+  display: flex;
+  flex-direction: column;
   button {
     @include bp(mobL) {
       margin: 0 2rem;
     }
     @include bp(laptop) {
       margin: 0 4rem;
-    }
-  }
-  &__table {
-    grid-area: t;
-  }
-  & a {
-    grid-area: a;
-    margin-top: 0.3rem;
-    @include bp(mobL) {
-      margin-top: 0.5rem;
-    }
-    @include bp(tab) {
-      margin-top: 0.6rem;
     }
   }
 }

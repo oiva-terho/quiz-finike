@@ -1,0 +1,60 @@
+@import '/src/styles/breakpoints';
+@import '/src/styles/variables';
+
+.dates-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  @include bp(mobL) {
+    margin-top: 0.5rem;
+  }
+  @include bp(tab) {
+    margin-top: 0.6rem;
+  }
+  & > span {
+    font-weight: 300;
+    align-self: center;
+    padding-right: 0.7rem;
+    @include bp(tab) {
+      justify-self: end;
+      padding-right: 1rem;
+    }
+    @include bp(laptop) {
+      padding-right: 1.6rem;
+    }
+    @include bp(laptopL) {
+      padding-right: 2.2rem;
+    }
+    @include bp(4k) {
+      padding-right: 4rem;
+    }
+  }
+  & > select {
+    background-color: $color-bg-light-blue;
+    border-radius: 6px;
+    border: none;
+    color: $color-font-primary;
+    height: 1.5rem;
+    font-family: 'Montserrat';
+    @include bp(tab) {
+      font-size: 1rem;
+    }
+    @include bp(laptop) {
+      height: 1.8rem;
+      font-size: 1.2rem;
+    }
+    @include bp(laptopL) {
+      height: 2.1rem;
+      font-size: 1.3rem;
+    }
+    @include bp(4k) {
+      height: 3.5rem;
+      font-size: 2.2rem;
+    }
+    option {
+      font-family: 'Montserrat';
+      text-align: center;
+    }
+  }
+}

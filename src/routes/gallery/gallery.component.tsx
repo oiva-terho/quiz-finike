@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DateSelect } from '~/components/date-select/date-select.component';
 
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Photo } from '~/components/photo/photo.component';
@@ -22,12 +23,6 @@ export const Gallery = () => {
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
 
-  const openDate = (date: string) => {
-    dispatch(fetchPhotoLinksStart(date));
-    gridRef.current.scrollTop = 0;
-    setStart(0);
-  };
-
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
 
@@ -35,31 +30,26 @@ export const Gallery = () => {
   const gridWidth = grid
     ? +window.getComputedStyle(grid).width.split('.')[0].replace(/\D/g, '')
     : 0;
-  console.log('grid:', grid, 'grid width:', gridWidth);
-  console.log('grid width', grid && window.getComputedStyle(grid).width);
   const windowWidth = document.documentElement.clientWidth;
-  console.log('window width:', windowWidth);
   const height = (function () {
     if (windowWidth < 768) return gridWidth;
     if (windowWidth < 1440) return (gridWidth - 10) / 2;
     return (gridWidth - 20) / 3;
   })();
-  console.log('img height:', height);
-  const visibleRows = Math.round(window.innerHeight / height + 1);
+  const visibleRows = Math.round(window.innerHeight / height + 3);
   const photosInRow = (function () {
     if (windowWidth < 768) return 1;
     if (windowWidth < 1440) return 2;
     return 3;
   })();
-  console.log('visible rows:', visibleRows, 'photos in row:', photosInRow);
   const getTopHeight = () => height * start;
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
   const onScroll = (e: Event): void => {
     const target = e.target as HTMLDivElement;
     if (target?.scrollTop) {
-      console.log('scroll', target.scrollTop);
-      setStart(Math.floor(target.scrollTop / height));
+      const newStart = Math.floor(target.scrollTop / height) - 1;
+      setStart(newStart < 0 ? 0 : newStart);
     }
   };
 
@@ -75,26 +65,16 @@ export const Gallery = () => {
     };
   });
 
+  const openDate = (date: string) => {
+    dispatch(fetchPhotoLinksStart(date));
+    gridRef.current.scrollTop = 0;
+    setStart(0);
+  };
+
   if (!currentUser) return <Nouser location='gallery' />;
   return (
     <>
-      <div className='gallery__dates'>
-        <span>Date:</span>
-        <select
-          defaultValue=''
-          className='gallery__dates'
-          onChange={(e) => openDate(e.target.value)}
-        >
-          <option value=''>-</option>
-          {foldersList?.length
-            ? [...foldersList]?.reverse().map((folder) => (
-                <option key={folder} value={folder}>
-                  {`${folder.slice(4, 6)}.${folder.slice(2, 4)}.20${folder.slice(0, 2)}`}
-                </option>
-              ))
-            : null}
-        </select>
-      </div>
+      <DateSelect dates={foldersList} action={openDate} />
       <div
         className='gallery__grid'
         style={{ height: window.innerHeight - 140, overflow: 'auto' }}
