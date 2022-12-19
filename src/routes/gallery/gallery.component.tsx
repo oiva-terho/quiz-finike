@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button } from '~/components/button/button.component';
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Photo } from '~/components/photo/photo.component';
 import { Spinner } from '~/components/spinner/spinner.component';
@@ -32,10 +31,21 @@ export const Gallery = () => {
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
 
-  const height = 400;
-  const visibleRows = Math.round(window.innerHeight / height + 1);
-  const photosInRow = Math.ceil(window.innerWidth / 639);
+  const grid = document.querySelector('.gallery__grid');
+  const gridWidth = grid ? +window.getComputedStyle(grid).width.replace(/\D/g, '') : 0;
 
+  const windowWidth = document.documentElement.clientWidth;
+  const height = (function () {
+    if (windowWidth < 768) return gridWidth;
+    if (windowWidth < 1440) return (gridWidth - 10) / 2;
+    return (gridWidth - 20) / 3;
+  })();
+  const visibleRows = Math.round(window.innerHeight / height + 1);
+  const photosInRow = (function () {
+    if (windowWidth < 768) return 1;
+    if (windowWidth < 1440) return 2;
+    return 3;
+  })();
   const getTopHeight = () => height * start;
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
