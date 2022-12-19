@@ -1,6 +1,5 @@
 .photo {
-  max-width: 600px;
-  max-height: 400px;
+  width: 100%;
   box-sizing: border-box;
   aspect-ratio: 3/2;
   & > img {
