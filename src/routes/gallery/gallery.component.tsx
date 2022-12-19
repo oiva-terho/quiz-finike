@@ -32,26 +32,33 @@ export const Gallery = () => {
   const [start, setStart] = useState(0);
 
   const grid = document.querySelector('.gallery__grid');
-  const gridWidth = grid ? +window.getComputedStyle(grid).width.replace(/\D/g, '') : 0;
-
+  const gridWidth = grid
+    ? +window.getComputedStyle(grid).width.split('.')[0].replace(/\D/g, '')
+    : 0;
+  console.log('grid:', grid, 'grid width:', gridWidth);
+  console.log('grid width', grid && window.getComputedStyle(grid).width);
   const windowWidth = document.documentElement.clientWidth;
+  console.log('window width:', windowWidth);
   const height = (function () {
     if (windowWidth < 768) return gridWidth;
     if (windowWidth < 1440) return (gridWidth - 10) / 2;
     return (gridWidth - 20) / 3;
   })();
+  console.log('img height:', height);
   const visibleRows = Math.round(window.innerHeight / height + 1);
   const photosInRow = (function () {
     if (windowWidth < 768) return 1;
     if (windowWidth < 1440) return 2;
     return 3;
   })();
+  console.log('visible rows:', visibleRows, 'photos in row:', photosInRow);
   const getTopHeight = () => height * start;
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
   const onScroll = (e: Event): void => {
     const target = e.target as HTMLDivElement;
     if (target?.scrollTop) {
+      console.log('scroll', target.scrollTop);
       setStart(Math.floor(target.scrollTop / height));
     }
   };
