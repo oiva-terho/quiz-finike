@@ -4,6 +4,7 @@ import './button.styles.scss';
 export enum BUTTON_CLASSES {
   google = 'button-google',
   apply = 'button-apply',
+  auth = 'button-auth',
 }
 
 export type ButtonProps = {

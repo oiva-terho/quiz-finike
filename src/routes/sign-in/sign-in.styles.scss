@@ -1,5 +1,93 @@
+@import '/src/styles/breakpoints';
+@import '/src/styles/variables.scss';
+
 .sign-in {
-  text-align: center;
+  height: calc(100vh - 70px);
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include bp(tab) {
+    height: calc(100vh - 45px);
+  }
+  @include bp(laptop) {
+    height: calc(100vh - 60px);
+  }
+  @include bp(4k) {
+    height: calc(100vh - 100px);
+  }
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+    gap: 16px;
+    @include bp(tab) {
+      border: 1px solid $color-font-primary;
+      border-radius: 6px;
+      width: 500px;
+      gap: 20px;
+    }
+    @include bp(laptop) {
+      width: 600px;
+    }
+    @include bp(4k) {
+      width: 1400px;
+    }
+    & > h3 {
+      margin-top: 0;
+    }
+    & > form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      @include bp(laptop) {
+        gap: 30px;
+      }
+      @include bp(4k) {
+        gap: 80px;
+      }
+      .sign-in__buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+    }
+    .sign-in__google {
+      margin: 1.4rem 0;
+      & > button {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        & > svg {
+          height: 1rem;
+          @include bp(mobL) {
+            height: 1.2rem;
+          }
+          @include bp(laptop) {
+            height: 1.4rem;
+          }
+          @include bp(4k) {
+            height: 4rem;
+          }
+        }
+      }
+    }
+    button {
+      @include bp(mobL) {
+        font-size: 1rem;
+        padding: 6px 30px;
+      }
+      @include bp(laptop) {
+        font-size: 1.2rem;
+        padding: 8px 40px;
+      }
+      @include bp(4k) {
+        font-size: 2.4rem;
+        padding: 23px 90px;
+        border-radius: 18px;
+      }
+    }
+  }
 }
