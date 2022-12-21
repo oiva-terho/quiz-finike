@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
+import { Spinner } from '~/components/spinner/spinner.component';
 import { clearError, signUpStart } from '~/store/user/user.action';
-import { selectCurrentUser, selectUserError } from '~/store/user/user.selector';
+import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/user/user.selector';
 
 const defaultFormFields = {
   email: '',
@@ -24,6 +25,8 @@ export const SignUpForm = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const logError = useSelector(selectUserError);
+  const onLoading = useSelector(selectUserLoading);
+
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password, confirmPassword } = formFields;
 
@@ -68,37 +71,43 @@ export const SignUpForm = () => {
 
   return (
     <div className='sign-in'>
-      <h2>Sign up with your email and password</h2>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          label='Email'
-          required
-          name='email'
-          type='email'
-          onChange={handleChange}
-          value={email}
-        />
-        <FormInput
-          label='Password'
-          required
-          name='password'
-          type='password'
-          onChange={handleChange}
-          value={password}
-        />
-        <FormInput
-          label='Confirm password'
-          required
-          name='confirmPassword'
-          type='password'
-          onChange={handleChange}
-          value={confirmPassword}
-        />
-        {regError !== null && <span>{regError}</span>}
-        <Button type='submit'>Sign Up</Button>
-      </form>
-      {checkUser === 'has team' && <Navigate to='/' />}
-      {checkUser === 'no team' && <Navigate to='/add-team' />}
+      {onLoading ? (
+        <Spinner />
+      ) : (
+        <div className='sign-in__wrapper'>
+          <h2>Create account</h2>
+          <form onSubmit={handleSubmit}>
+            <FormInput
+              label='Email'
+              required
+              name='email'
+              type='email'
+              onChange={handleChange}
+              value={email}
+            />
+            <FormInput
+              label='Password'
+              required
+              name='password'
+              type='password'
+              onChange={handleChange}
+              value={password}
+            />
+            <FormInput
+              label='Confirm password'
+              required
+              name='confirmPassword'
+              type='password'
+              onChange={handleChange}
+              value={confirmPassword}
+            />
+            {regError !== null && <span>{regError}</span>}
+            <Button type='submit'>Sign Up</Button>
+          </form>
+          {checkUser === 'has team' && <Navigate to='/' />}
+          {checkUser === 'no team' && <Navigate to='/add-team' />}
+        </div>
+      )}
     </div>
   );
 };

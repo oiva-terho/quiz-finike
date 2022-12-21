@@ -25,24 +25,27 @@ export const AddTeamName = () => {
 
   return (
     <div className='sign-in'>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          required
-          label='Team name'
-          name='teamName'
-          type='teamName'
-          onChange={handleChange}
-          value={teamName}
-        />
-        {teamName.toLocaleLowerCase() === 'admin' ? (
-          <h2>Unacceptable team name</h2>
-        ) : (
-          <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
-            Enter
-          </Button>
-        )}
-      </form>
-      {currentUser?.teamName && <Navigate to='/' />}
+      <div className='sign-in__wrapper'>
+        <h3>Add your team name</h3>
+        <form onSubmit={handleSubmit}>
+          <FormInput
+            required
+            label='Team name'
+            name='team-name'
+            type='text'
+            onChange={handleChange}
+            value={teamName}
+          />
+          {teamName.toLocaleLowerCase() === 'admin' ? (
+            <h2>Unacceptable team name</h2>
+          ) : (
+            <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
+              Add
+            </Button>
+          )}
+        </form>
+        {currentUser?.teamName && <Navigate to='/' />}
+      </div>
     </div>
   );
 };
