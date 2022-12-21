@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Button } from '~/components/button/button.component';
+import { DateSelect } from '~/components/date-select/date-select.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Table } from '~/components/table/table.component';
@@ -17,27 +18,24 @@ export const Games = () => {
   const gamesList = useSelector(selectGamesList);
   const teams = useSelector(selectGameTeams);
   const currentUser = useSelector(selectCurrentUser);
-  if (!currentUser) return <Nouser location='games' />;
 
-  const openGame = (date: string) => {
+  const openDate = (date: string) => {
     if (!date) return dispatch(clearGame());
     dispatch(fetchGameStart(date));
   };
 
+  if (!currentUser) return <Nouser location='games' />;
+
   return (
     <div className='games'>
       <h2>Game results</h2>
-      <span>Date:</span>
-      <select defaultValue='' className='games__dates' onChange={(e) => openGame(e.target.value)}>
-        <option value=''>-</option>
-        {gamesList?.length
-          ? [...gamesList]?.reverse().map((date) => (
-              <option key={date} value={date}>
-                {`${date.slice(4, 6)}.${date.slice(2, 4)}.20${date.slice(0, 2)}`}
-              </option>
-            ))
-          : null}
-      </select>
+      <DateSelect dates={gamesList} action={openDate} />
+      {currentUser.teamName === 'Admin' ? (
+        <Link to='/games/add'>
+          <Button>Edit game</Button>
+          <Button onClick={() => dispatch(clearGame())}>Add a game</Button>
+        </Link>
+      ) : null}
       <div className='games__table'>
         <GameHeader passive />
         {teams.map((team) => (
@@ -52,12 +50,6 @@ export const Games = () => {
           />
         ))}
       </div>
-      {currentUser.teamName === 'Admin' ? (
-        <Link to='/games/add'>
-          <Button>Edit game</Button>
-          <Button onClick={() => dispatch(clearGame())}>Add a game</Button>
-        </Link>
-      ) : null}
     </div>
   );
 };
