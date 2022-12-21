@@ -18,8 +18,8 @@
     position: absolute;
     font-weight: 300;
     font-size: 1rem;
-    left: 7px;
     top: 7px;
+    left: 10px;
     @include bp(laptop) {
       font-size: 1.3rem;
       top: 8px;
@@ -42,6 +42,7 @@
     border-radius: 6px;
     @include bp(laptop) {
       font-size: 1.1rem;
+      padding: 0 14px;
     }
     @include bp(4k) {
       border-radius: 18px;

@@ -30,9 +30,12 @@
     }
     @include bp(laptop) {
       width: 600px;
+      border-radius: 12px;
     }
     @include bp(4k) {
       width: 1400px;
+      border-radius: 18px;
+      padding: 80px;
     }
     & > h3 {
       margin-top: 0;

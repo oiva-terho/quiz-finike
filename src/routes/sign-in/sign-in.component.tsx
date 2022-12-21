@@ -4,8 +4,9 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
-import { selectCurrentUser, selectUserError } from '~/store/user/user.selector';
+import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/user/user.selector';
 import { clearError, emailSignInStart, googleSignInStart } from '../../store/user/user.action';
+import { Spinner } from '~/components/spinner/spinner.component';
 
 import { ReactComponent as GLogo } from '~/google.svg';
 import './sign-in.styles.scss';
@@ -23,6 +24,7 @@ enum errMessage {
 export const SignInForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const onLoading = useSelector(selectUserLoading);
   const goTo = (path: string) => navigate(path);
 
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -57,47 +59,55 @@ export const SignInForm = () => {
 
   return (
     <div className='sign-in'>
-      <div className='sign-in__wrapper'>
-        <h3>Sign in</h3>
-        <form onSubmit={handleSubmit}>
-          <FormInput
-            required
-            label='Email'
-            name='email'
-            type='email'
-            onChange={handleChange}
-            value={email}
-          />
-          {logError?.message === errMessage.email && (
-            <span>No user associated with this email</span>
-          )}
-          <FormInput
-            required
-            label='Password'
-            name='password'
-            type='password'
-            onChange={handleChange}
-            value={password}
-          />
-          {logError?.message === errMessage.pass && <span>Incorrect password</span>}
-          <div className='sign-in__buttons'>
-            <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={() => goTo('/sign-up')}>
-              Create account
-            </Button>
-            <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
-              Sign In
+      {onLoading ? (
+        <Spinner />
+      ) : (
+        <div className='sign-in__wrapper'>
+          <h3>Sign in</h3>
+          <form onSubmit={handleSubmit}>
+            <FormInput
+              required
+              label='Email'
+              name='email'
+              type='email'
+              onChange={handleChange}
+              value={email}
+            />
+            {logError?.message === errMessage.email && (
+              <span>No user associated with this email</span>
+            )}
+            <FormInput
+              required
+              label='Password'
+              name='password'
+              type='password'
+              onChange={handleChange}
+              value={password}
+            />
+            {logError?.message === errMessage.pass && <span>Incorrect password</span>}
+            <div className='sign-in__buttons'>
+              <Button
+                type='button'
+                buttonType={BUTTON_CLASSES.auth}
+                onClick={() => goTo('/sign-up')}
+              >
+                Create account
+              </Button>
+              <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
+                Sign In
+              </Button>
+            </div>
+          </form>
+          <div className='sign-in__google'>
+            <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={signInWithGoogle}>
+              <span>Continue with&nbsp;</span>
+              <GLogo />
             </Button>
           </div>
-        </form>
-        <div className='sign-in__google'>
-          <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={signInWithGoogle}>
-            <span>Continue with&nbsp;</span>
-            <GLogo />
-          </Button>
+          {checkUser === 'has team' && <Navigate to='/' />}
+          {checkUser === 'no team' && <Navigate to='/add-team' />}
         </div>
-        {checkUser === 'has team' && <Navigate to='/' />}
-        {checkUser === 'no team' && <Navigate to='/add-team' />}
-      </div>
+      )}
     </div>
   );
 };
