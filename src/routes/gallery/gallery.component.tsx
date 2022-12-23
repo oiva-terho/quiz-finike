@@ -23,6 +23,7 @@ export const Gallery = () => {
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
 
+  // Creates window of rendered photos, changes all unrendered photos by empty divs
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
 
@@ -39,6 +40,8 @@ export const Gallery = () => {
     : 0;
   const windowWidth = document.documentElement.clientWidth;
   const height = (function () {
+    // Checks how many photos on screen depending on media rulles and
+    // conts photo height on 3/2 aspect ratio. 10 = photo gap in px
     if (windowWidth < 768) return (gridWidth / 3) * 2;
     if (windowWidth < 1440) return (gridWidth - 10) / 3;
     return (gridWidth - 20) / 4.5;
