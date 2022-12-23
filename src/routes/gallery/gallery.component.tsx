@@ -32,24 +32,40 @@ export const Gallery = () => {
     : 0;
   const windowWidth = document.documentElement.clientWidth;
   const height = (function () {
-    if (windowWidth < 768) return gridWidth;
-    if (windowWidth < 1440) return (gridWidth - 10) / 2;
-    return (gridWidth - 20) / 3;
+    if (windowWidth < 768) return (gridWidth / 3) * 2;
+    if (windowWidth < 1440) return (gridWidth - 10) / 3;
+    return (gridWidth - 20) / 4.5;
   })();
-  const visibleRows = Math.round(window.innerHeight / height + 3);
+  const visibleRows = Math.round(window.innerHeight / height + 2);
   const photosInRow = (function () {
     if (windowWidth < 768) return 1;
     if (windowWidth < 1440) return 2;
     return 3;
   })();
-  const getTopHeight = () => height * start;
+  const getTopHeight = () => (height + 10) * start;
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
   const onScroll = (e: Event): void => {
     const target = e.target as HTMLDivElement;
     if (target?.scrollTop) {
-      const newStart = Math.floor(target.scrollTop / height) - 1;
+      const newStart = Math.floor(target.scrollTop / (height + 10)) - 1;
       setStart(newStart < 0 ? 0 : newStart);
+      console.log(
+        'scroll',
+        target.scrollTop,
+        'height',
+        height,
+        'start',
+        newStart,
+        'rows',
+        visibleRows,
+        'x',
+        photosInRow,
+        'top',
+        (height + 10) * start,
+        'window height',
+        window.innerHeight,
+      );
     }
   };
 
