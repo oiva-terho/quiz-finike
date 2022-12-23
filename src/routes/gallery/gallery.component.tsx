@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { DateSelect } from '~/components/date-select/date-select.component';
 
 import { Nouser } from '~/components/nouser/nouser.component';
@@ -28,6 +29,7 @@ export const Gallery = () => {
   // Creates window of rendered photos, changes all unrendered photos by empty divs
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
+  const [bonusOpened, setBonusOpened] = useState(false);
 
   const navigationComponent = document.querySelector('.navigation');
   const dateSelectComponent = document.querySelector('.dates-select');
@@ -55,7 +57,10 @@ export const Gallery = () => {
     return 3;
   })();
   const getTopHeight = () => (height + 10) * start;
-  const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
+  const getBottomHeight = () => {
+    const rowsLeft = photoLinks.length / photosInRow - (start + visibleRows + 1);
+    return height * (rowsLeft < 0 ? 0 : rowsLeft);
+  };
 
   const onScroll = (e: Event): void => {
     const target = e.target as HTMLDivElement;
@@ -78,12 +83,16 @@ export const Gallery = () => {
   });
 
   const openDate = (date: string) => {
-    if (!date) return dispatch(clearPhotos());
+    dispatch(clearPhotos());
     dispatch(setPhotoDate(date));
-    console.log(date);
     dispatch(fetchPhotoLinksStart(date));
     gridRef.current.scrollTop = 0;
     setStart(0);
+  };
+
+  const showBonus = () => {
+    setBonusOpened(true);
+    dispatch(fetchPhotoLinksStart(photoDate, true));
   };
 
   if (!currentUser) return <Nouser location='gallery' />;
@@ -101,6 +110,11 @@ export const Gallery = () => {
             {photosLoading ? <Spinner /> : 'Choose the date'}
           </div>
         )}
+        {photoLinks.length && !bonusOpened ? (
+          <Button buttonType={BUTTON_CLASSES.apply} onClick={showBonus}>
+            Bonus
+          </Button>
+        ) : null}
         <div className='gallery__space' style={{ height: getBottomHeight() }} />
       </div>
     </>

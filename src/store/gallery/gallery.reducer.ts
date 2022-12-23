@@ -6,6 +6,7 @@ import {
   fetchPhotoLinksStart,
   fetchPhotoLinksFailed,
   setPhotoDate,
+  addBonus,
 } from './gallery.action';
 
 export type GalleryState = {
@@ -24,13 +25,16 @@ const INITIAL_STATE: GalleryState = {
 
 export const galleryReducer = (state = INITIAL_STATE, action: AnyAction): GalleryState => {
   if (fetchPhotoLinksStart.match(action)) {
-    return { ...state, photoLinks: [], isLoading: true };
+    return { ...state, isLoading: true };
   }
   if (fetchFoldersSuccess.match(action)) {
     return { ...state, folders: action.payload };
   }
   if (fetchPhotoLinksSuccess.match(action)) {
     return { ...state, photoLinks: action.payload, isLoading: false };
+  }
+  if (addBonus.match(action)) {
+    return { ...state, photoLinks: [...state.photoLinks, ...action.payload] };
   }
   if (fetchPhotoLinksFailed.match(action)) {
     return { ...state, isLoading: false };

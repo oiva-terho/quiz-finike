@@ -11,7 +11,7 @@ export type FetchFolders = ActionWithPayload<GALLERY_ACTION_TYPES.FETCH_FOLDERS_
 export type SetPhotoDate = ActionWithPayload<GALLERY_ACTION_TYPES.SET_PHOTO_DATE, string>;
 export type FetchPhotoLinksStart = ActionWithPayload<
   GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_START,
-  { date: string }
+  { date: string; bonus?: boolean }
 >;
 export type FetchPhotoLinksSuccess = ActionWithPayload<
   GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_SUCCESS,
@@ -21,6 +21,7 @@ export type FetchPhotoLinksFailed = ActionWithPayload<
   GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_FAILED,
   Error
 >;
+export type AddBonus = ActionWithPayload<GALLERY_ACTION_TYPES.ADD_BONUS, string[]>;
 export type CleanPhotos = Action<GALLERY_ACTION_TYPES.CLEAR_PHOTO_LINKS>;
 
 // Actions
@@ -36,8 +37,8 @@ export const setPhotoDate = withMatcher(
   (date: string): SetPhotoDate => createAction(GALLERY_ACTION_TYPES.SET_PHOTO_DATE, date),
 );
 export const fetchPhotoLinksStart = withMatcher(
-  (date: string): FetchPhotoLinksStart =>
-    createAction(GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_START, { date }),
+  (date: string, bonus?: boolean): FetchPhotoLinksStart =>
+    createAction(GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_START, { date, bonus }),
 );
 export const fetchPhotoLinksSuccess = withMatcher(
   (photoLinks: string[]): FetchPhotoLinksSuccess =>
@@ -46,6 +47,9 @@ export const fetchPhotoLinksSuccess = withMatcher(
 export const fetchPhotoLinksFailed = withMatcher(
   (error: Error): FetchPhotoLinksFailed =>
     createAction(GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_FAILED, error),
+);
+export const addBonus = withMatcher(
+  (photoLinks: string[]): AddBonus => createAction(GALLERY_ACTION_TYPES.ADD_BONUS, photoLinks),
 );
 export const clearPhotos = withMatcher(
   (): CleanPhotos => createAction(GALLERY_ACTION_TYPES.CLEAR_PHOTO_LINKS),

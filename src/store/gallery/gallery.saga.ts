@@ -6,6 +6,7 @@ import {
   fetchPhotoLinksSuccess,
   fetchPhotoLinksFailed,
   FetchPhotoLinksStart,
+  addBonus,
 } from './gallery.action';
 import { GALLERY_ACTION_TYPES } from './gallery.types';
 
@@ -18,8 +19,15 @@ export function* fetchFoldersStartAsync() {
   }
 }
 
-export function* fetchPhotoLinksStartAsync({ payload: { date } }: FetchPhotoLinksStart) {
+export function* fetchPhotoLinksStartAsync({
+  payload: { date, bonus = false },
+}: FetchPhotoLinksStart) {
   try {
+    if (bonus) {
+      const photoLinks = yield* call(() => getPhotoLinks(`${date}/bonus`));
+      yield* put(addBonus(photoLinks));
+      return;
+    }
     const photoLinks = yield* call(() => getPhotoLinks(date));
     yield* put(fetchPhotoLinksSuccess(photoLinks));
   } catch (error) {
