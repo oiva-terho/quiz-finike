@@ -40,4 +40,8 @@
   &-auth {
     border: 1px solid $color-bg-light;
   }
+  &-watch {
+    border: 1px solid $color-marker;
+    margin: 20px auto !important;
+  }
 }

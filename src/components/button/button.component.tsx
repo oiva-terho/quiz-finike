@@ -5,6 +5,7 @@ export enum BUTTON_CLASSES {
   google = 'button-google',
   apply = 'button-apply',
   auth = 'button-auth',
+  watch = 'button-watch',
 }
 
 export type ButtonProps = {
