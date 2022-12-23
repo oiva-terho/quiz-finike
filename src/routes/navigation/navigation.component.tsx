@@ -9,14 +9,18 @@ import { ReactComponent as QuizLogo } from '~/finike-quiz.svg';
 import { selectCurrentUser } from '~/store/user/user.selector';
 
 import './navigation.styles.scss';
+import { clearPhotos } from '~/store/gallery/gallery.action';
 
 export const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
   const signOutUser = () => dispatch(signOutStart());
-  const goTo = (path: string) => navigate(path);
-
+  const goTo = (path: string) => {
+    dispatch(clearGame());
+    dispatch(clearPhotos());
+    navigate(path);
+  };
   return (
     <>
       <div className='navigation'>
@@ -27,14 +31,7 @@ export const Navigation = () => {
           {currentUser ? <span>{currentUser.teamName}</span> : null}
         </div>
         <div className='navigation__links'>
-          <Button
-            onClick={() => {
-              dispatch(clearGame());
-              goTo('/games');
-            }}
-          >
-            Games
-          </Button>
+          <Button onClick={() => goTo('/games')}>Games</Button>
           <Button onClick={() => goTo('/gallery')}>Gallery</Button>
           {currentUser ? (
             <Button onClick={signOutUser}>Sign Out</Button>

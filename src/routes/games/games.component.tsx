@@ -7,7 +7,7 @@ import { GameHeader } from '~/components/game-header/game-header.component';
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Table } from '~/components/table/table.component';
 
-import { fetchPhotoLinksStart } from '~/store/gallery/gallery.action';
+import { fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery/gallery.action';
 import { selectFolders } from '~/store/gallery/gallery.selector';
 import { clearGame, fetchGameStart } from '~/store/game/game.action';
 import { selectGameDate, selectGamesList, selectGameTeams } from '~/store/game/game.selector';
@@ -39,7 +39,7 @@ export const Games = () => {
   return (
     <div className='games'>
       <h2>Game results</h2>
-      <DateSelect dates={gamesList} action={openDate} />
+      <DateSelect dates={gamesList} currentDate={gameDate} action={openDate} />
       {currentUser.teamName === 'Admin' ? (
         <Link to='/games/add'>
           <Button buttonType={BUTTON_CLASSES.auth}>Edit game</Button>
@@ -67,6 +67,7 @@ export const Games = () => {
           buttonType={BUTTON_CLASSES.watch}
           onClick={() => {
             dispatch(fetchPhotoLinksStart(photosFolder));
+            dispatch(setPhotoDate(photosFolder));
             goTo('/gallery');
           }}
         >

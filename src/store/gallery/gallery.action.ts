@@ -8,7 +8,7 @@ export type FetchFoldersSuccess = ActionWithPayload<
   string[]
 >;
 export type FetchFolders = ActionWithPayload<GALLERY_ACTION_TYPES.FETCH_FOLDERS_FAILED, Error>;
-
+export type SetPhotoDate = ActionWithPayload<GALLERY_ACTION_TYPES.SET_PHOTO_DATE, string>;
 export type FetchPhotoLinksStart = ActionWithPayload<
   GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_START,
   { date: string }
@@ -31,6 +31,9 @@ export const fetchFoldersSuccess = withMatcher(
 );
 export const fetchFoldersFailed = withMatcher(
   (error: Error): FetchFolders => createAction(GALLERY_ACTION_TYPES.FETCH_FOLDERS_FAILED, error),
+);
+export const setPhotoDate = withMatcher(
+  (date: string): SetPhotoDate => createAction(GALLERY_ACTION_TYPES.SET_PHOTO_DATE, date),
 );
 export const fetchPhotoLinksStart = withMatcher(
   (date: string): FetchPhotoLinksStart =>

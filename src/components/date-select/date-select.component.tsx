@@ -2,13 +2,14 @@ import './date-select.styles.scss';
 
 type DateSelectProp = {
   dates: string[] | undefined;
+  currentDate: string;
   action: (date: string) => void;
 };
-export const DateSelect = ({ dates, action }: DateSelectProp) => {
+export const DateSelect = ({ dates, currentDate, action }: DateSelectProp) => {
   return (
     <div className='dates-select'>
       <span>Date:</span>
-      <select defaultValue='' onChange={(e) => action(e.target.value)}>
+      <select defaultValue={currentDate} onChange={(e) => action(e.target.value)}>
         <option value=''>-</option>
         {dates?.length
           ? [...dates]?.reverse().map((date) => (

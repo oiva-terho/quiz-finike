@@ -5,10 +5,11 @@ import { DateSelect } from '~/components/date-select/date-select.component';
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Photo } from '~/components/photo/photo.component';
 import { Spinner } from '~/components/spinner/spinner.component';
-import { fetchPhotoLinksStart } from '~/store/gallery/gallery.action';
+import { clearPhotos, fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery/gallery.action';
 
 import {
   selectFolders,
+  selectPhotoDate,
   selectPhotoLinks,
   selectPhotosLoading,
 } from '~/store/gallery/gallery.selector';
@@ -22,6 +23,7 @@ export const Gallery = () => {
   const foldersList = useSelector(selectFolders);
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
+  const photoDate = useSelector(selectPhotoDate);
 
   // Creates window of rendered photos, changes all unrendered photos by empty divs
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -76,6 +78,9 @@ export const Gallery = () => {
   });
 
   const openDate = (date: string) => {
+    if (!date) return dispatch(clearPhotos());
+    dispatch(setPhotoDate(date));
+    console.log(date);
     dispatch(fetchPhotoLinksStart(date));
     gridRef.current.scrollTop = 0;
     setStart(0);
@@ -84,7 +89,7 @@ export const Gallery = () => {
   if (!currentUser) return <Nouser location='gallery' />;
   return (
     <>
-      <DateSelect dates={foldersList} action={openDate} />
+      <DateSelect dates={foldersList} currentDate={photoDate} action={openDate} />
       <div className='gallery__grid' style={{ height: gridHeight, overflow: 'auto' }} ref={gridRef}>
         <div className='gallery__space' style={{ height: getTopHeight() }} />
         {currentUser && photoLinks.length !== 0 ? (
