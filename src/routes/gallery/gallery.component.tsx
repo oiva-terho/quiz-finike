@@ -26,6 +26,13 @@ export const Gallery = () => {
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
 
+  const navigationComponent = document.querySelector('.navigation');
+  const dateSelectComponent = document.querySelector('.dates-select');
+  const gridHeight =
+    window.innerHeight -
+    (navigationComponent ? navigationComponent.getBoundingClientRect().height : 100) -
+    (dateSelectComponent ? dateSelectComponent.getBoundingClientRect().height : 101);
+
   const grid = document.querySelector('.gallery__grid');
   const gridWidth = grid
     ? +window.getComputedStyle(grid).width.split('.')[0].replace(/\D/g, '')
@@ -50,22 +57,6 @@ export const Gallery = () => {
     if (target?.scrollTop) {
       const newStart = Math.floor(target.scrollTop / (height + 10)) - 1;
       setStart(newStart < 0 ? 0 : newStart);
-      console.log(
-        'scroll',
-        target.scrollTop,
-        'height',
-        height,
-        'start',
-        newStart,
-        'rows',
-        visibleRows,
-        'x',
-        photosInRow,
-        'top',
-        (height + 10) * start,
-        'window height',
-        window.innerHeight,
-      );
     }
   };
 
@@ -91,11 +82,7 @@ export const Gallery = () => {
   return (
     <>
       <DateSelect dates={foldersList} action={openDate} />
-      <div
-        className='gallery__grid'
-        style={{ height: window.innerHeight - 140, overflow: 'auto' }}
-        ref={gridRef}
-      >
+      <div className='gallery__grid' style={{ height: gridHeight, overflow: 'auto' }} ref={gridRef}>
         <div className='gallery__space' style={{ height: getTopHeight() }} />
         {currentUser && photoLinks.length !== 0 ? (
           photoLinks
