@@ -8,6 +8,7 @@
   padding: 18px;
   justify-items: center;
   align-items: center;
+  box-sizing: border-box;
   @include bp(tab) {
     grid-template-columns: 1fr 1fr;
     .gallery__space {

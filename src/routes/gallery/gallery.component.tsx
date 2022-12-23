@@ -23,8 +23,16 @@ export const Gallery = () => {
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
 
+  // Creates window of rendered photos, changes all unrendered photos by empty divs
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
   const [start, setStart] = useState(0);
+
+  const navigationComponent = document.querySelector('.navigation');
+  const dateSelectComponent = document.querySelector('.dates-select');
+  const gridHeight =
+    window.innerHeight -
+    (navigationComponent ? navigationComponent.getBoundingClientRect().height : 100) -
+    (dateSelectComponent ? dateSelectComponent.getBoundingClientRect().height : 101);
 
   const grid = document.querySelector('.gallery__grid');
   const gridWidth = grid
@@ -32,23 +40,25 @@ export const Gallery = () => {
     : 0;
   const windowWidth = document.documentElement.clientWidth;
   const height = (function () {
-    if (windowWidth < 768) return gridWidth;
-    if (windowWidth < 1440) return (gridWidth - 10) / 2;
-    return (gridWidth - 20) / 3;
+    // Checks how many photos on screen depending on media rulles and
+    // conts photo height on 3/2 aspect ratio. 10 = photo gap in px
+    if (windowWidth < 768) return (gridWidth / 3) * 2;
+    if (windowWidth < 1440) return (gridWidth - 10) / 3;
+    return (gridWidth - 20) / 4.5;
   })();
-  const visibleRows = Math.round(window.innerHeight / height + 3);
+  const visibleRows = Math.round(window.innerHeight / height + 2);
   const photosInRow = (function () {
     if (windowWidth < 768) return 1;
     if (windowWidth < 1440) return 2;
     return 3;
   })();
-  const getTopHeight = () => height * start;
+  const getTopHeight = () => (height + 10) * start;
   const getBottomHeight = () => height * (photoLinks.length / photosInRow - (start + visibleRows));
 
   const onScroll = (e: Event): void => {
     const target = e.target as HTMLDivElement;
     if (target?.scrollTop) {
-      const newStart = Math.floor(target.scrollTop / height) - 1;
+      const newStart = Math.floor(target.scrollTop / (height + 10)) - 1;
       setStart(newStart < 0 ? 0 : newStart);
     }
   };
@@ -75,11 +85,7 @@ export const Gallery = () => {
   return (
     <>
       <DateSelect dates={foldersList} action={openDate} />
-      <div
-        className='gallery__grid'
-        style={{ height: window.innerHeight - 140, overflow: 'auto' }}
-        ref={gridRef}
-      >
+      <div className='gallery__grid' style={{ height: gridHeight, overflow: 'auto' }} ref={gridRef}>
         <div className='gallery__space' style={{ height: getTopHeight() }} />
         {currentUser && photoLinks.length !== 0 ? (
           photoLinks
