@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { ReactComponent as QuizLogo } from '~/finike-quiz.svg';
+import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
+import { ReactComponent as TelegramLogo } from '~/assets/telegram.svg';
+import { ReactComponent as MapLogo } from '~/assets/map.svg';
 import { adaptiveClassName } from '~/utils/layout.utils';
 import './home-hero.styles.scss';
 
@@ -37,6 +39,14 @@ export const Heroblock = () => {
           </p>
         );
       })}
+      <a className='home-hero__map' href='https://goo.gl/maps/qYo4d3hvxq9kt3a69'>
+        <MapLogo />
+        <span>Finike</span>
+      </a>
+      <a className='home-hero__tg' href='https://t.me/finikequiz'>
+        <span>Our chat</span>
+        <TelegramLogo />
+      </a>
     </div>
   );
 };

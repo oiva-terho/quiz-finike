@@ -5,7 +5,7 @@ import { Button } from '~/components/button/button.component';
 import { clearGame } from '~/store/game/game.action';
 import { signOutStart } from '~/store/user/user.action';
 
-import { ReactComponent as QuizLogo } from '~/finike-quiz.svg';
+import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
 import { selectCurrentUser } from '~/store/user/user.selector';
 
 import './navigation.styles.scss';

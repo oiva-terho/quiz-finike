@@ -1,4 +1,5 @@
 @import '/src/styles/breakpoints';
+@import '/src/styles/variables';
 
 @keyframes fadeInUp {
   from {
@@ -83,6 +84,36 @@
     }
     @include bp(4k) {
       font-size: 3rem;
+    }
+  }
+  & > a.home-hero__map {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $color-font-primary;
+    span {
+      padding-left: 6px;
+    }
+    svg {
+      height: 30px;
+    }
+  }
+  & > a.home-hero__tg {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $color-font-primary;
+    span {
+      padding-right: 6px;
+    }
+    svg {
+      height: 30px;
     }
   }
 }

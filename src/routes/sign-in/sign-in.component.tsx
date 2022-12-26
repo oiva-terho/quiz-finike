@@ -8,7 +8,7 @@ import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/u
 import { clearError, emailSignInStart, googleSignInStart } from '../../store/user/user.action';
 import { Spinner } from '~/components/spinner/spinner.component';
 
-import { ReactComponent as GLogo } from '~/google.svg';
+import { ReactComponent as GLogo } from '~/assets/google.svg';
 import './sign-in.styles.scss';
 
 const defaultFormFields = {
