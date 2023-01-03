@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '~/components/button/button.component';
 import { clearGame } from '~/store/game/game.action';
@@ -15,6 +16,7 @@ export const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
+  const { t, i18n } = useTranslation();
   const signOutUser = () => dispatch(signOutStart());
   const goTo = (path: string) => {
     dispatch(clearGame());
@@ -31,13 +33,21 @@ export const Navigation = () => {
           {currentUser ? <span>{currentUser.teamName}</span> : null}
         </div>
         <div className='navigation__links'>
-          <Button onClick={() => goTo('/games')}>Games</Button>
-          <Button onClick={() => goTo('/gallery')}>Gallery</Button>
+          <Button onClick={() => goTo('/games')}>{t('games')}</Button>
+          <Button onClick={() => goTo('/gallery')}>{t('gallery')}</Button>
           {currentUser ? (
-            <Button onClick={signOutUser}>Sign Out</Button>
+            <Button onClick={signOutUser}>{t('signOut')}</Button>
           ) : (
-            <Button onClick={() => goTo('/sign-in')}>Sign In</Button>
+            <Button onClick={() => goTo('/sign-in')}>{t('signIn')}</Button>
           )}
+          <button
+            type='submit'
+            onClick={() => {
+              i18n.changeLanguage(i18n.resolvedLanguage === 'en' ? 'ru' : 'en');
+            }}
+          >
+            {i18n.resolvedLanguage === 'en' ? 'ru' : 'en'}
+          </button>
         </div>
       </div>
       <Outlet />
