@@ -16,7 +16,7 @@ export const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'navigation' });
   const signOutUser = () => dispatch(signOutStart());
   const goTo = (path: string) => {
     dispatch(clearGame());
