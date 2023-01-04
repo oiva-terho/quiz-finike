@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
@@ -25,6 +26,7 @@ export const SignInForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLoading = useSelector(selectUserLoading);
+  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
   const goTo = (path: string) => navigate(path);
 
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -63,7 +65,7 @@ export const SignInForm = () => {
         <Spinner />
       ) : (
         <div className='sign-in__wrapper'>
-          <h3>Sign in</h3>
+          <h3>{t('header')}</h3>
           <form onSubmit={handleSubmit}>
             <FormInput
               required
@@ -73,34 +75,32 @@ export const SignInForm = () => {
               onChange={handleChange}
               value={email}
             />
-            {logError?.message === errMessage.email && (
-              <span>No user associated with this email</span>
-            )}
+            {logError?.message === errMessage.email && <span>{t('nouser')}</span>}
             <FormInput
               required
-              label='Password'
+              label={t('pass')}
               name='password'
               type='password'
               onChange={handleChange}
               value={password}
             />
-            {logError?.message === errMessage.pass && <span>Incorrect password</span>}
+            {logError?.message === errMessage.pass && <span>{t('wrongPass')}</span>}
             <div className='sign-in__buttons'>
               <Button
                 type='button'
                 buttonType={BUTTON_CLASSES.auth}
                 onClick={() => goTo('/sign-up')}
               >
-                Create account
+                {t('create')}
               </Button>
               <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
-                Sign In
+                {t('signIn')}
               </Button>
             </div>
           </form>
           <div className='sign-in__google'>
             <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={signInWithGoogle}>
-              <span>Continue with&nbsp;</span>
+              <span>{t('google')}&nbsp;</span>
               <GLogo />
             </Button>
           </div>

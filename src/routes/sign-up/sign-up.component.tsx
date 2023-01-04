@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
 import { Spinner } from '~/components/spinner/spinner.component';
@@ -15,17 +17,12 @@ const defaultFormFields = {
 
 export const SignUpForm = () => {
   const [regError, setRegError] = useState('');
-  enum errMessage {
-    short = 'Password should be 6 characters or longer',
-    noMatch = 'Passwords do not match',
-    exist = 'Cannot create user. Email already in use',
-    else = 'Something went wrong. Try again later.',
-  }
 
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const logError = useSelector(selectUserError);
   const onLoading = useSelector(selectUserLoading);
+  const { t } = useTranslation('translation', { keyPrefix: 'auth' });
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password, confirmPassword } = formFields;
@@ -35,10 +32,10 @@ export const SignUpForm = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password.length < 6) {
-      setRegError(errMessage.short);
+      setRegError(() => t('short'));
       return;
     } else if (password !== confirmPassword) {
-      setRegError(errMessage.noMatch);
+      setRegError(() => t('noMatch'));
       return;
     }
 
@@ -48,13 +45,13 @@ export const SignUpForm = () => {
 
   useEffect(() => {
     if (logError?.message === 'Firebase: Error (auth/email-already-in-use).') {
-      setRegError(errMessage.exist);
+      setRegError(() => t('exist'));
       setTimeout(() => {
         dispatch(clearError());
         setRegError('');
       }, 6000);
     }
-  }, [logError, errMessage, dispatch]);
+  }, [logError, t, dispatch]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -75,7 +72,7 @@ export const SignUpForm = () => {
         <Spinner />
       ) : (
         <div className='sign-in__wrapper'>
-          <h2>Create account</h2>
+          <h2>{t('create')}</h2>
           <form onSubmit={handleSubmit}>
             <FormInput
               label='Email'
@@ -86,7 +83,7 @@ export const SignUpForm = () => {
               value={email}
             />
             <FormInput
-              label='Password'
+              label={t('pass')}
               required
               name='password'
               type='password'
@@ -94,7 +91,7 @@ export const SignUpForm = () => {
               value={password}
             />
             <FormInput
-              label='Confirm password'
+              label={t('pass2')}
               required
               name='confirmPassword'
               type='password'
@@ -102,7 +99,7 @@ export const SignUpForm = () => {
               value={confirmPassword}
             />
             {regError !== null && <span>{regError}</span>}
-            <Button type='submit'>Sign Up</Button>
+            <Button type='submit'>{t('signUp')}</Button>
           </form>
           {checkUser === 'has team' && <Navigate to='/' />}
           {checkUser === 'no team' && <Navigate to='/add-team' />}

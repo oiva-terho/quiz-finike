@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import './date-select.styles.scss';
 
 type DateSelectProp = {
@@ -6,9 +7,11 @@ type DateSelectProp = {
   action: (date: string) => void;
 };
 export const DateSelect = ({ dates, currentDate, action }: DateSelectProp) => {
+  const { t } = useTranslation();
+
   return (
     <div className='dates-select'>
-      <span>Date:</span>
+      <span>{t('date')}</span>
       <select defaultValue={currentDate} onChange={(e) => action(e.target.value)}>
         <option value=''>-</option>
         {dates?.length

@@ -1,7 +1,9 @@
 import { ChangeEvent } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { Team } from '~/store/game/game.types';
 import { TableInput } from '../table-input/table-input.component';
-import { ErrMessage } from '~/routes/add-game/add-game.component';
+
 import './add-team.styles.scss';
 
 type AddTeamProps = {
@@ -10,25 +12,20 @@ type AddTeamProps = {
   setTeamData: (team: Team) => void;
   sortTeams: () => void;
   setErr: React.Dispatch<React.SetStateAction<string>>;
-  errMessage: ErrMessage;
 };
 
-export const AddTeam = ({
-  team,
-  resColor,
-  setTeamData,
-  sortTeams,
-  setErr,
-  errMessage,
-}: AddTeamProps) => {
+export const AddTeam = ({ team, resColor, setTeamData, sortTeams, setErr }: AddTeamProps) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'addGame' });
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    setErr('');
     if (name === 'result') {
       if (!team.name) {
         setTeamData({ ...team, result: new Array(team.result.length).fill('') });
-        return setErr(errMessage.noTeam);
+        return setErr(() => t('noTeam'));
       }
-      if (+value > 30) return setErr(errMessage.tooLarge);
+      if (+value > 30) return setErr(() => t('tooLarge'));
       const round = event.target.getAttribute('data-round');
       const newResult = [...team.result];
       if (!round) return;
@@ -46,7 +43,7 @@ export const AddTeam = ({
       <TableInput
         required
         className='add-team__team-name'
-        label='Team name'
+        label={t('team')}
         name='name'
         type='text'
         onChange={handleChange}

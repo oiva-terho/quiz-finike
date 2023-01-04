@@ -9,7 +9,7 @@ import './home-hero.styles.scss';
 
 export const Heroblock = () => {
   const [tagline, setTagline] = useState(0);
-  const { t } = useTranslation('translation', { keyPrefix: 'heroText' });
+  const { t } = useTranslation('translation', { keyPrefix: 'hero' });
   const heroText = [t('1'), t('2'), t('3'), t('4')];
   useEffect(() => {
     const taglineChange = setInterval(() => {
