@@ -7,6 +7,9 @@ import { clearGame } from '~/store/game/game.action';
 import { signOutStart } from '~/store/user/user.action';
 
 import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
+import { ReactComponent as GamesLogo } from '~/assets/results.svg';
+import { ReactComponent as GalleryLogo } from '~/assets/gallery.svg';
+import { ReactComponent as AuthLogo } from '~/assets/auth.svg';
 import { selectCurrentUser } from '~/store/user/user.selector';
 
 import './navigation.styles.scss';
@@ -16,8 +19,9 @@ export const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
-  const { t, i18n } = useTranslation('translation', { keyPrefix: 'navigation' });
+  const { t } = useTranslation('translation', { keyPrefix: 'navigation' });
   const signOutUser = () => dispatch(signOutStart());
+  const windowWidth = document.documentElement.clientWidth;
   const goTo = (path: string) => {
     dispatch(clearGame());
     dispatch(clearPhotos());
@@ -26,28 +30,23 @@ export const Navigation = () => {
   return (
     <>
       <div className='navigation'>
-        <Button title='home' className='navigation__home' onClick={() => goTo('/')}>
+        <button title='home' className='navigation__home' onClick={() => goTo('/')}>
           <QuizLogo />
-        </Button>
-        <div className='navigation__team'>
-          {currentUser ? <span>{currentUser.teamName}</span> : null}
-        </div>
+        </button>
         <div className='navigation__links'>
-          <Button onClick={() => goTo('/games')}>{t('games')}</Button>
-          <Button onClick={() => goTo('/gallery')}>{t('gallery')}</Button>
+          <Button onClick={() => goTo('/games')}>
+            {windowWidth > 767 ? t('games') : <GamesLogo />}
+          </Button>
+          <Button onClick={() => goTo('/gallery')}>
+            {windowWidth > 767 ? t('gallery') : <GalleryLogo />}
+          </Button>
           {currentUser ? (
-            <Button onClick={signOutUser}>{t('signOut')}</Button>
+            <Button onClick={signOutUser}>{windowWidth > 767 ? t('signOut') : <AuthLogo />}</Button>
           ) : (
-            <Button onClick={() => goTo('/sign-in')}>{t('signIn')}</Button>
+            <Button onClick={() => goTo('/sign-in')}>
+              {windowWidth > 767 ? t('signIn') : <AuthLogo />}
+            </Button>
           )}
-          <button
-            type='submit'
-            onClick={() => {
-              i18n.changeLanguage(i18n.resolvedLanguage === 'en' ? 'ru' : 'en');
-            }}
-          >
-            {i18n.resolvedLanguage === 'en' ? 'ru' : 'en'}
-          </button>
         </div>
       </div>
       <Outlet />

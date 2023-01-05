@@ -6,10 +6,11 @@ import { ReactComponent as TelegramLogo } from '~/assets/telegram.svg';
 import { ReactComponent as MapLogo } from '~/assets/map.svg';
 import { adaptiveClassName } from '~/utils/layout.utils';
 import './home-hero.styles.scss';
+import { Button } from '../button/button.component';
 
 export const Heroblock = () => {
   const [tagline, setTagline] = useState(0);
-  const { t } = useTranslation('translation', { keyPrefix: 'hero' });
+  const { t, i18n } = useTranslation('translation', { keyPrefix: 'hero' });
   const heroText = [t('1'), t('2'), t('3'), t('4')];
   useEffect(() => {
     const taglineChange = setInterval(() => {
@@ -19,6 +20,15 @@ export const Heroblock = () => {
   });
   return (
     <div className='home-hero'>
+      <Button
+        type='submit'
+        id='lang'
+        onClick={() => {
+          i18n.changeLanguage(i18n.resolvedLanguage === 'en' ? 'ru' : 'en');
+        }}
+      >
+        <span>{i18n.resolvedLanguage === 'en' ? 'ru' : 'en'}</span>
+      </Button>
       <QuizLogo />
       {heroText.map((text, key) => {
         return (
