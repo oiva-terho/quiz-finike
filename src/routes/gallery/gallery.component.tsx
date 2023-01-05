@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { DateSelect } from '~/components/date-select/date-select.component';
+import { useTranslation } from 'react-i18next';
 
 import { Nouser } from '~/components/nouser/nouser.component';
 import { Photo } from '~/components/photo/photo.component';
@@ -25,6 +26,7 @@ export const Gallery = () => {
   const photoLinks = useSelector(selectPhotoLinks);
   const photosLoading = useSelector(selectPhotosLoading);
   const photoDate = useSelector(selectPhotoDate);
+  const { t } = useTranslation('translation', { keyPrefix: 'gallery' });
 
   // Creates window of rendered photos, changes all unrendered photos by empty divs
   const gridRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -95,7 +97,7 @@ export const Gallery = () => {
     dispatch(fetchPhotoLinksStart(photoDate, true));
   };
 
-  if (!currentUser) return <Nouser location='gallery' />;
+  if (!currentUser) return <Nouser location={t('gallery')} />;
   return (
     <>
       <DateSelect dates={foldersList} currentDate={photoDate} action={openDate} />
@@ -106,13 +108,11 @@ export const Gallery = () => {
             .slice(start * photosInRow, (start + visibleRows + 1) * photosInRow)
             .map((link, id) => <Photo key={start * photosInRow + id} src={link} />)
         ) : (
-          <div className='gallery__notification'>
-            {photosLoading ? <Spinner /> : 'Choose the date'}
-          </div>
+          <div className='gallery__notification'>{photosLoading ? <Spinner /> : t('noDate')}</div>
         )}
         {photoLinks.length && !bonusOpened ? (
           <Button buttonType={BUTTON_CLASSES.apply} onClick={showBonus}>
-            Bonus
+            {t('bonus')}
           </Button>
         ) : null}
         <div className='gallery__space' style={{ height: getBottomHeight() }} />

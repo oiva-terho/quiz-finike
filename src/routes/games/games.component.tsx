@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { DateSelect } from '~/components/date-select/date-select.component';
@@ -23,6 +24,7 @@ export const Games = () => {
   const currentUser = useSelector(selectCurrentUser);
   const fotoFoldersList = useSelector(selectFolders);
   const gameDate = useSelector(selectGameDate);
+  const { t } = useTranslation('translation', { keyPrefix: 'games' });
 
   const openDate = (date: string) => {
     if (!date) return dispatch(clearGame());
@@ -34,17 +36,17 @@ export const Games = () => {
   });
   const goTo = (path: string) => navigate(path);
 
-  if (!currentUser) return <Nouser location='games' />;
+  if (!currentUser) return <Nouser location={t('games')} />;
 
   return (
     <div className='games'>
-      <h2>Game results</h2>
+      <h2>{t('header')}</h2>
       <DateSelect dates={gamesList} currentDate={gameDate} action={openDate} />
       {currentUser.teamName === 'Admin' ? (
         <Link to='/games/add'>
-          <Button buttonType={BUTTON_CLASSES.auth}>Edit game</Button>
+          <Button buttonType={BUTTON_CLASSES.auth}>{t('edit')}</Button>
           <Button buttonType={BUTTON_CLASSES.auth} onClick={() => dispatch(clearGame())}>
-            Add a game
+            {t('add')}
           </Button>
         </Link>
       ) : null}
@@ -71,7 +73,7 @@ export const Games = () => {
             goTo('/gallery');
           }}
         >
-          Watch photos
+          {t('watch')}
         </Button>
       ) : null}
     </div>

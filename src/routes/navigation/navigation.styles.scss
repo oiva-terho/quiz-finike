@@ -3,32 +3,18 @@
 .navigation {
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(5, 20%);
+  grid-template-columns: 1fr 1fr;
   grid-auto-rows: 35px;
-  grid-template-areas:
-    'h h t t t'
-    'l l l l l';
-  overflow: clip;
-  @include bp(mobL) {
-    grid-template-columns: 25% 75%;
-    grid-template-areas:
-      't t'
-      'h l';
-  }
   @include bp(tab) {
     grid-auto-rows: 45px;
-    grid-template-columns: 15% 50% 35%;
-    grid-template-areas: 'h t l';
   }
   @include bp(laptop) {
     grid-auto-rows: 60px;
-    grid-template-columns: 13% 57% 30%;
   }
   @include bp(4k) {
     grid-auto-rows: 100px;
   }
   &__home {
-    grid-area: h;
     justify-self: start;
     background-color: transparent;
     border: none;
@@ -46,25 +32,15 @@
       }
     }
   }
-  &__team {
-    grid-area: t;
-    text-align: left;
-    font-size: 0.7rem;
-    @include bp(mobL) {
-      text-align: center;
-    }
-    @include bp(laptop) {
-      font-size: 1rem;
-    }
-    @include bp(4k) {
-      font-size: 2rem;
-    }
-  }
   &__links {
-    grid-area: l;
     display: flex;
-    justify-content: space-around;
+    justify-content: end;
     align-items: center;
+    gap: 20px;
+    padding: 0 10px;
+    & svg {
+      height: 20px;
+    }
   }
   & button {
     font-size: 0.8rem;

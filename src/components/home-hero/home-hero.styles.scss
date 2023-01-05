@@ -25,6 +25,7 @@
 }
 
 .home-hero {
+  position: relative;
   text-align: center;
   height: calc(100vh - 70px);
   @include bp(tab) {
@@ -114,6 +115,17 @@
     }
     svg {
       height: 30px;
+    }
+  }
+  #lang {
+    position: absolute;
+    right: 30px;
+    top: 0px;
+    transform: translate(50%);
+    background: url('/lang.svg') center center/contain no-repeat;
+    & > span {
+      z-index: 2;
+      position: relative;
     }
   }
 }

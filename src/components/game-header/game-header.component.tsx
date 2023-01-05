@@ -1,5 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 import { addDate } from '~/store/game/game.action';
 import { selectGameDate, selectGamesList, selectGameTeams } from '~/store/game/game.selector';
 import { TableInput } from '../table-input/table-input.component';
@@ -14,6 +16,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
   const gameList = useSelector(selectGamesList);
+  const { t } = useTranslation('translation', { keyPrefix: 'games' });
 
   const gameNumber = gameList
     ? gameList?.findIndex((game) => game === date.slice(2).replace(/\D/g, '')) + 1
@@ -21,7 +24,7 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const roundsCheck = () => {
     if (!teams.length) return [];
     const res = teams[0].result.map((_n, i) => (i + 1).toString());
-    res.push('Total', '');
+    res.push(t('total'), '');
     return res;
   };
   const rounds = roundsCheck();
