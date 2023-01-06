@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
 import { ReactComponent as TelegramLogo } from '~/assets/telegram.svg';
-import { ReactComponent as MapLogo } from '~/assets/map.svg';
+import { ReactComponent as ArrowDown } from '~/assets/arrow-down.svg';
 import { adaptiveClassName } from '~/utils/layout.utils';
 import './home-hero.styles.scss';
 import { Button } from '../button/button.component';
@@ -44,14 +44,11 @@ export const Heroblock = () => {
           </p>
         );
       })}
-      <a className='home-hero__map' href='https://goo.gl/maps/qYo4d3hvxq9kt3a69'>
-        <MapLogo />
-        <span>{t('finike')}</span>
-      </a>
       <a className='home-hero__tg' href='https://t.me/finikequiz'>
-        <span>{t('chat')}</span>
         <TelegramLogo />
+        <span>{t('chat')}</span>
       </a>
+      <ArrowDown id='arrow' />
     </div>
   );
 };
