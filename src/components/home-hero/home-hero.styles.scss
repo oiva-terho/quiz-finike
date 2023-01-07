@@ -27,7 +27,7 @@
 .home-hero {
   position: relative;
   text-align: center;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 35px);
   @include bp(tab) {
     height: calc(100vh - 45px);
   }
@@ -87,45 +87,38 @@
       font-size: 3rem;
     }
   }
-  & > a.home-hero__map {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: $color-font-primary;
-    span {
-      padding-left: 6px;
-    }
-    svg {
-      height: 30px;
-    }
-  }
   & > a.home-hero__tg {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    top: 0.8em;
+    left: 0.8em;
     display: flex;
     align-items: center;
     text-decoration: none;
     color: $color-font-primary;
     span {
-      padding-right: 6px;
+      padding-left: 9px;
+      font-size: 0.8em;
     }
     svg {
-      height: 30px;
+      height: 1.5em;
     }
   }
   #lang {
     position: absolute;
     right: 30px;
-    top: 0px;
+    top: 10px;
     transform: translate(50%);
     background: url('/lang.svg') center center/contain no-repeat;
     & > span {
       z-index: 2;
       position: relative;
     }
+  }
+  #arrow {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%);
+    width: 1.2em;
   }
 }
