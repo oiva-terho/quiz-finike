@@ -89,17 +89,18 @@
   }
   & > a.home-hero__tg {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0.8em;
+    left: 0.8em;
     display: flex;
     align-items: center;
     text-decoration: none;
     color: $color-font-primary;
     span {
       padding-left: 9px;
+      font-size: 0.8em;
     }
     svg {
-      height: 27px;
+      height: 1.5em;
     }
   }
   #lang {
@@ -115,8 +116,9 @@
   }
   #arrow {
     position: absolute;
-    bottom: 15px;
+    bottom: 1em;
     left: 50%;
     transform: translate(-50%);
+    width: 1.2em;
   }
 }
