@@ -8,7 +8,7 @@
   position: relative;
   justify-content: center;
   align-items: center;
-  background-image: url('/assets/announcement/waves.png');
+  background-image: url('/assets/announcement/waves.webp');
   background-size: contain;
   animation: 70s floatLeft infinite linear;
   overflow: hidden;
@@ -79,7 +79,7 @@
     padding: 2.2em 3.1em 2.2em 1.4em;
     border-radius: 0.5em;
     color: #fff;
-    background: url('/assets/announcement/msg-texture.png') center center/cover repeat;
+    background: url('/assets/announcement/msg-texture.webp') center center/auto repeat;
     h2 {
       color: #ffd00a;
       font-weight: 700;
