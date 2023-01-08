@@ -40,7 +40,11 @@
     border: 1px solid $color-bg-light;
   }
   &-watch {
-    border: 1px solid $color-marker;
-    margin: 20px auto !important;
+    border: 1px solid;
+    margin: 0.5em auto !important;
+    opacity: 0.4;
+    &:hover {
+      opacity: 1;
+    }
   }
 }

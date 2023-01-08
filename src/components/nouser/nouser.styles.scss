@@ -1,4 +1,11 @@
 .nouser {
   margin: 7rem 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  span {
+    padding-top: 2.2em;
+    font-size: 0.6em;
+    opacity: 0.4;
+  }
 }
