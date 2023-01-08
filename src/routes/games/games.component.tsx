@@ -11,16 +11,23 @@ import { Table } from '~/components/table/table.component';
 import { fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery/gallery.action';
 import { selectFolders } from '~/store/gallery/gallery.selector';
 import { clearGame, fetchGameStart } from '~/store/game/game.action';
-import { selectGameDate, selectGamesList, selectGameTeams } from '~/store/game/game.selector';
+import {
+  selectGameDate,
+  selectGameIsLoading,
+  selectGamesList,
+  selectGameTeams,
+} from '~/store/game/game.selector';
 import { selectCurrentUser } from '~/store/user/user.selector';
 import { countResColor } from '~/utils/layout.utils';
 import './games.styles.scss';
+import { Spinner } from '~/components/spinner/spinner.component';
 
 export const Games = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const gamesList = useSelector(selectGamesList);
   const teams = useSelector(selectGameTeams);
+  const loading = useSelector(selectGameIsLoading);
   const currentUser = useSelector(selectCurrentUser);
   const fotoFoldersList = useSelector(selectFolders);
   const gameDate = useSelector(selectGameDate);
@@ -41,41 +48,47 @@ export const Games = () => {
   return (
     <div className='games'>
       <h2>{t('header')}</h2>
-      <DateSelect dates={gamesList} currentDate={gameDate} action={openDate} />
-      {currentUser.teamName === 'Admin' ? (
-        <Link to='/games/add'>
-          <Button buttonType={BUTTON_CLASSES.auth}>{t('edit')}</Button>
-          <Button buttonType={BUTTON_CLASSES.auth} onClick={() => dispatch(clearGame())}>
-            {t('add')}
-          </Button>
-        </Link>
-      ) : null}
-      <div className='games__table'>
-        <GameHeader passive />
-        {teams.map((team) => (
-          <Table
-            key={team.name}
-            team={team}
-            resColor={countResColor({
-              min: teams[0].sum,
-              max: teams[teams.length - 1].sum,
-              score: team.sum,
-            })}
-          />
-        ))}
-      </div>
-      {photosFolder ? (
-        <Button
-          buttonType={BUTTON_CLASSES.watch}
-          onClick={() => {
-            dispatch(fetchPhotoLinksStart(photosFolder));
-            dispatch(setPhotoDate(photosFolder));
-            goTo('/gallery');
-          }}
-        >
-          {t('watch')}
-        </Button>
-      ) : null}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <DateSelect dates={gamesList} currentDate={gameDate} action={openDate} />
+          {currentUser.teamName === 'Admin' ? (
+            <Link to='/games/add'>
+              <Button buttonType={BUTTON_CLASSES.auth}>{t('edit')}</Button>
+              <Button buttonType={BUTTON_CLASSES.auth} onClick={() => dispatch(clearGame())}>
+                {t('add')}
+              </Button>
+            </Link>
+          ) : null}
+          <div className='games__table'>
+            <GameHeader passive />
+            {teams.map((team) => (
+              <Table
+                key={team.name}
+                team={team}
+                resColor={countResColor({
+                  min: teams[0].sum,
+                  max: teams[teams.length - 1].sum,
+                  score: team.sum,
+                })}
+              />
+            ))}
+          </div>
+          {photosFolder ? (
+            <Button
+              buttonType={BUTTON_CLASSES.watch}
+              onClick={() => {
+                dispatch(fetchPhotoLinksStart(photosFolder));
+                dispatch(setPhotoDate(photosFolder));
+                goTo('/gallery');
+              }}
+            >
+              {t('watch')}
+            </Button>
+          ) : null}
+        </>
+      )}
     </div>
   );
 };

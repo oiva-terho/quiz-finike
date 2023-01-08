@@ -8,3 +8,4 @@ export const selectGameDate = createSelector([selectGameReducer], (game) => game
 export const selectGameTeams = createSelector([selectGameReducer], (game) => game.teams);
 export const selectGamesList = createSelector([selectGameReducer], (game) => game.gamesList);
 export const selectGameRounds = createSelector([selectGameReducer], (game) => game.rounds);
+export const selectGameIsLoading = createSelector([selectGameReducer], (game) => game.isLoading);
