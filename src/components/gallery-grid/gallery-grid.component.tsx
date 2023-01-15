@@ -85,7 +85,7 @@ export const GalleryGrid = () => {
         currentGridRef.removeEventListener('scroll', onScroll);
       }
     };
-  });
+  }, [gridRef, config]);
 
   const showBonus = () => {
     setBonusOpened(true);
@@ -96,15 +96,12 @@ export const GalleryGrid = () => {
     const zoomHandler = (e: Event) => {
       if (e.target instanceof HTMLImageElement) {
         console.log(e.target);
-        console.log({ photoLinks });
       }
     };
     const ref = gridRef.current;
     ref.addEventListener('click', zoomHandler);
-    console.log('zoom add');
     return () => {
       ref.removeEventListener('click', zoomHandler);
-      console.log('zoom remove');
     };
   }, [photoLinks]);
 
@@ -115,7 +112,7 @@ export const GalleryGrid = () => {
       ref={gridRef}
     >
       <div className='gallery__space' style={{ height: getTopHeight() }} />
-      {currentUser && photoLinks.length !== 0 ? (
+      {currentUser && photoLinks.length ? (
         photoLinks
           .slice(start * config.photosInRow, (start + config.visibleRows + 1) * config.photosInRow)
           .map((link, id) => (
@@ -128,11 +125,11 @@ export const GalleryGrid = () => {
       ) : (
         <div className='gallery__notification'>{photosLoading ? <Spinner /> : t('noDate')}</div>
       )}
-      {photoLinks.length && !bonusOpened ? (
+      {photoLinks.length !== 0 && !bonusOpened && (
         <Button buttonType={BUTTON_CLASSES.apply} onClick={showBonus}>
           {t('bonus')}
         </Button>
-      ) : null}
+      )}
       <div className='gallery__space' style={{ height: getBottomHeight() }} />
     </div>
   );
