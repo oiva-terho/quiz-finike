@@ -79,6 +79,7 @@ export const SignUpForm = () => {
               required
               name='email'
               type='email'
+              autoCapitalize='off'
               onChange={handleChange}
               value={email}
             />
