@@ -30,6 +30,7 @@ export const GalleryGrid = () => {
   const [bonusOpened, setBonusOpened] = useState(false);
 
   const windowWidth = document.documentElement.clientWidth;
+  const windowHeight = window.innerHeight;
   const grid = document.querySelector('.gallery__grid');
   type Config = {
     [index: string]: number;
@@ -40,7 +41,7 @@ export const GalleryGrid = () => {
       const navigationComponent = document.querySelector('.navigation');
       const dateSelectComponent = document.querySelector('.dates-select');
       return (
-        window.innerHeight -
+        windowHeight -
         (navigationComponent ? navigationComponent.getBoundingClientRect().height : 100) -
         (dateSelectComponent ? dateSelectComponent.getBoundingClientRect().height : 101)
       );
@@ -53,14 +54,14 @@ export const GalleryGrid = () => {
       if (windowWidth < 1440) return (gridWidth - 10) / 3;
       return (gridWidth - 20) / 4.5;
     })();
-    currentConfig.visibleRows = Math.round(window.innerHeight / currentConfig.height + 2);
+    currentConfig.visibleRows = Math.round(windowHeight / currentConfig.height + 2);
     currentConfig.photosInRow = (function () {
       if (windowWidth < 768) return 1;
       if (windowWidth < 1440) return 2;
       return 3;
     })();
     return currentConfig;
-  }, [windowWidth, grid]);
+  }, [windowWidth, windowHeight, grid]);
 
   const getTopHeight = () => (config.height + 10) * start;
   const getBottomHeight = () => {
