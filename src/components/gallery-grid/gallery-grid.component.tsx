@@ -30,6 +30,7 @@ export const GalleryGrid = () => {
   const [bonusOpened, setBonusOpened] = useState(false);
 
   const windowWidth = document.documentElement.clientWidth;
+  const grid = document.querySelector('.gallery__grid');
   type Config = {
     [index: string]: number;
   };
@@ -45,7 +46,6 @@ export const GalleryGrid = () => {
       );
     })();
     currentConfig.height = (function () {
-      const grid = document.querySelector('.gallery__grid');
       const gridWidth = grid
         ? +window.getComputedStyle(grid).width.split('.')[0].replace(/\D/g, '')
         : 0;
@@ -60,7 +60,7 @@ export const GalleryGrid = () => {
       return 3;
     })();
     return currentConfig;
-  }, [windowWidth]);
+  }, [windowWidth, grid]);
 
   const getTopHeight = () => (config.height + 10) * start;
   const getBottomHeight = () => {
