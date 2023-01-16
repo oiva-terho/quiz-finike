@@ -1,0 +1,19 @@
+.photo-slider {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    object-position: center;
+    overflow: hidden;
+  }
+}

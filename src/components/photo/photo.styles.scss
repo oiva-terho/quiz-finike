@@ -12,23 +12,4 @@
     object-position: center;
     overflow-y: hidden;
   }
-  &__backing {
-    position: absolute;
-    padding: 0;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    & > img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      overflow: hidden;
-    }
-  }
 }
