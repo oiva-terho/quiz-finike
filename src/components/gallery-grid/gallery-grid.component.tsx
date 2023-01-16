@@ -92,8 +92,8 @@ export const GalleryGrid = ({ enlarge }: GalleryGridProps) => {
   }, [gridRef, config]);
 
   const showBonus = () => {
-    setBonusOpened(true);
     dispatch(fetchPhotoLinksStart(photoDate, true));
+    setBonusOpened(true);
   };
   useEffect(() => setBonusOpened(false), [photoDate]);
 
@@ -131,9 +131,11 @@ export const GalleryGrid = ({ enlarge }: GalleryGridProps) => {
         <div className='gallery__notification'>{photosLoading ? <Spinner /> : t('noDate')}</div>
       )}
       {photoLinks.length !== 0 && !bonusOpened && (
-        <Button buttonType={BUTTON_CLASSES.apply} onClick={showBonus}>
-          {t('bonus')}
-        </Button>
+        <div className='gallery__bonus' style={{ height: config.height + 'px' }}>
+          <Button buttonType={BUTTON_CLASSES.apply} onClick={showBonus}>
+            {t('bonus')}
+          </Button>
+        </div>
       )}
       <div className='gallery__space' style={{ height: getBottomHeight() }} />
     </div>
