@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +9,7 @@ import { GalleryGrid } from '~/components/gallery-grid/gallery-grid.component';
 import { clearPhotos, fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery/gallery.action';
 import { selectFolders, selectPhotoDate } from '~/store/gallery/gallery.selector';
 import { selectCurrentUser } from '~/store/user/user.selector';
+import { PhotoSlider } from '~/components/photo-slider/photo-slider.component';
 
 export const Gallery = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ export const Gallery = () => {
   const foldersList = useSelector(selectFolders);
   const photoDate = useSelector(selectPhotoDate);
   const { t } = useTranslation('translation', { keyPrefix: 'gallery' });
+  const [photoToOpen, setPhotoToOpen] = useState('');
 
   const openDate = (date: string) => {
     dispatch(clearPhotos());
@@ -26,7 +29,8 @@ export const Gallery = () => {
   return (
     <>
       <DateSelect dates={foldersList} currentDate={photoDate} action={openDate} />
-      <GalleryGrid />
+      <GalleryGrid enlarge={setPhotoToOpen} />
+      {photoToOpen && <PhotoSlider photoToOpen={photoToOpen} setPhotoToOpen={setPhotoToOpen} />}
     </>
   );
 };

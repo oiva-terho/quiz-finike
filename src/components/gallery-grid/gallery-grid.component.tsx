@@ -16,7 +16,10 @@ import { fetchPhotoLinksStart } from '~/store/gallery/gallery.action';
 
 import './gallery-grid.styles.scss';
 
-export const GalleryGrid = () => {
+type GalleryGridProps = {
+  enlarge: (arg0: string) => void;
+};
+export const GalleryGrid = ({ enlarge }: GalleryGridProps) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const photoLinks = useSelector(selectPhotoLinks);
@@ -92,19 +95,20 @@ export const GalleryGrid = () => {
     setBonusOpened(true);
     dispatch(fetchPhotoLinksStart(photoDate, true));
   };
+  useEffect(() => setBonusOpened(false), [photoDate]);
 
   useEffect(() => {
-    const zoomHandler = (e: Event) => {
+    const enlargeHandler = (e: Event) => {
       if (e.target instanceof HTMLImageElement) {
-        console.log(e.target);
+        enlarge(e.target.alt);
       }
     };
     const ref = gridRef.current;
-    ref.addEventListener('click', zoomHandler);
+    ref.addEventListener('click', enlargeHandler);
     return () => {
-      ref.removeEventListener('click', zoomHandler);
+      ref.removeEventListener('click', enlargeHandler);
     };
-  }, [photoLinks]);
+  }, [photoLinks, enlarge]);
 
   return (
     <div

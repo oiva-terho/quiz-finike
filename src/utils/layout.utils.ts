@@ -38,3 +38,13 @@ export const countResColor = ({ min, max, score }: CountResColorProps): string =
   if (score > mid) return rgb(findColor(midColor, maxColor, score - (min + mid)));
   return '#999';
 };
+
+export function debounce(callback: (...args: any[]) => any, delay = 600) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return (...args: any[]) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => callback(...args), delay);
+  };
+}
