@@ -40,7 +40,7 @@ export const Navigation = () => {
           <Button onClick={() => goTo('/gallery')}>
             {windowWidth > 767 ? t('gallery') : <GalleryLogo />}
           </Button>
-          {currentUser ? (
+          {currentUser && currentUser.email !== 'me@mail.com' ? (
             <Button onClick={signOutUser}>{windowWidth > 767 ? t('signOut') : <AuthLogo />}</Button>
           ) : (
             <Button onClick={() => goTo('/sign-in')}>

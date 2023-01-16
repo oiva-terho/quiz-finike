@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
 import { Spinner } from '~/components/spinner/spinner.component';
-import { clearError, signUpStart } from '~/store/user/user.action';
+import { clearError, signOutStart, signUpStart } from '~/store/user/user.action';
 import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/user/user.selector';
 
 const defaultFormFields = {
@@ -23,6 +23,8 @@ export const SignUpForm = () => {
   const logError = useSelector(selectUserError);
   const onLoading = useSelector(selectUserLoading);
   const { t } = useTranslation('translation', { keyPrefix: 'auth' });
+
+  if (currentUser?.email === 'me@mail.com') dispatch(signOutStart());
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password, confirmPassword } = formFields;
@@ -60,11 +62,10 @@ export const SignUpForm = () => {
   };
 
   const checkUser = (function () {
-    if (currentUser?.teamName) {
-      return 'has team';
-    } else if (currentUser) {
-      return 'no team';
-    } else return 'no user';
+    if (currentUser?.teamName === '...') return;
+    if (currentUser?.teamName) return 'has team';
+    if (currentUser) return 'no team';
+    return;
   })();
 
   return (

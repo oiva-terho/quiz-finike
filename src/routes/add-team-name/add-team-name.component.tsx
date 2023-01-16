@@ -39,7 +39,7 @@ export const AddTeamName = () => {
             onChange={handleChange}
             value={teamName}
           />
-          {teamName.toLocaleLowerCase() === 'admin' ? (
+          {teamName.toLocaleLowerCase() === 'admin' || teamName.toLocaleLowerCase() === '...' ? (
             <h2>{t('wrongTeam')}</h2>
           ) : (
             <Button type='submit' buttonType={BUTTON_CLASSES.apply}>

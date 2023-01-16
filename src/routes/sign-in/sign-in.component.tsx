@@ -6,7 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { FormInput } from '~/components/form-input/form-input.component';
 import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/user/user.selector';
-import { clearError, emailSignInStart, googleSignInStart } from '../../store/user/user.action';
+import {
+  clearError,
+  emailSignInStart,
+  googleSignInStart,
+  signOutStart,
+} from '../../store/user/user.action';
 import { Spinner } from '~/components/spinner/spinner.component';
 
 import { ReactComponent as GLogo } from '~/assets/google.svg';
@@ -34,6 +39,8 @@ export const SignInForm = () => {
   const currentUser = useSelector(selectCurrentUser);
   const logError = useSelector(selectUserError);
 
+  if (currentUser?.email === 'me@mail.com') dispatch(signOutStart());
+
   const resetFormFields = () => setFormFields(defaultFormFields);
 
   const signInWithGoogle = async () => {
@@ -53,11 +60,10 @@ export const SignInForm = () => {
   };
 
   const checkUser = (function () {
-    if (currentUser?.teamName) {
-      return 'has team';
-    } else if (currentUser) {
-      return 'no team';
-    } else return 'no user';
+    if (currentUser?.teamName === '...') return;
+    if (currentUser?.teamName) return 'has team';
+    if (currentUser) return 'no team';
+    return;
   })();
 
   return (
