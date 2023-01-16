@@ -12,7 +12,16 @@ dist
 dist-ssr
 *.local
 .env
+
+#Firebase
 .firebase
+.github
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules
+tsconfig.tsbuildinfo
 
 # Editor directories and files
 !.vscode/extensions.json
