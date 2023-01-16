@@ -1,9 +1,14 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { addDate } from '~/store/game/game.action';
-import { selectGameDate, selectGamesList, selectGameTeams } from '~/store/game/game.selector';
+import {
+  selectGameDate,
+  selectGameRounds,
+  selectGamesList,
+  selectGameTeams,
+} from '~/store/game/game.selector';
 import { TableInput } from '../table-input/table-input.component';
 import './game-header.styles.scss';
 
@@ -16,18 +21,18 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
   const gameList = useSelector(selectGamesList);
+  const rounds = useSelector(selectGameRounds);
   const { t } = useTranslation('translation', { keyPrefix: 'games' });
 
   const gameNumber = gameList
     ? gameList?.findIndex((game) => game === date.slice(2).replace(/\D/g, '')) + 1
     : 0;
-  const roundsCheck = () => {
-    if (!teams.length) return [];
-    const res = teams[0].result.map((_n, i) => (i + 1).toString());
+
+  const headerRounds = useMemo(() => {
+    const res = Array.from({ length: rounds }, (_, i) => (i + 1).toString());
     res.push(t('total'), '');
     return res;
-  };
-  const rounds = roundsCheck();
+  }, [t, rounds]);
 
   const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(addDate(event.target.value));
@@ -50,11 +55,13 @@ export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
           />
         )}
       </div>
-      <div className='game-header__rounds'>
-        {rounds.map((n, i) => (
-          <span key={i}>{n}</span>
-        ))}
-      </div>
+      {teams.length !== 0 && (
+        <div className='game-header__rounds'>
+          {headerRounds.map((n, i) => (
+            <span key={i}>{n}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

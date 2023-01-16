@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: [sagaMiddleware, process.env.NODE_ENV === 'development' && logger].filter(
+  middleware: [sagaMiddleware, process.env.NODE_ENV === '1' && logger].filter(
     (middleware): middleware is Middleware => Boolean(middleware),
   ),
 });

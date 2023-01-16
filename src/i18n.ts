@@ -65,6 +65,7 @@ i18next
             noDate: 'Choose date first',
             noTeams: 'Fill in teams results',
             noTeam: 'Fill team name',
+            tooMuchTeams: 'Too much teams',
             tooLarge: 'Too large score',
             teamsExists: 'Cannot change rounds quantity for existing game. Clear the table first',
             dataLoss: 'You will loose all filled data. Would you like to continue?',
@@ -156,6 +157,7 @@ i18next
             noDate: 'Сначала выберите дату',
             noTeams: 'Добавьте команды и их результаты',
             noTeam: 'Заполните имя команды',
+            tooMuchTeams: ' Слишком много команд',
             tooLarge: 'Слишком большой результат',
             teamsExists:
               'Нельзя менять количество раундов у существующей игры. Сначала очиститие таблицу',

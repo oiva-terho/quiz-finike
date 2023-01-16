@@ -9,15 +9,15 @@ export const Announcement = () => {
   const today = new Date();
 
   const nextGame = () => {
-    const nextFriday = () => {
+    const nextFriday = (function () {
       const weekday = today.getDay();
       if (weekday === 5) return today;
       return new Date(
         today.setDate(today.getDate() + (5 - weekday < 0 ? 5 - weekday + 7 : 5 - weekday)),
       );
-    };
-    const month = nextFriday().getMonth().toString();
-    const day = nextFriday().getDate();
+    })();
+    const month = nextFriday.getMonth().toString();
+    const day = nextFriday.getDate();
     const ordinal = (number: number) => {
       switch (number) {
         case 1:

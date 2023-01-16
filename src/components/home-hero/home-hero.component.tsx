@@ -17,7 +17,7 @@ export const Heroblock = () => {
       setTagline(tagline === 3 ? 0 : tagline + 1);
     }, 5000);
     return () => clearInterval(taglineChange);
-  });
+  }, [tagline]);
   return (
     <div className='home-hero'>
       <Button

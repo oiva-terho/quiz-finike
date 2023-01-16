@@ -59,12 +59,13 @@ export const SignUpForm = () => {
     setRegError('');
   };
 
-  let checkUser = 'no user';
-  if (currentUser?.teamName) {
-    checkUser = 'has team';
-  } else if (currentUser) {
-    checkUser = 'no team';
-  } else checkUser = 'no user';
+  const checkUser = (function () {
+    if (currentUser?.teamName) {
+      return 'has team';
+    } else if (currentUser) {
+      return 'no team';
+    } else return 'no user';
+  })();
 
   return (
     <div className='sign-in'>

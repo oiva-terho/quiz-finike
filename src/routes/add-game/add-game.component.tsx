@@ -41,6 +41,8 @@ export const AddGame = () => {
     setInputError('');
   };
   const handleRowsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (+event.target.value > 20) return setInputError(() => t('tooMuchTeams'));
+    if (+event.target.value < 0) return;
     setExpectedRowQuantity(+event.target.value);
     setRowsQuantity(+event.target.value);
   };

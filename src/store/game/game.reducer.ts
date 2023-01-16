@@ -44,7 +44,12 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
     return { ...state, gamesList: action.payload };
   }
   if (fetchGameSuccess.match(action)) {
-    return { ...state, date: action.payload.date, teams: action.payload.teams };
+    return {
+      ...state,
+      date: action.payload.date,
+      teams: action.payload.teams,
+      rounds: action.payload.teams[0].result.length,
+    };
   }
   if (uploadGameStart.match(action)) {
     return { ...state, isLoading: true };

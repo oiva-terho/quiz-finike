@@ -13,7 +13,7 @@ export const HomeBg = () => {
       setBgImg(bgImg === 7 ? 0 : bgImg + 1);
     }, 12000);
     return () => clearInterval(bgChange);
-  });
+  }, [bgImg]);
 
   return (
     <div className='home-bg'>
