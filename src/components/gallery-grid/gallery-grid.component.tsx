@@ -43,10 +43,10 @@ export const GalleryGrid = ({ enlarge }: GalleryGridProps) => {
     currentConfig.gridHeight = (function () {
       const navigationComponent = document.querySelector('.navigation');
       const dateSelectComponent = document.querySelector('.dates-select');
-      return (
+      return Math.floor(
         windowHeight -
-        (navigationComponent ? navigationComponent.getBoundingClientRect().height : 100) -
-        (dateSelectComponent ? dateSelectComponent.getBoundingClientRect().height : 101)
+          (navigationComponent ? navigationComponent.getBoundingClientRect().height : 100) -
+          (dateSelectComponent ? dateSelectComponent.getBoundingClientRect().height : 101),
       );
     })();
     currentConfig.height = (function () {

@@ -6,7 +6,8 @@ i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
-    lng: 'en',
+    fallbackLng: 'en',
+    supportedLngs: ['en', 'ru'],
     resources: {
       en: {
         translation: {
