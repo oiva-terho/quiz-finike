@@ -16,6 +16,7 @@ i18next
             gallery: 'Gallery',
             signOut: 'Sign Out',
             signIn: 'Sign In',
+            stat: 'My results',
           },
           hero: {
             1: 'Mind game for everyone',
@@ -108,6 +109,7 @@ i18next
             gallery: 'Галерея',
             signOut: 'Выйти',
             signIn: 'Войти',
+            stat: 'Мои результаты',
           },
           hero: {
             1: 'Интеллектуальная игра для каждого',

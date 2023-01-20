@@ -3,9 +3,9 @@ export enum GAME_ACTION_TYPES {
   SET_TEAMS = 'game/SET_TEAMS',
   SET_ROUNDS = 'game/SET_ROUNDS',
   CLEAR_GAME = 'game/CLEAR_GAME',
-  FETCH_GAMES_LIST_START = 'game/FETCH_GAMES_LIST_START',
-  FETCH_GAMES_LIST_SUCCESS = 'game/FETCH_GAMES_LIST_SUCCESS',
-  FETCH_GAMES_LIST_FAILED = 'game/FETCH_GAMES_LIST_FAILED',
+  FETCH_GAMES_DATA_START = 'game/FETCH_GAMES_DATA_START',
+  FETCH_GAMES_DATA_SUCCESS = 'game/FETCH_GAMES_DATA_SUCCESS',
+  FETCH_GAMES_DATA_FAILED = 'game/FETCH_GAMES_DATA_FAILED',
   FETCH_GAME_START = 'game/FETCH_GAME_START',
   FETCH_GAME_SUCCESS = 'game/FETCH_GAME_SUCCESS',
   FETCH_GAME_FAILED = 'game/FETCH_GAME_FAILED',
@@ -19,4 +19,8 @@ export type Team = {
   result: Array<number | string>;
   sum: number;
   position: number;
+};
+
+export type GamesData = {
+  [index: string]: Team[];
 };

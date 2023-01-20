@@ -1,4 +1,4 @@
-import { GAME_ACTION_TYPES, Team } from './game.types';
+import { GamesData, GAME_ACTION_TYPES, Team } from './game.types';
 import { createAction, ActionWithPayload, Action, withMatcher } from '../../utils/reducer.utils';
 
 const defaultTeamObject: Team = {
@@ -14,13 +14,13 @@ export type AddDate = ActionWithPayload<GAME_ACTION_TYPES.ADD_DATE, string>;
 export type SetRounds = ActionWithPayload<GAME_ACTION_TYPES.SET_ROUNDS, number>;
 export type SetTeams = ActionWithPayload<GAME_ACTION_TYPES.SET_TEAMS, Team[]>;
 export type ClearGame = Action<GAME_ACTION_TYPES.CLEAR_GAME>;
-export type FetchGamesListStart = Action<GAME_ACTION_TYPES.FETCH_GAMES_LIST_START>;
-export type FetchGamesListSuccess = ActionWithPayload<
-  GAME_ACTION_TYPES.FETCH_GAMES_LIST_SUCCESS,
-  string[]
+export type FetchGamesDataStart = Action<GAME_ACTION_TYPES.FETCH_GAMES_DATA_START>;
+export type FetchGamesDataSuccess = ActionWithPayload<
+  GAME_ACTION_TYPES.FETCH_GAMES_DATA_SUCCESS,
+  GamesData
 >;
-export type FetchGamesListFailed = ActionWithPayload<
-  GAME_ACTION_TYPES.FETCH_GAMES_LIST_FAILED,
+export type FetchGamesDataFailed = ActionWithPayload<
+  GAME_ACTION_TYPES.FETCH_GAMES_DATA_FAILED,
   Error
 >;
 export type FetchGameStart = ActionWithPayload<
@@ -58,16 +58,16 @@ export const setTeams = withMatcher(
   (teams: Team[]): SetTeams => createAction(GAME_ACTION_TYPES.SET_TEAMS, teams),
 );
 export const clearGame = withMatcher(() => createAction(GAME_ACTION_TYPES.CLEAR_GAME));
-export const fetchGamesListStart = withMatcher(
-  (): FetchGamesListStart => createAction(GAME_ACTION_TYPES.FETCH_GAMES_LIST_START),
+export const fetchGamesDataStart = withMatcher(
+  (): FetchGamesDataStart => createAction(GAME_ACTION_TYPES.FETCH_GAMES_DATA_START),
 );
-export const fetchGamesListSuccess = withMatcher(
-  (gamesList: string[]): FetchGamesListSuccess =>
-    createAction(GAME_ACTION_TYPES.FETCH_GAMES_LIST_SUCCESS, gamesList),
+export const fetchGamesDataSuccess = withMatcher(
+  (gamesData: GamesData): FetchGamesDataSuccess =>
+    createAction(GAME_ACTION_TYPES.FETCH_GAMES_DATA_SUCCESS, gamesData),
 );
-export const fetchGamesListFailed = withMatcher(
-  (error: Error): FetchGamesListFailed =>
-    createAction(GAME_ACTION_TYPES.FETCH_GAMES_LIST_FAILED, error),
+export const fetchGamesDataFailed = withMatcher(
+  (error: Error): FetchGamesDataFailed =>
+    createAction(GAME_ACTION_TYPES.FETCH_GAMES_DATA_FAILED, error),
 );
 export const fetchGameStart = withMatcher(
   (date: string): FetchGameStart => createAction(GAME_ACTION_TYPES.FETCH_GAME_START, { date }),

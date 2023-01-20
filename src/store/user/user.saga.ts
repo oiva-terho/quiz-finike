@@ -25,14 +25,14 @@ import {
 } from '../../utils/firebase.utils';
 import { fetchFoldersStartAsync } from '../gallery/gallery.saga';
 import { clearPhotos } from '../gallery/gallery.action';
-import { fetchGamesListStartAsync } from '../game/game.saga';
+import { fetchGamesDataStartAsync } from '../game/game.saga';
 
 export function* getSnapshotFromUserAuth(userAuth: User) {
   try {
     const userSnapshot = yield* call(createUserDocFromAuth, userAuth);
     if (userSnapshot) {
       yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
-      yield* call(fetchGamesListStartAsync);
+      yield* call(fetchGamesDataStartAsync);
       yield* call(fetchFoldersStartAsync);
     }
   } catch (error) {

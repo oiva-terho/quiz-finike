@@ -1,24 +1,24 @@
 import { takeLatest, all, call, put } from 'typed-redux-saga';
-import { addGameDoc, getCurrentUser, getGameDoc, getGamesList } from '~/utils/firebase.utils';
+import { addGameDoc, getCurrentUser, getGameDoc, getGamesData } from '~/utils/firebase.utils';
 import {
   uploadGameSuccess,
   uploadGameFailed,
   UploadGameStart,
-  fetchGamesListSuccess,
-  fetchGamesListFailed,
+  fetchGamesDataSuccess,
+  fetchGamesDataFailed,
   FetchGameStart,
   fetchGameSuccess,
   fetchGameFailed,
-  fetchGamesListStart,
+  fetchGamesDataStart,
 } from './game.action';
 import { GAME_ACTION_TYPES } from './game.types';
 
-export function* fetchGamesListStartAsync() {
+export function* fetchGamesDataStartAsync() {
   try {
-    const gamesList = yield* call(getGamesList);
-    yield* put(fetchGamesListSuccess(gamesList));
+    const gamesData = yield* call(getGamesData);
+    yield* put(fetchGamesDataSuccess(gamesData));
   } catch (error) {
-    yield* put(fetchGamesListFailed(error as Error));
+    yield* put(fetchGamesDataFailed(error as Error));
   }
 }
 
@@ -39,16 +39,16 @@ export function* uploadGame({ payload: { date, teams } }: UploadGameStart) {
     const gameDate = date.slice(2).replace(/\D/g, '');
     yield* call(addGameDoc, gameDate, teams);
     yield* put(uploadGameSuccess());
-    yield* put(fetchGamesListStart());
+    yield* put(fetchGamesDataStart());
   } catch (error) {
     yield* put(uploadGameFailed(error as Error));
   }
 }
-export function* onFetchGamesList() {
-  yield* takeLatest(GAME_ACTION_TYPES.FETCH_GAMES_LIST_START, fetchGamesListStartAsync);
+export function* onFetchGamesData() {
+  yield* takeLatest(GAME_ACTION_TYPES.FETCH_GAMES_DATA_START, fetchGamesDataStartAsync);
 }
 export function* onFetchGamesListByClearTable() {
-  yield* takeLatest(GAME_ACTION_TYPES.CLEAR_GAME, fetchGamesListStartAsync);
+  yield* takeLatest(GAME_ACTION_TYPES.CLEAR_GAME, fetchGamesDataStartAsync);
 }
 export function* onFetchGame() {
   yield* takeLatest(GAME_ACTION_TYPES.FETCH_GAME_START, fetchGameStartAsync);
@@ -59,7 +59,7 @@ export function* onUploadGameStart() {
 
 export function* gameSagas() {
   yield* all([
-    call(onFetchGamesList),
+    call(onFetchGamesData),
     call(onFetchGame),
     call(onUploadGameStart),
     call(onFetchGamesListByClearTable),

@@ -6,7 +6,6 @@ import { Button } from '~/components/button/button.component';
 import { selectCurrentUser } from '~/store/user/user.selector';
 import { clearGame } from '~/store/game/game.action';
 import { clearPhotos } from '~/store/gallery/gallery.action';
-import { signOutStart } from '~/store/user/user.action';
 
 import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
 import { ReactComponent as GamesLogo } from '~/assets/results.svg';
@@ -20,7 +19,6 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
   const { t } = useTranslation('translation', { keyPrefix: 'navigation' });
-  const signOutUser = () => dispatch(signOutStart());
   const windowWidth = document.documentElement.clientWidth;
   const goTo = (path: string) => {
     dispatch(clearGame());
@@ -40,11 +38,13 @@ export const Navigation = () => {
           <Button onClick={() => goTo('/gallery')}>
             {windowWidth > 767 ? t('gallery') : <GalleryLogo />}
           </Button>
-          {currentUser && currentUser.email !== 'me@mail.com' ? (
-            <Button onClick={signOutUser}>{windowWidth > 767 ? t('signOut') : <AuthLogo />}</Button>
-          ) : (
+          {!currentUser || currentUser.email === 'me@mail.com' ? (
             <Button onClick={() => goTo('/sign-in')}>
               {windowWidth > 767 ? t('signIn') : <AuthLogo />}
+            </Button>
+          ) : (
+            <Button onClick={() => goTo('/statistics')}>
+              {windowWidth > 767 ? t('stat') : <AuthLogo />}
             </Button>
           )}
         </div>

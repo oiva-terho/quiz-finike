@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import {
-  fetchGamesListSuccess,
-  fetchGamesListFailed,
+  fetchGamesDataSuccess,
+  fetchGamesDataFailed,
   uploadGameStart,
   uploadGameSuccess,
   uploadGameFailed,
@@ -12,12 +12,13 @@ import {
   fetchGameSuccess,
   setRounds,
 } from './game.action';
-import { Team } from './game.types';
+import { GamesData, Team } from './game.types';
 
 export type GameState = {
   date: string;
   teams: Team[];
-  gamesList?: string[];
+  gamesData: GamesData;
+  gamesList: string[];
   rounds: number;
   isLoading: boolean;
 };
@@ -25,6 +26,7 @@ export type GameState = {
 const INITIAL_STATE: GameState = {
   date: '',
   teams: [],
+  gamesData: {},
   gamesList: [],
   rounds: 6,
   isLoading: false,
@@ -40,8 +42,8 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
   if (setTeams.match(action) && state.date) {
     return { ...state, teams: action.payload };
   }
-  if (fetchGamesListSuccess.match(action)) {
-    return { ...state, gamesList: action.payload };
+  if (fetchGamesDataSuccess.match(action)) {
+    return { ...state, gamesData: action.payload, gamesList: Object.keys(action.payload) };
   }
   if (fetchGameSuccess.match(action)) {
     return {
@@ -59,7 +61,7 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
   }
   if (
     uploadGameFailed.match(action) ||
-    fetchGamesListFailed.match(action) ||
+    fetchGamesDataFailed.match(action) ||
     fetchGameFailed.match(action)
   ) {
     return { ...state };
