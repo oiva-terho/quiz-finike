@@ -8,10 +8,10 @@ import { signOutStart } from '~/store/user/user.action';
 import { Navigate } from 'react-router-dom';
 import { selectGamesData } from '~/store/game/game.selector';
 import { Spinner } from '~/components/spinner/spinner.component';
-import { StatData } from '~/components/stat-data/stat-data.component';
 import { AddTeamName } from '~/components/add-team-name/add-team-name.component';
 
 import '~/components/date-select/date-select.styles.scss';
+import { TeamStatistics } from '~/components/team-statistics/team-statistics.component';
 
 export const Statistics = () => {
   const dispatch = useDispatch();
@@ -25,13 +25,13 @@ export const Statistics = () => {
   if (Object.keys(GamesData).length === 0) return <Spinner />;
 
   // Team list
-  // const teamList = Array.from(
+  // const fullTeamList = Array.from(
   //   new Set(
   //     Object.values(GamesData)
   //       .reduce((acc, teams) => [...acc, ...teams])
   //       .map((obj) => obj.name),
   //   ),
-  // ).sort();
+  // );
 
   const teamList = (function () {
     const allTeams = Object.values(GamesData)
@@ -52,7 +52,7 @@ export const Statistics = () => {
       {edit ? <AddTeamName /> : <span>{user?.teamName}</span>}
       <Button onClick={() => setEdit(edit ? false : true)}>{edit ? 'Cancel' : 'Edit'}</Button>
       <Button onClick={signOutUser}>{t('signOut')}</Button>
-      {user && <StatData GamesData={GamesData} teamName={user?.teamName} />}
+      {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       <div className='dates-select'>
         <select defaultValue={teamToCompare} onChange={(e) => setTeamToCompare(e.target.value)}>
           <option value=''>-</option>
@@ -63,7 +63,7 @@ export const Statistics = () => {
           ))}
         </select>
       </div>
-      {teamToCompare !== '' && <StatData GamesData={GamesData} teamName={teamToCompare} />}
+      {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
     </div>
   );
 };

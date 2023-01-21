@@ -1,20 +1,40 @@
 import { GamesData } from '~/store/game/game.types';
 
+export type StatDataType = {
+  teamName: string;
+  gamesDates: [string, number, number][];
+  gamesStreak: {
+    currentStreak: number;
+    longestStreak: number;
+  };
+  rating: {
+    totalScore: number;
+    averageRating: number;
+    gamesRatings: [string, number, number][];
+  };
+  total: number;
+  best: string | undefined;
+  rivalNames: string[];
+  rivalsWhoWon: {
+    win: number;
+    loose: number;
+  }[];
+};
+
 type StatDataProps = {
   GamesData: GamesData;
   teamName: string;
 };
-export const StatData = ({ GamesData, teamName }: StatDataProps) => {
-  const gamesStreakDates: [string, number, number][] = Object.entries(GamesData).map(
-    ([key, value]) => [
-      key,
-      value.filter((x) => x.name === teamName).map((y) => y.position)[0],
-      value.filter((x) => x.name === teamName).map((y) => y.sum)[0],
-    ],
-  );
 
+export const StatData = ({ GamesData, teamName }: StatDataProps) => {
+  const gamesDates: [string, number, number][] = Object.entries(GamesData).map(([key, value]) => [
+    key,
+    value.filter((x) => x.name === teamName).map((y) => y.position)[0],
+    value.filter((x) => x.name === teamName).map((y) => y.sum)[0],
+  ]);
+  // Games streak
   const gamesStreak = (function () {
-    const games = gamesStreakDates.map((day) => day[1]);
+    const games = gamesDates.map((day) => day[1]);
     let currentStreak = 0;
     let longestStreak = 0;
     for (let i = 0; i < games.length; i++) {
@@ -29,7 +49,7 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
     }
     return { currentStreak: currentStreak, longestStreak: longestStreak };
   })();
-  const datesPlayed: { [index: string]: number } = gamesStreakDates.reduce(
+  const datesPlayed: { [index: string]: number } = gamesDates.reduce(
     (acc, val) => (val[1] ? { ...acc, [val[0]]: val[1] } : { ...acc }),
     {},
   );
@@ -44,26 +64,25 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
     return acc;
   },
   {});
+  // Rating
   const rating = (function () {
-    const totalScore = gamesStreakDates.reduce((acc, curr) => {
+    const totalScore = gamesDates.reduce((acc, curr) => {
       return curr[2] ? acc + curr[2] : acc;
     }, 0);
     const dates = Object.keys(datesPlayed);
     const games = Object.entries(GamesData).filter(([item]) => dates.includes(item));
-    const gamesRating = games.map((game) => {
+    const gamesRatings: [string, number, number][] = games.map((game) => {
       const date = game[0];
       const teams = game[1];
       const myTeam = teams.filter((team) => team.name === teamName)[0];
       const range = teams[0].sum - teams[teams.length - 1].sum;
       const result = teams[myTeam.position - 1].sum - teams[teams.length - 1].sum;
       const rating = Math.round((result / range) * 100);
-      return { [date]: rating };
+      return [date, myTeam.position, rating];
     });
-    const averageRating = Math.round(
-      gamesRating.map((date) => Object.values(date)[0]).reduce((acc, curr) => acc + curr, 0) /
-        gamesRating.length,
-    );
-    return { totalScore: totalScore, averageRating: averageRating };
+    const averageRating =
+      Math.round(gamesRatings.reduce((acc, curr) => acc + curr[2], 0)) / gamesRatings.length;
+    return { totalScore: totalScore, averageRating: averageRating, gamesRatings: gamesRatings };
   })();
   // Best game
   const best = (function () {
@@ -146,12 +165,9 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
       ),
   );
 
-  // Average score
-  // Favourite round
-
   const StatData = {
     teamName: teamName,
-    gamesStreakDates: gamesStreakDates,
+    gamesDates: gamesDates,
     gamesStreak: gamesStreak,
     rating: rating,
     total: total,
@@ -160,49 +176,5 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
     rivalNames: rivalNames,
     rivalsWhoWon: rivalsWhoWon,
   };
-  return (
-    <div>
-      {Object.keys(datesPlayed).length === 0 ? (
-        <span>There is no such team</span>
-      ) : (
-        <>
-          <div>{StatData.total && <span>Total games played: {StatData.total}</span>}</div>
-          <div>Current streak:&nbsp;{StatData.gamesStreak.currentStreak}</div>
-          <div>Longest streak:&nbsp;{StatData.gamesStreak.longestStreak}</div>
-          <div>Total score:&nbsp;{StatData.rating.totalScore}</div>
-          <div>Rating:&nbsp; {StatData.rating.averageRating}%</div>
-          <div>
-            Games played:&nbsp;
-            {gamesStreakDates.map((date, i) => (
-              <span style={{ color: 'lightgreen' }} key={i}>
-                {date[1] ? ': ' : '. '}
-              </span>
-            ))}
-          </div>
-          <div>
-            {Object.entries(StatData.top3).map((key) => (
-              <span key={key[0]} style={{ display: 'block' }}>
-                {key[0]} place: {key[1]} times
-              </span>
-            ))}
-          </div>
-          <div>Best game: {StatData.best}</div>
-          <div>
-            Best rivals:{' '}
-            {StatData.rivalNames.map((rival, i) => (
-              <span key={i}>{rival} </span>
-            ))}
-          </div>
-          {StatData.rivalsWhoWon[0].win === 0 && StatData.rivalsWhoWon[0].loose === 0
-            ? null
-            : StatData.rivalNames.map((rival, i) => (
-                <div key={i}>
-                  {StatData.teamName} {StatData.rivalsWhoWon[i].win} :{' '}
-                  {StatData.rivalsWhoWon[i].loose} {rival}
-                </div>
-              ))}
-        </>
-      )}
-    </div>
-  );
+  return StatData;
 };
