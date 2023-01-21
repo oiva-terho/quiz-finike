@@ -8,6 +8,7 @@ import { clearGame } from '~/store/game/game.action';
 import { clearPhotos } from '~/store/gallery/gallery.action';
 
 import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
+import { ReactComponent as MyResultsLogo } from '~/assets/my-results.svg';
 import { ReactComponent as GamesLogo } from '~/assets/results.svg';
 import { ReactComponent as GalleryLogo } from '~/assets/gallery.svg';
 import { ReactComponent as AuthLogo } from '~/assets/auth.svg';
@@ -44,7 +45,7 @@ export const Navigation = () => {
             </Button>
           ) : (
             <Button onClick={() => goTo('/statistics')}>
-              {windowWidth > 767 ? t('stat') : <AuthLogo />}
+              {windowWidth > 767 ? t('stat') : <MyResultsLogo />}
             </Button>
           )}
         </div>

@@ -8,6 +8,7 @@ import { FormInput } from '~/components/form-input/form-input.component';
 import { Spinner } from '~/components/spinner/spinner.component';
 import { clearError, signOutStart, signUpStart } from '~/store/user/user.action';
 import { selectCurrentUser, selectUserError, selectUserLoading } from '~/store/user/user.selector';
+import { AddTeamName } from '~/components/add-team-name/add-team-name.component';
 
 const defaultFormFields = {
   email: '',
@@ -74,38 +75,47 @@ export const SignUpForm = () => {
         <Spinner />
       ) : (
         <div className='sign-in__wrapper'>
-          <h2>{t('create')}</h2>
-          <form onSubmit={handleSubmit}>
-            <FormInput
-              label='Email'
-              required
-              name='email'
-              type='email'
-              autoCapitalize='off'
-              onChange={handleChange}
-              value={email}
-            />
-            <FormInput
-              label={t('pass')}
-              required
-              name='password'
-              type='password'
-              onChange={handleChange}
-              value={password}
-            />
-            <FormInput
-              label={t('pass2')}
-              required
-              name='confirmPassword'
-              type='password'
-              onChange={handleChange}
-              value={confirmPassword}
-            />
-            {regError !== null && <span>{regError}</span>}
-            <Button type='submit'>{t('signUp')}</Button>
-          </form>
           {checkUser === 'has team' && <Navigate to='/' />}
-          {checkUser === 'no team' && <Navigate to='/add-team' />}
+
+          {checkUser === 'no team' ? (
+            <>
+              <h2>{t('add-team')}</h2>
+              <AddTeamName />
+            </>
+          ) : (
+            <>
+              <h2>{t('create')}</h2>
+              <form onSubmit={handleSubmit}>
+                <FormInput
+                  label='Email'
+                  required
+                  name='email'
+                  type='email'
+                  autoCapitalize='off'
+                  onChange={handleChange}
+                  value={email}
+                />
+                <FormInput
+                  label={t('pass')}
+                  required
+                  name='password'
+                  type='password'
+                  onChange={handleChange}
+                  value={password}
+                />
+                <FormInput
+                  label={t('pass2')}
+                  required
+                  name='confirmPassword'
+                  type='password'
+                  onChange={handleChange}
+                  value={confirmPassword}
+                />
+                {regError !== null && <span>{regError}</span>}
+                <Button type='submit'>{t('signUp')}</Button>
+              </form>
+            </>
+          )}
         </div>
       )}
     </div>
