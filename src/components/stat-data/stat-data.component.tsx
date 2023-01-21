@@ -5,21 +5,42 @@ type StatDataProps = {
   teamName: string;
 };
 export const StatData = ({ GamesData, teamName }: StatDataProps) => {
-  const datesPlayed = Object.entries(GamesData)
-    .map(([key, value]) => {
-      return {
-        [key]: value.filter((x) => x.name === teamName).map((y) => y.position)[0],
-      };
-    })
-    .reduce((acc, val) => (Object.values(val)[0] ? { ...acc, ...val } : { ...acc }), {});
-  const pos = Object.values(datesPlayed);
+  const gamesStreakDates: [string, number][] = Object.entries(GamesData).map(([key, value]) => [
+    key,
+    value.filter((x) => x.name === teamName).map((y) => y.position)[0],
+  ]);
+
+  const gamesStreak = (function () {
+    const games = gamesStreakDates.map((day) => day[1]);
+    let currentStreak = 0;
+    let longestStreak = 0;
+    for (let i = 0; i < games.length; i++) {
+      if (games[i] !== undefined) {
+        currentStreak++;
+        if (currentStreak > longestStreak) {
+          longestStreak = currentStreak;
+        }
+      } else {
+        currentStreak = 0;
+      }
+    }
+    return { currentStreak: currentStreak, longestStreak: longestStreak };
+  })();
+  const datesPlayed: { [index: string]: number } = gamesStreakDates.reduce(
+    (acc, val) => (val[1] ? { ...acc, [val[0]]: val[1] } : { ...acc }),
+    {},
+  );
   // Total games played
-  const total = pos.length;
+  const total = Object.values(datesPlayed).length;
   // Top 3 best positions
-  const sortPos = pos.reduce(function (acc: { [index: string]: number }, curr: number) {
+  const sortPos = Object.values(datesPlayed).reduce(function (
+    acc: { [index: string]: number },
+    curr: number,
+  ) {
     curr in acc ? acc[curr]++ : (acc[curr] = 1);
     return acc;
-  }, {});
+  },
+  {});
   // Best game
   const best = (function () {
     const topPlace = Object.keys(sortPos)[0];
@@ -102,12 +123,12 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
   );
 
   // Average score
-  // Compare all results with another team
   // Favourite round
 
   const StatData = {
     teamName: teamName,
-    pos: pos,
+    gamesStreakDates: gamesStreakDates,
+    gamesStreak: gamesStreak,
     total: total,
     top3: Object.fromEntries(Object.entries(sortPos).slice(0, 3)),
     best: best,
@@ -121,6 +142,16 @@ export const StatData = ({ GamesData, teamName }: StatDataProps) => {
       ) : (
         <>
           <div>{StatData.total && <span>Total games played: {StatData.total}</span>}</div>
+          <div>Current streak:&nbsp;{StatData.gamesStreak.currentStreak}</div>
+          <div>Longest streak:&nbsp;{StatData.gamesStreak.longestStreak}</div>
+          <div>
+            Games played:&nbsp;
+            {gamesStreakDates.map((date, i) => (
+              <span style={{ color: 'lightgreen' }} key={i}>
+                {date[1] ? ': ' : '. '}
+              </span>
+            ))}
+          </div>
           <div>
             {Object.entries(StatData.top3).map((key) => (
               <span key={key[0]} style={{ display: 'block' }}>
