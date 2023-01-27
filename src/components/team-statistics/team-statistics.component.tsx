@@ -1,5 +1,12 @@
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { GamesData } from '~/store/game/game.types';
 import { statData } from '~/utils/statistics.utils';
+import { BestRival } from '../best-rival/best-rival.component';
+
+import { fetchGameStart } from '~/store/game/game.action';
 
 import { ReactComponent as First } from '~/assets/1st.svg';
 import { ReactComponent as Second } from '~/assets/2nd.svg';
@@ -9,8 +16,6 @@ import { ReactComponent as Laurel } from '~/assets/laurel.svg';
 import { ReactComponent as FireCurrent } from '~/assets/fire-current.svg';
 import { ReactComponent as FireLongest } from '~/assets/fire-longest.svg';
 import './team-statistics.styles.scss';
-import { BestRival } from '../best-rival/best-rival.component';
-import { useTranslation } from 'react-i18next';
 
 type TeamStatisticsProps = {
   GamesData: GamesData;
@@ -19,6 +24,8 @@ type TeamStatisticsProps = {
 export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => {
   const SD = statData({ GamesData, teamName });
   const { t } = useTranslation('translation', { keyPrefix: 'statistics' });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const place = (place: number) => {
     if (place === 1) {
@@ -58,7 +65,6 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
       </div>
     </div>
   ));
-  console.log(streakDates1);
 
   return (
     <div className='team-statistics'>
@@ -114,7 +120,13 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
             </div>
             <div className='team-statistics__best'>
               <h4>Best game</h4>
-              <button>
+              <button
+                onClick={() => {
+                  if (!SD.best) return;
+                  navigate('/games');
+                  dispatch(fetchGameStart(SD.best));
+                }}
+              >
                 <Laurel />
                 <span>
                   {SD.best &&

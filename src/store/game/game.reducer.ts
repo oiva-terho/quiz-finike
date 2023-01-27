@@ -11,6 +11,7 @@ import {
   fetchGameFailed,
   fetchGameSuccess,
   setRounds,
+  fetchGameStart,
 } from './game.action';
 import { GamesData, Team } from './game.types';
 
@@ -51,9 +52,10 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
       date: action.payload.date,
       teams: action.payload.teams,
       rounds: action.payload.teams[0].result.length,
+      isLoading: false,
     };
   }
-  if (uploadGameStart.match(action)) {
+  if (uploadGameStart.match(action) || fetchGameStart.match(action)) {
     return { ...state, isLoading: true };
   }
   if (uploadGameSuccess.match(action) || clearGame.match(action)) {
