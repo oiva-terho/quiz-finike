@@ -2,7 +2,8 @@
 @import './styles/breakpoints';
 @import './styles/typografy';
 
-body {
+body,
+button {
   margin: 0;
   background-color: $color-bg-main;
   color: $color-font-primary;

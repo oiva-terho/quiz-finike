@@ -10,6 +10,7 @@ import { ReactComponent as FireCurrent } from '~/assets/fire-current.svg';
 import { ReactComponent as FireLongest } from '~/assets/fire-longest.svg';
 import './team-statistics.styles.scss';
 import { BestRival } from '../best-rival/best-rival.component';
+import { useTranslation } from 'react-i18next';
 
 type TeamStatisticsProps = {
   GamesData: GamesData;
@@ -17,6 +18,7 @@ type TeamStatisticsProps = {
 };
 export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => {
   const SD = statData({ GamesData, teamName });
+  const { t } = useTranslation('translation', { keyPrefix: 'statistics' });
 
   const place = (place: number) => {
     if (place === 1) {
@@ -35,6 +37,29 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
       </div>
     );
   };
+  const streakDates1: { [index: string]: [number, number | undefined][] } = SD.gamesDates.reduce<{
+    [index: string]: [number, number | undefined][];
+  }>((acc, curr) => {
+    const month = t(`months.${curr[0].slice(2, 4)}`);
+    const monthYear = month + ' ' + '20' + curr[0].slice(0, 2);
+    const date = +curr[0].slice(4, 6);
+    !acc[monthYear] ? (acc[monthYear] = [[date, curr[1]]]) : acc[monthYear].push([date, curr[1]]);
+    return acc;
+  }, {});
+  const streakCalendar = Object.entries(streakDates1).map((month, i) => (
+    <div className='team-statistics__streak_month' key={i}>
+      <span>{month[0]}</span>
+      <div className='team-statistics__streak_month-dates'>
+        {month[1].map((date, i) => (
+          <span className={date[1] ? 'mark' : ''} key={i}>
+            {date[0]}
+          </span>
+        ))}
+      </div>
+    </div>
+  ));
+  console.log(streakDates1);
+
   return (
     <div className='team-statistics'>
       {SD.total === 0 ? (
@@ -132,14 +157,7 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
                   </div>
                 </div>
               </div>
-              <div className='team-statistics__streak_dates'>
-                Games played:&nbsp;
-                {SD.gamesDates.map((date, i) => (
-                  <span style={{ color: 'lightgreen' }} key={i}>
-                    {date[1] ? ': ' : '. '}
-                  </span>
-                ))}
-              </div>
+              <div className='team-statistics__streak_dates'>{streakCalendar}</div>
             </div>
           </div>
         </>

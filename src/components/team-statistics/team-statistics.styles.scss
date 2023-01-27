@@ -195,6 +195,52 @@
         }
       }
       & .team-statistics__streak_dates {
+        display: flex;
+        justify-content: flex-end;
+        overflow-x: scroll;
+        & > .team-statistics__streak_month {
+          text-align: center;
+          margin-top: 0.4em;
+          &:last-of-type {
+            & > .team-statistics__streak_month-dates::after {
+              display: none;
+            }
+          }
+          & > span {
+            font-weight: 700;
+            font-size: 0.7em;
+          }
+          & > .team-statistics__streak_month-dates {
+            display: flex;
+            gap: 0.8em;
+            margin-top: 0.4em;
+            &::after {
+              content: '';
+              display: inline-block;
+              width: 0.2em;
+              height: 1.6em;
+              background-color: $color-bg-main;
+              border-radius: 1px;
+            }
+            & > span {
+              display: block;
+              width: 1.6em;
+              height: 1.6em;
+              background-color: $color-bg-main;
+              border-radius: 50%;
+              text-align: center;
+              line-height: 1.6em;
+              font-size: 1em;
+              font-weight: 700;
+              &:first-of-type {
+                margin-left: 0.8em;
+              }
+            }
+            & > .mark {
+              background-color: $color-marker;
+            }
+          }
+        }
       }
     }
   }
