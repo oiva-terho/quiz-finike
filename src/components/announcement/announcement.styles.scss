@@ -95,13 +95,20 @@
       align-items: center;
       text-decoration: none;
       color: #fff;
-      font-weight: 700;
       padding: 1em * 0.6 0;
       svg {
-        height: 1.5em;
+        height: 2em;
         display: inline;
         color: white;
         margin-right: 0.2em;
+      }
+      .announcement__plate_pub {
+        font-weight: 700;
+        font-size: 1.4em;
+        line-height: 1em;
+      }
+      .announcement__plate_addr {
+        font-weight: 300;
       }
     }
     div:last-of-type {

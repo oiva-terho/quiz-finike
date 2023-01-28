@@ -53,9 +53,12 @@ export const Announcement = () => {
       <div className='announcement__plate'>
         <h2>{nextGame()}</h2>
         <div>{t('friday')} | 19:30</div>
-        <a href='https://goo.gl/maps/qYo4d3hvxq9kt3a69'>
+        <a href='https://goo.gl/maps/FFtjjgMAn9HXg9Zh6'>
           <MapLogo />
-          Hanımeli Cafe
+          <div>
+            <div className='announcement__plate_pub'>FINK PUB</div>
+            <div className='announcement__plate_addr'>Şerbetçi Blv. 53</div>
+          </div>
         </a>
         <div>
           {t('cost')}
