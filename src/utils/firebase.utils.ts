@@ -24,7 +24,7 @@ import {
 } from 'firebase/firestore';
 
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import { Team } from '~/store/game/game.types';
+import { GamesData, Team } from '~/store/game/game.types';
 
 // Firebase config
 
@@ -151,12 +151,17 @@ export const getGameDoc = async (date: string) => {
   return teams;
 };
 
-export const getGamesList = async (): Promise<string[]> => {
+export const getGamesData = async (): Promise<GamesData> => {
   const gameRef = collection(db, 'games');
   const querySnapshot = await getDocs(query(gameRef));
-  const gameMap = querySnapshot.docs.map((docSnapshot) => docSnapshot.id);
-  return gameMap;
+  const data: GamesData = {};
+  querySnapshot.forEach((doc) => {
+    const { teams } = doc.data();
+    data[doc.id] = teams;
+  });
+  return data;
 };
+
 // Firebase storage
 
 const storage = getStorage(firebaseApp);

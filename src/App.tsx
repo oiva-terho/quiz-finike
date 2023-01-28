@@ -9,8 +9,8 @@ import { AddGame } from './routes/add-game/add-game.component';
 import { Gallery } from './routes/gallery/gallery.component';
 import { SignInForm } from './routes/sign-in/sign-in.component';
 import { SignUpForm } from './routes/sign-up/sign-up.component';
-import { AddTeamName } from './routes/add-team-name/add-team-name.component';
 import { checkUserSession } from './store/user/user.action';
+import { Statistics } from './routes/statistics/statistics.component';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function App() {
         <Route path='gallery' element={<Gallery />} />
         <Route path='sign-in' element={<SignInForm />} />
         <Route path='sign-up' element={<SignUpForm />} />
-        <Route path='add-team' element={<AddTeamName />} />
+        <Route path='statistics' element={<Statistics />} />
       </Route>
     </Routes>
   );

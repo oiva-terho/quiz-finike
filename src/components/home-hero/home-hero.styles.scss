@@ -27,10 +27,7 @@
 .home-hero {
   position: relative;
   text-align: center;
-  height: calc(100vh - 35px);
-  @include bp(tab) {
-    height: calc(100vh - 45px);
-  }
+  height: calc(100vh - 45px);
   @include bp(laptop) {
     height: calc(100vh - 60px);
   }

@@ -16,6 +16,7 @@ import { Spinner } from '~/components/spinner/spinner.component';
 
 import { ReactComponent as GLogo } from '~/assets/google.svg';
 import './sign-in.styles.scss';
+import { AddTeamName } from '~/components/add-team-name/add-team-name.component';
 
 const defaultFormFields = {
   email: '',
@@ -72,47 +73,55 @@ export const SignInForm = () => {
         <Spinner />
       ) : (
         <div className='sign-in__wrapper'>
-          <h3>{t('header')}</h3>
-          <form onSubmit={handleSubmit}>
-            <FormInput
-              required
-              label='Email'
-              name='email'
-              type='email'
-              onChange={handleChange}
-              value={email}
-            />
-            {logError?.message === errMessage.email && <span>{t('nouser')}</span>}
-            <FormInput
-              required
-              label={t('pass')}
-              name='password'
-              type='password'
-              onChange={handleChange}
-              value={password}
-            />
-            {logError?.message === errMessage.pass && <span>{t('wrongPass')}</span>}
-            <div className='sign-in__buttons'>
-              <Button
-                type='button'
-                buttonType={BUTTON_CLASSES.auth}
-                onClick={() => goTo('/sign-up')}
-              >
-                {t('create')}
-              </Button>
-              <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
-                {t('signIn')}
-              </Button>
-            </div>
-          </form>
-          <div className='sign-in__google'>
-            <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={signInWithGoogle}>
-              <span>{t('google')}&nbsp;</span>
-              <GLogo />
-            </Button>
-          </div>
           {checkUser === 'has team' && <Navigate to='/' />}
-          {checkUser === 'no team' && <Navigate to='/add-team' />}
+          {checkUser === 'no team' ? (
+            <>
+              <h3>{t('add-team')}</h3>
+              <AddTeamName />
+            </>
+          ) : (
+            <>
+              <h3>{t('header')}</h3>
+              <form onSubmit={handleSubmit}>
+                <FormInput
+                  required
+                  label='Email'
+                  name='email'
+                  type='email'
+                  onChange={handleChange}
+                  value={email}
+                />
+                {logError?.message === errMessage.email && <span>{t('nouser')}</span>}
+                <FormInput
+                  required
+                  label={t('pass')}
+                  name='password'
+                  type='password'
+                  onChange={handleChange}
+                  value={password}
+                />
+                {logError?.message === errMessage.pass && <span>{t('wrongPass')}</span>}
+                <div className='sign-in__buttons'>
+                  <Button
+                    type='button'
+                    buttonType={BUTTON_CLASSES.auth}
+                    onClick={() => goTo('/sign-up')}
+                  >
+                    {t('create')}
+                  </Button>
+                  <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
+                    {t('signIn')}
+                  </Button>
+                </div>
+              </form>
+              <div className='sign-in__google'>
+                <Button type='button' buttonType={BUTTON_CLASSES.auth} onClick={signInWithGoogle}>
+                  <span>{t('google')}&nbsp;</span>
+                  <GLogo />
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

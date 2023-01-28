@@ -1,0 +1,59 @@
+@import '/src/styles/breakpoints';
+@import '/src/styles/variables.scss';
+
+.leaderboard {
+  & > h4 {
+    text-align: center;
+    margin-top: 0;
+  }
+  &__table {
+    & > button,
+    div {
+      display: grid;
+      grid-template-columns: 4fr 1fr 1fr;
+      font-size: 0.8em;
+      background-color: $color-bg-light-blue;
+      border-radius: 0.2em;
+      border: none;
+      width: 100%;
+      margin-top: 3px;
+      padding: 0.15em;
+      padding-left: 0.5em;
+      & > span:first-child {
+        text-align: left;
+        padding-left: 0.5em;
+      }
+      & > span:not(:first-child) {
+        font-weight: 700;
+        color: #fff;
+        background-color: $color-marker;
+        border-radius: 0.2em;
+        margin: 0 0.5em;
+        b {
+          font-size: 0.6em;
+          padding-left: 0.2em;
+        }
+      }
+      & > span:nth-of-type(3) {
+        background-color: $color-bg-light;
+      }
+    }
+    & > div {
+      box-sizing: border-box;
+      margin-bottom: 0.8em;
+      button {
+        font-size: 0.7em;
+        font-weight: 700;
+        border: none;
+        background-color: transparent;
+        &:first-of-type {
+          padding-left: 0.7em;
+          text-align: left;
+        }
+        &::after {
+          content: '▾';
+        }
+      }
+    }
+  }
+}

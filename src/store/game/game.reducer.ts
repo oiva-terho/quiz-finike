@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import {
-  fetchGamesListSuccess,
-  fetchGamesListFailed,
+  fetchGamesDataSuccess,
+  fetchGamesDataFailed,
   uploadGameStart,
   uploadGameSuccess,
   uploadGameFailed,
@@ -11,13 +11,15 @@ import {
   fetchGameFailed,
   fetchGameSuccess,
   setRounds,
+  fetchGameStart,
 } from './game.action';
-import { Team } from './game.types';
+import { GamesData, Team } from './game.types';
 
 export type GameState = {
   date: string;
   teams: Team[];
-  gamesList?: string[];
+  gamesData: GamesData;
+  gamesList: string[];
   rounds: number;
   isLoading: boolean;
 };
@@ -25,6 +27,7 @@ export type GameState = {
 const INITIAL_STATE: GameState = {
   date: '',
   teams: [],
+  gamesData: {},
   gamesList: [],
   rounds: 6,
   isLoading: false,
@@ -40,8 +43,8 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
   if (setTeams.match(action) && state.date) {
     return { ...state, teams: action.payload };
   }
-  if (fetchGamesListSuccess.match(action)) {
-    return { ...state, gamesList: action.payload };
+  if (fetchGamesDataSuccess.match(action)) {
+    return { ...state, gamesData: action.payload, gamesList: Object.keys(action.payload) };
   }
   if (fetchGameSuccess.match(action)) {
     return {
@@ -49,9 +52,10 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
       date: action.payload.date,
       teams: action.payload.teams,
       rounds: action.payload.teams[0].result.length,
+      isLoading: false,
     };
   }
-  if (uploadGameStart.match(action)) {
+  if (uploadGameStart.match(action) || fetchGameStart.match(action)) {
     return { ...state, isLoading: true };
   }
   if (uploadGameSuccess.match(action) || clearGame.match(action)) {
@@ -59,7 +63,7 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
   }
   if (
     uploadGameFailed.match(action) ||
-    fetchGamesListFailed.match(action) ||
+    fetchGamesDataFailed.match(action) ||
     fetchGameFailed.match(action)
   ) {
     return { ...state };
