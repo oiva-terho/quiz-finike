@@ -201,11 +201,22 @@
       }
       & .team-statistics__streak_dates {
         display: flex;
-        justify-content: flex-end;
-        overflow-x: scroll;
+        overflow-x: auto;
+        scrollbar-color: $color-bg-main #aac1d4;
+        scrollbar-width: 0.2em;
+        &::-webkit-scrollbar {
+          height: 0.2em;
+          background-color: #aac1d4;
+          border-radius: 0.1em;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: $color-bg-main;
+          border-radius: 0.1em;
+        }
         & > .team-statistics__streak_month {
           text-align: center;
           margin-top: 0.4em;
+          margin-bottom: 0.4em;
           &:last-of-type {
             & > .team-statistics__streak_month-dates::after {
               display: none;
@@ -224,8 +235,8 @@
               display: inline-block;
               width: 0.2em;
               height: 1.6em;
-              background-color: $color-bg-main;
-              border-radius: 1px;
+              background-color: #aac1d4;
+              border-radius: 0.1em;
             }
             & > span {
               display: block;
