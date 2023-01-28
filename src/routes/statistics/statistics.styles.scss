@@ -1,5 +1,27 @@
+@import '/src/styles/breakpoints';
+
 .statistics {
   padding: 1em;
+  & > div {
+    margin-bottom: 2em;
+  }
+  @include bp(mobL) {
+    padding: 1.5em;
+  }
+  @include bp(tab) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+    grid-auto-flow: dense;
+    width: 100vw;
+    box-sizing: border-box;
+    & > div {
+      width: calc((100vw - 5em) / 2);
+      &:nth-child(2) {
+        grid-row: 2 / 3;
+      }
+    }
+  }
   &__header {
     display: flex;
     justify-content: center;

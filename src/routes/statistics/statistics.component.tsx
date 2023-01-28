@@ -25,7 +25,7 @@ export const Statistics = () => {
   const user = useSelector(selectCurrentUser);
   const GamesData = useSelector(selectGamesData);
   const signOutUser = () => dispatch(signOutStart());
-  const { t } = useTranslation('translation', { keyPrefix: 'navigation' });
+  const { t } = useTranslation('translation', { keyPrefix: 'statistics' });
   const [edit, setEdit] = useState(false);
   const [teamToCompare, setTeamToCompare] = useState('');
   const leaderboard = useMemo(() => getLeaderboard(GamesData), [GamesData]);
@@ -59,28 +59,30 @@ export const Statistics = () => {
 
   return (
     <div className='statistics'>
-      <div className='statistics__header'>
-        {!user && <Navigate to='/sign-in' />}
-        <Button onClick={() => setEdit(edit ? false : true)}>
-          {edit ? <StopEdit /> : <Edit />}
-        </Button>
-        {edit ? <AddTeamName /> : <span className='statistics__name'>{user?.teamName}</span>}
-        <Button onClick={signOutUser}>
-          <Exit />
-        </Button>
+      <div>
+        <div className='statistics__header'>
+          {!user && <Navigate to='/sign-in' />}
+          <Button onClick={() => setEdit(edit ? false : true)}>
+            {edit ? <StopEdit /> : <Edit />}
+          </Button>
+          {edit ? <AddTeamName /> : <span className='statistics__name'>{user?.teamName}</span>}
+          <Button onClick={signOutUser}>
+            <Exit />
+          </Button>
+        </div>
+        {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       </div>
-      {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       <div className='dates-select'>
         <select defaultValue={teamToCompare} onChange={(e) => setTeamToCompare(e.target.value)}>
-          <option value=''>Choose a team to compare</option>
+          <option value=''>{t('compare')}</option>
           {teamList.map((team, i) => (
             <option value={team[0]} key={i}>
               {team[0]}:{team[1]}
             </option>
           ))}
         </select>
+        {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
       </div>
-      {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
       <Leaderboard list={leaderboard} />
     </div>
   );
