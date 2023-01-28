@@ -18,6 +18,7 @@ import { ReactComponent as Exit } from '~/assets/exit.svg';
 
 import '~/components/date-select/date-select.styles.scss';
 import './statistics.styles.scss';
+import { Leaderboard } from '~/components/leaderboard/leaderboard.component';
 
 export const Statistics = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ export const Statistics = () => {
       {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       <div className='dates-select'>
         <select defaultValue={teamToCompare} onChange={(e) => setTeamToCompare(e.target.value)}>
-          <option value=''>-</option>
+          <option value=''>Choose a team to compare</option>
           {teamList.map((team, i) => (
             <option value={team[0]} key={i}>
               {team[0]}:{team[1]}
@@ -80,15 +81,7 @@ export const Statistics = () => {
         </select>
       </div>
       {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
-
-      <div>
-        <h6>Leaderboard</h6>
-        {leaderboard.map((team, i) => (
-          <div key={i}>
-            {team.teamName} : {team.totalScore} ({team.averageRating}%)
-          </div>
-        ))}
-      </div>
+      <Leaderboard list={leaderboard} />
     </div>
   );
 };
