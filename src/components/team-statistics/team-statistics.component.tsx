@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -44,17 +45,17 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
       </div>
     );
   };
-  const streakDates1: { [index: string]: [number, number | undefined][] } = SD.gamesDates.reduce<{
-    [index: string]: [number, number | undefined][];
-  }>((acc, curr) => {
+  type StreakDates = { [index: string]: [number, number | undefined][] };
+  const streakDates: StreakDates = SD.gamesDates.reduce<StreakDates>((acc, curr) => {
     const month = t(`months.${curr[0].slice(2, 4)}`);
     const monthYear = month + ' ' + '20' + curr[0].slice(0, 2);
     const date = +curr[0].slice(4, 6);
     !acc[monthYear] ? (acc[monthYear] = [[date, curr[1]]]) : acc[monthYear].push([date, curr[1]]);
     return acc;
   }, {});
-  const streakCalendar = Object.entries(streakDates1).map((month, i) => (
-    <div className='team-statistics__streak_month' key={i}>
+  const streakDatesArray = Object.entries(streakDates);
+  const streakCalendar = streakDatesArray.map((month, i) => (
+    <div className='team-statistics__streak_month' data-month={i + 1} key={i}>
       <span>{month[0]}</span>
       <div className='team-statistics__streak_month-dates'>
         {month[1].map((date, i) => (
@@ -76,18 +77,18 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
             <div className='team-statistics__general_bubble'>
               <span>{SD.total}</span>
               <div className='team-statistics__general_bubble-title'>
-                Games
+                {t('games')}
                 <button>
-                  <span>Total number of played games</span>
+                  <span>{t('gamesDescr')}</span>
                 </button>
               </div>
             </div>
             <div className='team-statistics__general_bubble team-statistics__general_bubble-big'>
               <span>{SD.rating.totalScore}</span>
               <div className='team-statistics__general_bubble-title'>
-                Score
+                {t('score')}
                 <button>
-                  <span>Sum of scores of all games</span>
+                  <span>{t('scoreDescr')}</span>
                 </button>
               </div>
             </div>
@@ -97,19 +98,16 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
                 <span>%</span>
               </span>
               <div className='team-statistics__general_bubble-title'>
-                Rating
+                {t('rating')}
                 <button>
-                  <span>
-                    Average position in game results if 1st place&apos;s is 100% and last
-                    place&apos;s score is 0%
-                  </span>
+                  <span>{t('ratingDescr')}</span>
                 </button>
               </div>
             </div>
           </div>
           <div className='team-statistics__tops'>
             <div className='team-statistics__top3'>
-              <h4>Top 3 places</h4>
+              <h4>{t('top3')}</h4>
               <div className='team-statistics__top3-container'>
                 {Object.entries(SD.top3).map((key) => (
                   <div className='team-statistics__top3-position' key={key[0]}>
@@ -119,7 +117,7 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
               </div>
             </div>
             <div className='team-statistics__best'>
-              <h4>Best game</h4>
+              <h4>{t('best')}</h4>
               <button
                 onClick={() => {
                   if (!SD.best) return;
@@ -136,7 +134,7 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
             </div>
           </div>
           <div className='team-statistics__rivals'>
-            <h4>Best rival{SD.rivalNames.length > 1 ? 's' : null}</h4>
+            <h4>{t(SD.rivalNames.length > 1 ? 'rivals' : 'rival')}</h4>
             {SD.rivalsWhoWon[0].win === 0 && SD.rivalsWhoWon[0].loose === 0
               ? null
               : SD.rivalNames.map((rival, i) => (
@@ -151,18 +149,18 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
                 ))}
           </div>
           <div className='team-statistics__streak'>
-            <h4>Streak</h4>
+            <h4>{t('streak')}</h4>
             <div className='team-statistics__streak_wrapper'>
               <div className='team-statistics__streak_absolute'>
                 <div>
-                  <span>Current</span>
+                  <span>{t('current')}</span>
                   <div>
                     <FireCurrent />
                     <span>{SD.gamesStreak.currentStreak}</span>
                   </div>
                 </div>
                 <div className='team-statistics__streak_longest'>
-                  <span>Longest</span>
+                  <span>{t('longest')}</span>
                   <div>
                     <FireLongest />
                     <span>{SD.gamesStreak.longestStreak}</span>

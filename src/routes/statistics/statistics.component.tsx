@@ -72,18 +72,22 @@ export const Statistics = () => {
         </div>
         {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       </div>
-      <div className='dates-select'>
-        <select defaultValue={teamToCompare} onChange={(e) => setTeamToCompare(e.target.value)}>
+      <div>
+        <select
+          className='statistics__select'
+          defaultValue={teamToCompare}
+          onChange={(e) => setTeamToCompare(e.target.value)}
+        >
           <option value=''>{t('compare')}</option>
           {teamList.map((team, i) => (
             <option value={team[0]} key={i}>
-              {team[0]}:{team[1]}
+              {team[0]} -{team[1]}-
             </option>
           ))}
         </select>
         {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
       </div>
-      <Leaderboard list={leaderboard} />
+      <Leaderboard list={leaderboard} select={setTeamToCompare} />
     </div>
   );
 };

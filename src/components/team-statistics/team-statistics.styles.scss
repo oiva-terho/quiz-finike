@@ -46,11 +46,13 @@
             content: '?';
             background-color: $color-bg-light-blue;
             border-radius: 50%;
-            display: block;
-            font-size: 9px;
-            line-height: 12px;
-            width: 12px;
-            height: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.6em;
+            font-weight: 600;
+            width: 1.4em;
+            height: 1.4em;
             margin-left: 0.4em;
           }
           &:hover,
@@ -63,6 +65,7 @@
             display: block;
             position: absolute;
             background-color: $color-bg-light-blue;
+            border: 1px solid $color-bg-main;
             border-radius: 0.5em;
             top: 130%;
             right: 50%;
@@ -204,6 +207,10 @@
         overflow-x: auto;
         scrollbar-color: $color-bg-main #aac1d4;
         scrollbar-width: 0.2em;
+        transition: all 0.5s;
+        @include bp(tab) {
+          max-width: calc((100vw - 5em) / 2);
+        }
         &::-webkit-scrollbar {
           height: 0.2em;
           background-color: #aac1d4;
@@ -217,6 +224,7 @@
           text-align: center;
           margin-top: 0.4em;
           margin-bottom: 0.4em;
+          transition: all 0.5s;
           &:last-of-type {
             & > .team-statistics__streak_month-dates::after {
               display: none;

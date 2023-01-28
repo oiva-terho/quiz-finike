@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './leaderboard.styles.scss';
 
 type TeamScore = {
@@ -7,8 +8,13 @@ type TeamScore = {
   averageRating: number;
 }[];
 
-export const Leaderboard = ({ list }: { list: TeamScore }) => {
+type LeaderboardProps = {
+  list: TeamScore;
+  select: (arg: string) => void;
+};
+export const Leaderboard = ({ list, select }: LeaderboardProps) => {
   const [teamsList, setTeamsList] = useState(list);
+  const { t } = useTranslation('translation', { keyPrefix: 'statistics' });
   const sortBy = (option: string) => {
     const sortedList = Array.from(
       list.sort((a, b) => {
@@ -21,22 +27,22 @@ export const Leaderboard = ({ list }: { list: TeamScore }) => {
   };
   return (
     <div className='leaderboard'>
-      <h4>Leaderboard</h4>
+      <h4>{t('leaderboard')}</h4>
       <div className='leaderboard__table'>
         <div>
-          <button onClick={() => sortBy('name')}>Team</button>
-          <button onClick={() => sortBy('score')}>Score</button>
-          <button onClick={() => sortBy('rating')}>Rating</button>
+          <button onClick={() => sortBy('name')}>{t('team')}</button>
+          <button onClick={() => sortBy('score')}>{t('score')}</button>
+          <button onClick={() => sortBy('rating')}>{t('rating')}</button>
         </div>
         {teamsList.map((team, i) => (
-          <div key={i}>
+          <button onClick={() => select(team.teamName)} key={i}>
             <span>{team.teamName}</span>
             <span>{team.totalScore}</span>
             <span>
               {team.averageRating}
               <b>%</b>
             </span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
