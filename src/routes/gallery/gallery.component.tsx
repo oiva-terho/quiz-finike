@@ -11,7 +11,7 @@ import { selectFolders, selectPhotoDate } from '~/store/gallery/gallery.selector
 import { selectCurrentUser } from '~/store/user/user.selector';
 import { PhotoSlider } from '~/components/photo-slider/photo-slider.component';
 
-export const Gallery = () => {
+const Gallery = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const foldersList = useSelector(selectFolders);
@@ -34,3 +34,5 @@ export const Gallery = () => {
     </>
   );
 };
+
+export default Gallery;

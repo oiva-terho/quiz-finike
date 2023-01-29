@@ -20,7 +20,7 @@ import '~/components/date-select/date-select.styles.scss';
 import './statistics.styles.scss';
 import { Leaderboard } from '~/components/leaderboard/leaderboard.component';
 
-export const Statistics = () => {
+const Statistics = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const GamesData = useSelector(selectGamesData);
@@ -30,6 +30,8 @@ export const Statistics = () => {
   const [teamToCompare, setTeamToCompare] = useState('');
   const leaderboard = useMemo(() => getLeaderboard(GamesData), [GamesData]);
   if (Object.keys(GamesData).length === 0) return <Spinner />;
+
+  const guest = user?.email === 'me@mail.com' ? true : false;
 
   // Fix team name of 'Они заняли ***е место'
   Object.fromEntries(
@@ -62,15 +64,21 @@ export const Statistics = () => {
       <div>
         <div className='statistics__header'>
           {!user && <Navigate to='/sign-in' />}
-          <Button onClick={() => setEdit(edit ? false : true)}>
-            {edit ? <StopEdit /> : <Edit />}
-          </Button>
-          {edit ? <AddTeamName /> : <span className='statistics__name'>{user?.teamName}</span>}
+          {guest ? (
+            <span className='statistics__name'>{t('justWatch')}</span>
+          ) : (
+            <>
+              <Button onClick={() => setEdit(edit ? false : true)}>
+                {edit ? <StopEdit /> : <Edit />}
+              </Button>
+              {edit ? <AddTeamName /> : <span className='statistics__name'>{user?.teamName}</span>}
+            </>
+          )}
           <Button onClick={signOutUser}>
             <Exit />
           </Button>
         </div>
-        {user && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
+        {user?.teamName && <TeamStatistics GamesData={GamesData} teamName={user?.teamName} />}
       </div>
       <div>
         <select
@@ -85,9 +93,16 @@ export const Statistics = () => {
             </option>
           ))}
         </select>
-        {teamToCompare !== '' && <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />}
+        {teamToCompare !== '' && (
+          <>
+            <div className='statistics__name'>{teamToCompare}</div>
+            <TeamStatistics GamesData={GamesData} teamName={teamToCompare} />
+          </>
+        )}
       </div>
       <Leaderboard list={leaderboard} select={setTeamToCompare} />
     </div>
   );
 };
+
+export default Statistics;

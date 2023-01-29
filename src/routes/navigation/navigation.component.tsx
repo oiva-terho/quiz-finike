@@ -15,7 +15,7 @@ import { ReactComponent as AuthLogo } from '~/assets/auth.svg';
 
 import './navigation.styles.scss';
 
-export const Navigation = () => {
+const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
@@ -39,7 +39,7 @@ export const Navigation = () => {
           <Button onClick={() => goTo('/gallery')}>
             {windowWidth > 767 ? t('gallery') : <GalleryLogo />}
           </Button>
-          {!currentUser || currentUser.email === 'me@mail.com' ? (
+          {!currentUser ? (
             <Button onClick={() => goTo('/sign-in')}>
               {windowWidth > 767 ? t('signIn') : <AuthLogo />}
             </Button>
@@ -54,3 +54,5 @@ export const Navigation = () => {
     </>
   );
 };
+
+export default Navigation;

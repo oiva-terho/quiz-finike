@@ -1,0 +1,15 @@
+{
+  "short_name": "Quiz Finike",
+  "name": "Quiz Finike - квиз для русских в Турции",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512 384x384 192x192 128x128 64x64 32x32 24x23 16x16",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#ddf",
+  "background_color": "#022c52"
+}

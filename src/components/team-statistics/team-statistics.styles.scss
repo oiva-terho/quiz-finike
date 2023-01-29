@@ -3,6 +3,10 @@
 
 .team-statistics {
   position: relative;
+  &__noteam {
+    display: block;
+    text-align: center;
+  }
   & h4 {
     text-align: center;
     margin: 0;

@@ -22,7 +22,7 @@ import { countResColor } from '~/utils/layout.utils';
 import './games.styles.scss';
 import { Spinner } from '~/components/spinner/spinner.component';
 
-export const Games = () => {
+const Games = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const gamesList = useSelector(selectGamesList);
@@ -92,3 +92,5 @@ export const Games = () => {
     </div>
   );
 };
+
+export default Games;

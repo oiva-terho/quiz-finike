@@ -16,7 +16,7 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 
-export const SignUpForm = () => {
+const SignUpForm = () => {
   const [regError, setRegError] = useState('');
 
   const dispatch = useDispatch();
@@ -63,7 +63,6 @@ export const SignUpForm = () => {
   };
 
   const checkUser = (function () {
-    if (currentUser?.teamName === '...') return;
     if (currentUser?.teamName) return 'has team';
     if (currentUser) return 'no team';
     return;
@@ -121,3 +120,5 @@ export const SignUpForm = () => {
     </div>
   );
 };
+
+export default SignUpForm;

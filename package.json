@@ -46,6 +46,7 @@
     "typed-redux-saga": "^1.5.0",
     "typescript": "^4.8.4",
     "vite": "^3.2.3",
+    "vite-plugin-compression": "^0.5.1",
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^3.5.2"
   }
