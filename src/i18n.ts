@@ -53,6 +53,7 @@ i18next
             add: 'Add a game',
             watch: 'Watch photos',
             total: 'Total',
+            select: 'Select date',
           },
           addGame: {
             header: 'Add a game',
@@ -180,6 +181,7 @@ i18next
             add: 'Добавить игру',
             watch: 'Смотреть фото',
             total: 'Всего',
+            select: 'Выберите дату',
           },
           addGame: {
             header: 'Добавить игру',

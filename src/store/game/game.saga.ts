@@ -25,8 +25,7 @@ export function* fetchGamesDataStartAsync() {
 export function* fetchGameStartAsync({ payload: { date } }: FetchGameStart) {
   try {
     const teams = yield* call(() => getGameDoc(date));
-    const newDate = `20${date.slice(0, 2)}-${date.slice(2, 4)}-${date.slice(4, 6)}`;
-    yield* put(fetchGameSuccess(newDate, teams));
+    yield* put(fetchGameSuccess(date, teams));
   } catch (error) {
     yield* put(fetchGameFailed(error as Error));
   }

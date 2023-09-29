@@ -38,7 +38,10 @@ export function* fetchPhotoLinksStartAsync({
 export function* onFetchPhotoLinks() {
   yield* takeLatest(GALLERY_ACTION_TYPES.FETCH_PHOTO_LINKS_START, fetchPhotoLinksStartAsync);
 }
+export function* onFetchPhotoFolders() {
+  yield* takeLatest(GALLERY_ACTION_TYPES.FETCH_FOLDERS_START, fetchFoldersStartAsync);
+}
 
 export function* gallerySagas() {
-  yield* all([call(onFetchPhotoLinks)]);
+  yield* all([call(onFetchPhotoLinks), call(onFetchPhotoFolders)]);
 }

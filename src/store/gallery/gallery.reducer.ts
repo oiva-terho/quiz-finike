@@ -7,6 +7,8 @@ import {
   fetchPhotoLinksFailed,
   setPhotoDate,
   addBonus,
+  fetchFoldersStart,
+  fetchFoldersFailed,
 } from './gallery.action';
 
 export type GalleryState = {
@@ -24,11 +26,11 @@ const INITIAL_STATE: GalleryState = {
 };
 
 export const galleryReducer = (state = INITIAL_STATE, action: AnyAction): GalleryState => {
-  if (fetchPhotoLinksStart.match(action)) {
+  if (fetchPhotoLinksStart.match(action) || fetchFoldersStart.match(action)) {
     return { ...state, isLoading: true };
   }
   if (fetchFoldersSuccess.match(action)) {
-    return { ...state, folders: action.payload };
+    return { ...state, folders: action.payload, isLoading: false };
   }
   if (fetchPhotoLinksSuccess.match(action)) {
     return { ...state, photoLinks: action.payload, isLoading: false };
@@ -36,7 +38,7 @@ export const galleryReducer = (state = INITIAL_STATE, action: AnyAction): Galler
   if (addBonus.match(action)) {
     return { ...state, photoLinks: [...state.photoLinks, ...action.payload] };
   }
-  if (fetchPhotoLinksFailed.match(action)) {
+  if (fetchPhotoLinksFailed.match(action) || fetchFoldersFailed.match(action)) {
     return { ...state, isLoading: false };
   }
   if (clearPhotos.match(action)) {

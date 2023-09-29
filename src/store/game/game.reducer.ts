@@ -12,6 +12,7 @@ import {
   fetchGameSuccess,
   setRounds,
   fetchGameStart,
+  fetchGamesDataStart,
 } from './game.action';
 import { GamesData, Team } from './game.types';
 
@@ -43,8 +44,16 @@ export const gameReducer = (state = INITIAL_STATE, action: AnyAction): GameState
   if (setTeams.match(action) && state.date) {
     return { ...state, teams: action.payload };
   }
+  if (fetchGamesDataStart.match(action)) {
+    return { ...state, isLoading: true };
+  }
   if (fetchGamesDataSuccess.match(action)) {
-    return { ...state, gamesData: action.payload, gamesList: Object.keys(action.payload) };
+    return {
+      ...state,
+      gamesData: action.payload,
+      gamesList: Object.keys(action.payload),
+      isLoading: false,
+    };
   }
   if (fetchGameSuccess.match(action)) {
     return {

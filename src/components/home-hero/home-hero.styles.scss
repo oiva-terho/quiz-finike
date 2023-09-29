@@ -1,42 +1,25 @@
 @import '/src/styles/breakpoints';
 @import '/src/styles/variables';
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeOutUp {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-}
-
 .home-hero {
   position: relative;
   text-align: center;
-  height: calc(100vh - 45px);
-  @include bp(laptop) {
-    height: calc(100vh - 60px);
-  }
-  @include bp(4k) {
-    height: calc(100vh - 100px);
+  height: calc(100vh - var(--navbar-height));
+  background: url('/public/assets/hero1.webp') center center/cover no-repeat;
+  &-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(100vh - var(--navbar-height));
+    width: 100vw;
+    background-color: #000;
+    opacity: 0.6;
   }
   & > svg {
     display: block;
     margin: 0 auto;
+    z-index: 2;
+    position: relative;
     justify-self: center;
     width: 200px;
     padding-top: 30vh;
@@ -56,32 +39,23 @@
       width: 1600px;
     }
   }
-  & > p {
-    font-size: 1rem;
-    font-weight: 400;
-    margin: 1rem 2rem;
-    width: calc(100% - 4rem);
-    animation-name: fadeOutUp;
-    animation-duration: 1s;
-    opacity: 0;
-    display: none;
-    position: absolute;
-    &.outgoing {
-      display: block;
-    }
-    &.active {
-      opacity: 1;
-      animation-name: fadeInUp;
-      display: block;
-    }
-    @include bp(tab) {
-      font-size: 1.3rem;
-    }
-    @include bp(laptop) {
-      font-size: 1.5rem;
-    }
-    @include bp(4k) {
-      font-size: 3rem;
+  &-text {
+    position: relative;
+    z-index: 2;
+    & > p {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 1rem 2rem;
+      width: calc(100% - 4rem);
+      @include bp(tab) {
+        font-size: 1.3rem;
+      }
+      @include bp(laptop) {
+        font-size: 1.5rem;
+      }
+      @include bp(4k) {
+        font-size: 3rem;
+      }
     }
   }
   & > a.home-hero__tg {

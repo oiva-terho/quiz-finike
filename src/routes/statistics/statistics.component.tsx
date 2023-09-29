@@ -61,7 +61,6 @@ export const Statistics = () => {
     <div className='statistics'>
       <div>
         <div className='statistics__header'>
-          {!user && <Navigate to='/sign-in' />}
           <Button onClick={() => setEdit(edit ? false : true)}>
             {edit ? <StopEdit /> : <Edit />}
           </Button>
