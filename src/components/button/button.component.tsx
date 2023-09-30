@@ -10,11 +10,17 @@ export enum BUTTON_CLASSES {
 
 export type ButtonProps = {
   buttonType?: BUTTON_CLASSES;
+  className?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button: FC<ButtonProps> = ({ children, buttonType = '', ...otherProps }) => {
+export const Button: FC<ButtonProps> = ({
+  children,
+  buttonType = '',
+  className = '',
+  ...otherProps
+}) => {
   return (
-    <button className={`button ${buttonType}`} {...otherProps}>
+    <button className={`button ${buttonType} ${className}`} {...otherProps}>
       {children}
     </button>
   );

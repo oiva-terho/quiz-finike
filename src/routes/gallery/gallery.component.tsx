@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 import { DateSelect } from '~/components/date-select/date-select.component';
 import { GalleryGrid } from '~/components/gallery-grid/gallery-grid.component';
@@ -13,7 +12,6 @@ export const Gallery = () => {
   const dispatch = useDispatch();
   const foldersList = useSelector(selectFolders);
   const photoDate = useSelector(selectPhotoDate);
-  const { t } = useTranslation('translation', { keyPrefix: 'gallery' });
   const [photoToOpen, setPhotoToOpen] = useState('');
 
   const openDate = (date: string) => {

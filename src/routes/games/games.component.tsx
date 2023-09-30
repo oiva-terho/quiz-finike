@@ -27,7 +27,7 @@ import { Spinner } from '~/components/spinner/spinner.component';
 
 export const Games = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const goTo = useNavigate();
   const gamesList = useSelector(selectGamesList);
   const gamesLoading = useSelector(selectGameIsLoading);
   const teams = useSelector(selectGameTeams);
@@ -51,7 +51,6 @@ export const Games = () => {
   const photosFolder = fotoFoldersList.find((folder) => {
     return folder === gameDate;
   });
-  const goTo = (path: string) => navigate(path);
   return (
     <section className='games'>
       <h2>{t('header')}</h2>

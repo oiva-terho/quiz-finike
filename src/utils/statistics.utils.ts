@@ -208,6 +208,7 @@ export const statData = ({ GamesData, teamName }: StatDataProps) => {
   };
   return StatData;
 };
+
 type Leaderboard = {
   teamName: string;
   totalScore: number;
