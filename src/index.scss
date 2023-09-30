@@ -12,6 +12,14 @@ button {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
   font-size: 1rem;
+  h5 {
+    text-align: center;
+  }
+  .error {
+    color: red;
+    font-size: 0.7em;
+    padding-left: 5px;
+  }
   @include bp(mobL) {
     font-size: 1.2rem;
   }
