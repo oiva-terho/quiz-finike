@@ -8,7 +8,7 @@ import { clearPhotos, fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery
 import { selectFolders, selectPhotoDate } from '~/store/gallery/gallery.selector';
 import { PhotoSlider } from '~/components/photo-slider/photo-slider.component';
 
-export const Gallery = () => {
+const Gallery = () => {
   const dispatch = useDispatch();
   const foldersList = useSelector(selectFolders);
   const photoDate = useSelector(selectPhotoDate);
@@ -28,3 +28,5 @@ export const Gallery = () => {
     </>
   );
 };
+
+export default Gallery;

@@ -16,7 +16,7 @@ import { countResColor } from '~/utils/layout.utils';
 
 import './add-game.styles.scss';
 
-export const AddGame = () => {
+const AddGame = () => {
   const dispatch = useDispatch();
   const date = useSelector(selectGameDate);
   const teams = useSelector(selectGameTeams);
@@ -149,3 +149,5 @@ export const AddGame = () => {
     </div>
   );
 };
+
+export default AddGame;

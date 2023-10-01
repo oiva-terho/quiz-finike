@@ -28,7 +28,7 @@ enum errMessage {
   pass = 'Firebase: Error (auth/wrong-password).',
 }
 
-export const SignInForm = () => {
+const SignInForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLoading = useSelector(selectUserLoading);
@@ -61,7 +61,6 @@ export const SignInForm = () => {
   };
 
   const checkUser = (function () {
-    if (currentUser?.teamName === '...') return;
     if (currentUser?.teamName) return 'has team';
     if (currentUser) return 'no team';
     return;
@@ -127,3 +126,5 @@ export const SignInForm = () => {
     </div>
   );
 };
+
+export default SignInForm;

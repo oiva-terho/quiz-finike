@@ -50,6 +50,8 @@ export const Statistics = () => {
 
   const signOutUser = () => dispatch(signOutStart());
 
+  const guest = user?.email === 'me@mail.com' ? true : false;
+
   // Fix team name of 'Они заняли ***е место'
   Object.fromEntries(
     Object.entries(GamesData).map((date) => {
@@ -85,7 +87,6 @@ export const Statistics = () => {
                 {edit ? <StopEdit /> : <Edit />}
               </Button>
               {edit ? <AddTeamName /> : <span className='statistics__name'>{user?.teamName}</span>}
-
               <Button onClick={signOutUser}>
                 <Exit />
               </Button>
@@ -127,3 +128,5 @@ export const Statistics = () => {
     </section>
   );
 };
+
+export default Statistics;
