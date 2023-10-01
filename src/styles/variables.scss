@@ -1,6 +1,18 @@
+@import './breakpoints.scss';
+
 $color-marker: #f80;
 $color-bg-main: #022c52;
 $color-bg-light: #999;
 $color-bg-light-blue: #527596;
 $color-font-primary: #ddf;
 $color-font-secondary: #aea49a;
+
+body {
+  --navbar-height: 45px;
+  @include bp(laptop) {
+    --navbar-height: 60px;
+  }
+  @include bp(4k) {
+    --navbar-height: 100px;
+  }
+}

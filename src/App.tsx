@@ -15,12 +15,6 @@ const SignUpForm = lazy(() => import('./routes/sign-up/sign-up.component'));
 const Statistics = lazy(() => import('./routes/statistics/statistics.component'));
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(checkUserSession());
-  }, [dispatch]);
-
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>

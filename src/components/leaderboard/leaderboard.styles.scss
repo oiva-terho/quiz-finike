@@ -2,11 +2,19 @@
 @import '/src/styles/variables.scss';
 
 .leaderboard {
+  min-width: 280px;
+  min-height: calc(100vh - var(--navbar-height) - 1em);
+  @include bp(tab) {
+    max-height: var(--leaderboard-height);
+    overflow-y: scroll;
+    padding-right: 10px;
+  }
   & > h4 {
     text-align: center;
-    margin-top: 0;
+    margin: 0;
   }
   &__table {
+    margin-top: 1em;
     & > button,
     div {
       display: grid;

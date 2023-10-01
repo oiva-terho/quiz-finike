@@ -9,10 +9,11 @@ type TeamScore = {
 }[];
 
 type LeaderboardProps = {
+  className?: string;
   list: TeamScore;
   select: (arg: string) => void;
 };
-export const Leaderboard = ({ list, select }: LeaderboardProps) => {
+export const Leaderboard = ({ className = '', list, select }: LeaderboardProps) => {
   const [teamsList, setTeamsList] = useState(list);
   const { t } = useTranslation('translation', { keyPrefix: 'statistics' });
   const sortBy = (option: string) => {
@@ -26,7 +27,7 @@ export const Leaderboard = ({ list, select }: LeaderboardProps) => {
     return setTeamsList(sortedList);
   };
   return (
-    <div className='leaderboard'>
+    <div className={`leaderboard ${className}`}>
       <h4>{t('leaderboard')}</h4>
       <div className='leaderboard__table'>
         <div>

@@ -18,7 +18,8 @@ type GameHeaderProps = {
 };
 export const GameHeader = ({ passive, clearErr }: GameHeaderProps) => {
   const dispatch = useDispatch();
-  const date = useSelector(selectGameDate);
+  const rawDate = useSelector(selectGameDate);
+  const date = `20${rawDate.slice(0, 2)}-${rawDate.slice(2, 4)}-${rawDate.slice(4, 6)}`;
   const teams = useSelector(selectGameTeams);
   const gameList = useSelector(selectGamesList);
   const rounds = useSelector(selectGameRounds);

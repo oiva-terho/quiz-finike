@@ -117,7 +117,7 @@ export const GalleryGrid = ({ enlarge }: GalleryGridProps) => {
       ref={gridRef}
     >
       <div className='gallery__space' style={{ height: getTopHeight() }} />
-      {currentUser && photoLinks.length ? (
+      {photoLinks.length ? (
         photoLinks
           .slice(start * config.photosInRow, (start + config.visibleRows + 1) * config.photosInRow)
           .map((link, id) => (

@@ -1,29 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '~/components/button/button.component';
-import { selectCurrentUser } from '~/store/user/user.selector';
-import { clearGame } from '~/store/game/game.action';
-import { clearPhotos } from '~/store/gallery/gallery.action';
 
 import { ReactComponent as QuizLogo } from '~/assets/finike-quiz.svg';
 import { ReactComponent as MyResultsLogo } from '~/assets/my-results.svg';
 import { ReactComponent as GamesLogo } from '~/assets/games.svg';
 import { ReactComponent as GalleryLogo } from '~/assets/gallery.svg';
-import { ReactComponent as AuthLogo } from '~/assets/auth.svg';
 
 import './navigation.styles.scss';
 
-const Navigation = () => {
-  const dispatch = useDispatch();
+export const Navigation = () => {
   const navigate = useNavigate();
-  const currentUser = useSelector(selectCurrentUser);
   const { t } = useTranslation('translation', { keyPrefix: 'navigation' });
   const windowWidth = document.documentElement.clientWidth;
   const goTo = (path: string) => {
-    dispatch(clearGame());
-    dispatch(clearPhotos());
     navigate(path);
   };
   return (
@@ -39,15 +30,9 @@ const Navigation = () => {
           <Button onClick={() => goTo('/gallery')}>
             {windowWidth > 767 ? t('gallery') : <GalleryLogo />}
           </Button>
-          {!currentUser ? (
-            <Button onClick={() => goTo('/sign-in')}>
-              {windowWidth > 767 ? t('signIn') : <AuthLogo />}
-            </Button>
-          ) : (
-            <Button onClick={() => goTo('/statistics')}>
-              {windowWidth > 767 ? t('stat') : <MyResultsLogo />}
-            </Button>
-          )}
+          <Button onClick={() => goTo('/statistics')}>
+            {windowWidth > 767 ? t('stat') : <MyResultsLogo />}
+          </Button>
         </div>
       </div>
       <Outlet />

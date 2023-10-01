@@ -69,7 +69,7 @@ export const TeamStatistics = ({ GamesData, teamName }: TeamStatisticsProps) => 
   return (
     <div className='team-statistics'>
       {SD.total === 0 ? (
-        <span className='team-statistics__noteam'>{t('noTeam')}</span>
+        <h5>{t('noTeam')}</h5>
       ) : (
         <>
           <div className='team-statistics__general'>

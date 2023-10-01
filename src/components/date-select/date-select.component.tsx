@@ -8,7 +8,6 @@ type DateSelectProp = {
 };
 export const DateSelect = ({ dates, currentDate, action }: DateSelectProp) => {
   const { t } = useTranslation();
-
   return (
     <div className='dates-select'>
       <span>{t('date')}</span>

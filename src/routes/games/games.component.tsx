@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { Button, BUTTON_CLASSES } from '~/components/button/button.component';
 import { DateSelect } from '~/components/date-select/date-select.component';
 import { GameHeader } from '~/components/game-header/game-header.component';
-import { Nouser } from '~/components/nouser/nouser.component';
 import { Table } from '~/components/table/table.component';
 
-import { fetchPhotoLinksStart, setPhotoDate } from '~/store/gallery/gallery.action';
-import { selectFolders } from '~/store/gallery/gallery.selector';
-import { clearGame, fetchGameStart } from '~/store/game/game.action';
+import {
+  fetchFoldersStart,
+  fetchPhotoLinksStart,
+  setPhotoDate,
+} from '~/store/gallery/gallery.action';
+import { selectFolders, selectPhotosLoading } from '~/store/gallery/gallery.selector';
+import { clearGame, fetchGamesDataStart, fetchGameStart } from '~/store/game/game.action';
 import {
   selectGameDate,
   selectGameIsLoading,
@@ -24,36 +27,39 @@ import { Spinner } from '~/components/spinner/spinner.component';
 
 const Games = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const goTo = useNavigate();
   const gamesList = useSelector(selectGamesList);
+  const gamesLoading = useSelector(selectGameIsLoading);
   const teams = useSelector(selectGameTeams);
-  const loading = useSelector(selectGameIsLoading);
   const currentUser = useSelector(selectCurrentUser);
   const fotoFoldersList = useSelector(selectFolders);
+  const photoFoldersLoading = useSelector(selectPhotosLoading);
   const gameDate = useSelector(selectGameDate);
   const { t } = useTranslation('translation', { keyPrefix: 'games' });
+
+  if (!gamesList.length && !gamesLoading) {
+    dispatch(fetchGamesDataStart());
+  }
+  if (!fotoFoldersList.length && !photoFoldersLoading) {
+    dispatch(fetchFoldersStart());
+  }
 
   const openDate = (date: string) => {
     if (!date) return dispatch(clearGame());
     dispatch(fetchGameStart(date));
   };
   const photosFolder = fotoFoldersList.find((folder) => {
-    const selectedDate = gameDate.replace(/\D/g, '').slice(2, 8);
-    return folder === selectedDate;
+    return folder === gameDate;
   });
-  const goTo = (path: string) => navigate(path);
-
-  if (!currentUser) return <Nouser location={t('games')} />;
-
   return (
-    <div className='games'>
+    <section className='games'>
       <h2>{t('header')}</h2>
-      {loading ? (
+      {gamesLoading ? (
         <Spinner />
       ) : (
         <>
           <DateSelect dates={gamesList} currentDate={gameDate} action={openDate} />
-          {currentUser.teamName === 'Admin' ? (
+          {currentUser?.teamName === 'Admin' ? (
             <Link to='/games/add'>
               <Button buttonType={BUTTON_CLASSES.auth}>{t('edit')}</Button>
               <Button buttonType={BUTTON_CLASSES.auth} onClick={() => dispatch(clearGame())}>
@@ -62,7 +68,7 @@ const Games = () => {
             </Link>
           ) : null}
           <div className='games__table'>
-            <GameHeader passive />
+            {gameDate ? <GameHeader passive /> : <p>{t('select')}</p>}
             {teams.map((team) => (
               <Table
                 key={team.name}
@@ -89,7 +95,7 @@ const Games = () => {
           ) : null}
         </>
       )}
-    </div>
+    </section>
   );
 };
 

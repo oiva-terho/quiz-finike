@@ -3,10 +3,7 @@
 
 .team-statistics {
   position: relative;
-  &__noteam {
-    display: block;
-    text-align: center;
-  }
+  max-width: 340px;
   & h4 {
     text-align: center;
     margin: 0;

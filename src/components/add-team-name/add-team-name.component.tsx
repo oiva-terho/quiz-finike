@@ -36,8 +36,10 @@ export const AddTeamName = () => {
         onChange={handleChange}
         value={teamName}
       />
-      {teamName && teamName.toLocaleLowerCase() === 'admin' ? (
-        <span>{t('wrongTeam')}</span>
+      {teamName &&
+      (teamName.toLocaleLowerCase() === 'admin' || teamName.toLocaleLowerCase() === '...') ? (
+        <span className='error'>{t('wrongTeam')}</span>
+
       ) : (
         <Button type='submit' buttonType={BUTTON_CLASSES.apply}>
           {t('add')}
