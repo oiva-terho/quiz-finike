@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 import { Spinner } from './components/spinner/spinner.component';
 
