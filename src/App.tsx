@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import { Spinner } from './components/spinner/spinner.component';
 
@@ -27,11 +27,7 @@ function App() {
       description:
         'Квиз в Финике, Турция. Посмотрите статистику и фото интеллектуальной коммандной игры для русскоязычных в Турции',
       siteName: 'Quiz Finike',
-      images: [
-        {
-          url: '/preview.jpg',
-        },
-      ],
+      images: '/preview.jpg',
     },
     twitter: {
       title: 'Quiz Finike',
@@ -44,23 +40,46 @@ function App() {
     },
   };
   return (
-    <DocumentMeta {...meta}>
-      <Suspense fallback={<Spinner />}>
-        <Routes>
-          <Route path='/' element={<Navigation />}>
-            <Route index element={<Home />} />
-            <Route path='games'>
-              <Route index element={<Games />} />
-              <Route path='/games/add' element={<AddGame />} />
-            </Route>
-            <Route path='gallery' element={<Gallery />} />
-            <Route path='sign-in' element={<SignInForm />} />
-            <Route path='sign-up' element={<SignUpForm />} />
-            <Route path='statistics' element={<Statistics />} />
+    <Suspense fallback={<Spinner />}>
+      <Helmet>
+        <title>{meta.title}</title>
+        <meta name='description' content={meta.description} />
+        <meta name='keywords' content={meta.keywords.join(', ')} />
+        <meta
+          name='viewport'
+          content={`width=${meta.viewport.width}, initial-scale=${meta.viewport.initialScale}`}
+        />
+
+        {/* OpenGraph */}
+        <meta property='og:type' content={meta.openGraph.type} />
+        <meta property='og:url' content={meta.openGraph.url} />
+        <meta property='og:title' content={meta.openGraph.title} />
+        <meta property='og:description' content={meta.openGraph.description} />
+        <meta property='og:site_name' content={meta.openGraph.siteName} />
+        <meta property='og:image' content={meta.openGraph.images} />
+
+        {/* Twitter */}
+        <meta name='twitter:title' content={meta.twitter.title} />
+        <meta name='twitter:description' content={meta.twitter.description} />
+        <meta name='twitter:card' content={meta.twitter.card} />
+        <meta name='twitter:site' content={meta.twitter.site} />
+        <meta name='twitter:creator' content={meta.twitter.creator} />
+        <meta name='twitter:image' content={meta.twitter.images} />
+      </Helmet>
+      <Routes>
+        <Route path='/' element={<Navigation />}>
+          <Route index element={<Home />} />
+          <Route path='games'>
+            <Route index element={<Games />} />
+            <Route path='/games/add' element={<AddGame />} />
           </Route>
-        </Routes>
-      </Suspense>
-    </DocumentMeta>
+          <Route path='gallery' element={<Gallery />} />
+          <Route path='sign-in' element={<SignInForm />} />
+          <Route path='sign-up' element={<SignUpForm />} />
+          <Route path='statistics' element={<Statistics />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
