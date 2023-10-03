@@ -124,7 +124,13 @@ export const uploadTeamName = async (userAuth: User, teamName: string) => {
   }
 };
 
-// Firebase games
+// Firebase database
+
+export const getFirebaseDoc = async (collection: string, document: string) => {
+  const ref = doc(db, collection, document);
+  const snapshot = await getDoc(ref);
+  return snapshot.data();
+};
 
 export const addGameDoc = async <T extends Team>(date: string, teams: T[]) => {
   try {
