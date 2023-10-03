@@ -22,8 +22,8 @@ export const Heroblock = () => {
       </Button>
       <QuizLogo />
       <div className='home-hero-text'>
-        <p>Квиз - интеллектуальная командная игра, полтора-два часа бурного общения и эмоций.</p>
-        <p>Но квиз в Финике - нечто большее.</p>
+        <p>{t('1')}</p>
+        <p>{t('2')}</p>
       </div>
       <a className='home-hero__tg' href='https://t.me/finikequiz'>
         <TelegramLogo />
