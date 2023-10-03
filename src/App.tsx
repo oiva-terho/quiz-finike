@@ -14,8 +14,9 @@ const SignUpForm = lazy(() => import('./routes/sign-up/sign-up.component'));
 const Statistics = lazy(() => import('./routes/statistics/statistics.component'));
 
 function App() {
+  const host = window.location.hostname;
   const meta = {
-    title: 'Quiz Finike',
+    title: 'Quiz in Finike',
     description:
       'Квиз в Финике. Посмотрите статистику и фото интеллектуальной коммандной игры для русскоязычных в Турции',
     keywords: ['quiz', 'intellectual', 'Turkey', 'Finike', 'team game'],
@@ -27,7 +28,7 @@ function App() {
       description:
         'Квиз в Финике, Турция. Посмотрите статистику и фото интеллектуальной коммандной игры для русскоязычных в Турции',
       siteName: 'Quiz Finike',
-      images: '/preview.jpg',
+      images: `https://${host}/preview.png`,
     },
     twitter: {
       title: 'Quiz Finike',
@@ -36,7 +37,7 @@ function App() {
       card: 'summary_large_image',
       site: '@site',
       creator: '@creator',
-      images: '/preview.jpg',
+      images: `https://${host}/preview.png`,
     },
   };
   return (
